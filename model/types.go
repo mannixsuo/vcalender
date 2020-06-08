@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/base64"
 	"fmt"
+	"strings"
 	"time"
 )
 
@@ -109,18 +110,111 @@ func (d *Date) String() string {
 	return d.Date.Format("20060102")
 }
 
+//    Purpose:  This value type is used to identify values that specify a
+//      precise calendar date and time of day.
+//    Format Definition:  This value type is defined by the following
+//      notation:
+//
+//       date-time  = date "T" time ;As specified in the DATE and TIME
+//                                  ;value definitions
 type DateTime struct {
 	Date time.Time
 }
 
 func (d *DateTime) String() string {
-	return d.Date.Format()
+	// todo other date format style
+	return d.Date.Format("20060102T150405Z")
 }
 
-type DURATION time.Time
-type FLOAT float32
+//    Purpose:  This value type is used to identify properties that contain
+//      a duration of time.
+//    Format Definition:  This value type is defined by the following
+//      notation:
+//
+//       dur-value  = (["+"] / "-") "P" (dur-date / dur-time / dur-week)
+//
+//       dur-date   = dur-day [dur-time]
+//       dur-time   = "T" (dur-hour / dur-minute / dur-second)
+//       dur-week   = 1*DIGIT "W"
+//       dur-hour   = 1*DIGIT "H" [dur-minute]
+//       dur-minute = 1*DIGIT "M" [dur-second]
+//       dur-second = 1*DIGIT "S"
+//       dur-day    = 1*DIGIT "D"
 
-type INTEGER int
+type Duration struct {
+	Negative  bool
+	DurWeek   int
+	DurDay    int
+	DurHour   int
+	DurMinute int
+	DurSecond int
+}
+
+func (d *Duration) String() string {
+	s := strings.Builder{}
+	if d.Negative {
+		s.WriteString("-")
+	}
+	s.WriteString("P")
+	if d.DurWeek != 0 {
+		s.WriteString(fmt.Sprint(d.DurWeek))
+		s.WriteString("W")
+		return s.String()
+	}
+	if d.DurDay != 0 {
+		s.WriteString(fmt.Sprint(d.DurDay))
+		s.WriteString("D")
+	}
+	if d.DurHour != 0 || d.DurMinute != 0 || d.DurSecond != 0 {
+		s.WriteString("T")
+	}
+	if d.DurHour != 0 {
+		s.WriteString(fmt.Sprint(d.DurHour))
+		s.WriteString("H")
+	}
+	if d.DurMinute != 0 {
+		s.WriteString(fmt.Sprint(d.DurMinute))
+		s.WriteString("M")
+	}
+	if d.DurSecond != 0 {
+		s.WriteString(fmt.Sprint(d.DurSecond))
+		s.WriteString("S")
+	}
+	return s.String()
+}
+
+//    Purpose:  This value type is used to identify properties that contain
+//      a real-number value.
+//
+//   Format Definition:  This value type is defined by the following
+//      notation:
+//
+//       float      = (["+"] / "-") 1*DIGIT ["." 1*DIGIT]
+type Float float32
+//    Purpose:  This value type is used to identify properties that contain
+//      a signed integer value.
+//
+//   Format Definition:  This value type is defined by the following
+//      notation:
+type Integer int
+//    Purpose:  This value type is used to identify values that contain a
+//      precise period of time.
+//
+//   Format Definition:  This value type is defined by the following
+//      notation:
+//
+//       period     = period-explicit / period-start
+//
+//       period-explicit = date-time "/" date-time
+//       ; [ISO.8601.2004] complete representation basic format for a
+//       ; period of time consisting of a start and end.  The start MUST
+//       ; be before the end.
+//
+//       period-start = date-time "/" dur-value
+//       ; [ISO.8601.2004] complete representation basic format for a
+//       ; period of time consisting of a start and positive duration
+//       ; of time.
+// 
 type PERIOD string
 type RECUR string
 type TEXT string
