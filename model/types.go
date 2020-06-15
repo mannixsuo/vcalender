@@ -8,6 +8,11 @@ import (
 	"time"
 )
 
+const (
+	UTCDateTimeFormat = "20060102T150405Z"
+	UTCTimeFormat     = "150405Z"
+)
+
 //    Purpose:  This value type is used to identify properties that contain
 //      a character encoding of inline binary data.  For example, an
 //      inline attachment of a document might be included in an iCalendar
@@ -123,7 +128,7 @@ type DateTime struct {
 
 func (d *DateTime) String() string {
 	// todo other date format style
-	return d.Date.Format("20060102T150405Z")
+	return d.Date.Format(UTCDateTimeFormat)
 }
 
 //    Purpose:  This value type is used to identify properties that contain
@@ -191,12 +196,14 @@ func (d *Duration) String() string {
 //
 //       float      = (["+"] / "-") 1*DIGIT ["." 1*DIGIT]
 type Float float32
+
 //    Purpose:  This value type is used to identify properties that contain
 //      a signed integer value.
 //
 //   Format Definition:  This value type is defined by the following
 //      notation:
 type Integer int
+
 //    Purpose:  This value type is used to identify values that contain a
 //      precise period of time.
 //
@@ -215,9 +222,73 @@ type Integer int
 //       ; period of time consisting of a start and positive duration
 //       ; of time.
 // 
-type PERIOD string
-type RECUR string
-type TEXT string
-type TIME time.Time
+type Period interface {
+	Check() bool
+	Build() string
+}
+type ExplicitPeriod struct {
+	Start time.Time
+	End   time.Time
+}
+
+func (e *ExplicitPeriod) Check() bool {
+	return e.Start.Before(e.End)
+}
+
+func (e *ExplicitPeriod) Build() string {
+	return e.Start.Format(UTCDateTimeFormat) + "/" + e.End.Format(UTCDateTimeFormat)
+}
+
+type StartPeriod struct {
+	Start    time.Time
+	Duration Duration
+}
+
+func (s *StartPeriod) Check() bool {
+	return true
+}
+
+func (s *StartPeriod) Build() string {
+	return s.Start.Format(UTCDateTimeFormat) + "/" + s.Duration.String()
+}
+
+type Recur string
+type Text string
+
+//    Purpose:  This value type is used to identify values that contain a
+//      time of day.
+//
+//   Format Definition:  This value type is defined by the following
+//      notation:
+//
+//       time         = time-hour time-minute time-second [time-utc]
+//
+//       time-hour    = 2DIGIT        ;00-23
+//       time-minute  = 2DIGIT        ;00-59
+//       time-second  = 2DIGIT        ;00-60
+//       ;The "60" value is used to account for positive "leap" seconds.
+//
+//       time-utc     = "Z"
+type Time struct {
+	Data time.Time
+}
+
+func (t *Time) String() string {
+	return t.Data.Format(UTCTimeFormat)
+}
+
+//    Purpose:  This value type is used to identify values that contain a
+//      uniform resource identifier (URI) type of reference to the
+//      property value.
 type URI string
-type UTCOFFSET string
+
+//    Purpose:  This value type is used to identify properties that contain
+//      an offset from UTC to local time.
+//
+//   Format Definition:  This value type is defined by the following
+//      notation:
+//
+//       utc-offset = time-numzone
+//
+//       time-numzone = ("+" / "-") time-hour time-minute [time-second]
+type UTCOffset string

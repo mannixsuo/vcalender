@@ -346,30 +346,6 @@ func (x *Xcomp) Build() {
 //                    (audioprop / dispprop / emailprop)
 //                    "END" ":" "VALARM" CRLF
 //
-//       audioprop  = *(
-//                  ;
-//                  ; 'action' and 'trigger' are both REQUIRED,
-//                   ; but MUST NOT occur more than once.
-//                  ;
-//                  action / trigger /
-//                  ;
-//                  ; 'duration' and 'repeat' are both OPTIONAL,
-//                  ; and MUST NOT occur more than once each;
-//                  ; but if one occurs, so MUST the other.
-//                  ;
-//                  duration / repeat /
-//                  ;
-//                  ; The following is OPTIONAL,
-//                  ; but MUST NOT occur more than once.
-//                  ;
-//                  attach /
-//                  ;
-//                  ; The following is OPTIONAL,
-//                  ; and MAY occur more than once.
-//                  ;
-//                  x-prop / iana-prop
-//                  ;
-//                  )
 //
 //       dispprop   = *(
 //                  ;
@@ -436,6 +412,30 @@ type AlarmProp interface {
 	Validate() (bool, error)
 }
 
+//       audioprop  = *(
+//                  ;
+//                  ; 'action' and 'trigger' are both REQUIRED,
+//                   ; but MUST NOT occur more than once.
+//                  ;
+//                  action / trigger /
+//                  ;
+//                  ; 'duration' and 'repeat' are both OPTIONAL,
+//                  ; and MUST NOT occur more than once each;
+//                  ; but if one occurs, so MUST the other.
+//                  ;
+//                  duration / repeat /
+//                  ;
+//                  ; The following is OPTIONAL,
+//                  ; but MUST NOT occur more than once.
+//                  ;
+//                  attach /
+//                  ;
+//                  ; The following is OPTIONAL,
+//                  ; and MAY occur more than once.
+//                  ;
+//                  x-prop / iana-prop
+//                  ;
+//                  )
 type Audioprop struct {
 	action   string
 	trigger  string
@@ -466,7 +466,7 @@ func (a *Audioprop) Build(s *strings.Builder) {
 }
 
 func (a *Audioprop) Validate() (bool, error) {
-	if a.action == "" || a.trigger == "" {
+	if a.trigger == "" {
 		return false, fmt.Errorf("audioprop's action or trigger properity must not be null")
 	}
 	if a.duration != "" && a.repeat == "" {
