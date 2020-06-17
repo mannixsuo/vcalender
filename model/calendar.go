@@ -40,5 +40,5 @@ type Calendar struct {
 	Method      string
 	Xprops      []string
 	IanaProps   []string
-	Components []Component
+	Components []CalendarComponent
 }

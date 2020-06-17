@@ -9,23 +9,23 @@ todo list:
   - [x] Boolean
   - [x] Calendar User Address
   - [x] Date
-  - [ ] Date-Time
-  - [ ] Duration
-  - [ ] Float
-  - [ ] Integer
-  - [ ] Period of Time
+  - [x] Date-Time
+  - [x] Duration
+  - [x] Float
+  - [x] Integer
+  - [x] Period of Time
   - [ ] Recurrence Rule
-  - [ ] Text
-  - [ ] Time
-  - [ ] URI
-  - [ ] UTC Offset
+  - [x] Text
+  - [x] Time
+  - [x] URI
+  - [x] UTC Offset
 - [ ] Alarm
-     - [ ] Action
-     - [ ] REPEAT
-     - [ ] Trigger
-     - [ ] AUDIO
-     - [ ] DISPLY
-     - [ ] EMAIL
+     - [x] Action
+     - [x] REPEAT
+     - [x] Trigger
+     - [x] AUDIO
+     - [x] DISPLY
+     - [x] EMAIL
 - [ ] EVENT
 - [ ] TO-DO
 - [ ] JOURNAL

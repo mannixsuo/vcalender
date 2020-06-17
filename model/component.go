@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-type Component interface {
+type CalendarComponent interface {
 	Build()
 }
 
@@ -436,25 +436,24 @@ type AlarmProp interface {
 //                  x-prop / iana-prop
 //                  ;
 //                  )
-type Audioprop struct {
-	action   string
-	trigger  string
-	duration string
-	repeat   string
-	attach   string
+type AudioProp struct {
+	Trigger  Trigger
+	Duration *Duration
+	Repeat   *Integer
+	Attach   Attach
 	xProp    string
 	ianaProp string
 }
 
-func (a *Audioprop) Build(s *strings.Builder) {
+func (a *AudioProp) Build(s *strings.Builder) {
 	s.WriteString(fmt.Sprintln("ACTION:AUDIO"))
-	s.WriteString(fmt.Sprintf("TRIGGER:%s\n", a.trigger))
-	if a.duration != "" {
-		s.WriteString(fmt.Sprintf("DURATION:%s\n", a.duration))
-		s.WriteString(fmt.Sprintf("REPEAT:%s\n", a.repeat))
+	s.WriteString(fmt.Sprintf("TRIGGER:%s\n", a.Trigger.Trigger()))
+	if a.Duration != nil {
+		s.WriteString(fmt.Sprintf("DURATION:%s\n", a.Duration))
+		s.WriteString(fmt.Sprintf("REPEAT:%d\n", a.Repeat))
 	}
-	if a.attach != "" {
-		s.WriteString(fmt.Sprintf("ATTACH:%s\n", a.attach))
+	if a.Attach != nil {
+		s.WriteString(fmt.Sprintf("ATTACH:%s\n", a.Attach.Attach()))
 	}
 	if a.xProp != "" {
 		s.WriteString(fmt.Sprintf("XPROP:%s\n", a.xProp))
@@ -465,14 +464,14 @@ func (a *Audioprop) Build(s *strings.Builder) {
 	}
 }
 
-func (a *Audioprop) Validate() (bool, error) {
-	if a.trigger == "" {
+func (a *AudioProp) Validate() (bool, error) {
+	if a.Trigger == nil {
 		return false, fmt.Errorf("audioprop's action or trigger properity must not be null")
 	}
-	if a.duration != "" && a.repeat == "" {
+	if a.Duration != nil && a.Repeat == nil {
 		return false, fmt.Errorf("audioprop's duration and repeat must appear both")
 	}
-	if a.duration == "" && a.repeat != "" {
+	if a.Duration == nil && a.Repeat != nil {
 		return false, fmt.Errorf("audioprop's duration and repeat must appear both")
 	}
 	return true, nil
@@ -497,41 +496,40 @@ func (a *Audioprop) Validate() (bool, error) {
 //                  x-prop / iana-prop
 //                  ;
 //                  )
-type Disprop struct {
-	action      string
-	description string
-	trigger     string
-	duration    string
-	repeat      int
-	xProp       string
-	ianaProp    string
+type DisProp struct {
+	Description Text
+	Trigger     Trigger
+	Duration    *Duration
+	Repeat      Integer
+	XProp       string
+	IanaProp    string
 }
 
-func (d *Disprop) Build(s *strings.Builder) {
+func (d *DisProp) Build(s *strings.Builder) {
 	s.WriteString(fmt.Sprintln("ACTION:DISPLY"))
-	s.WriteString(fmt.Sprintf("DESCRIPTION:%s\n", d.description))
-	s.WriteString(fmt.Sprintf("TRIGGER:%s", d.trigger))
-	if d.duration != "" {
-		s.WriteString(fmt.Sprintf("DURATION:%s", d.duration))
-		s.WriteString(fmt.Sprintf("REPEAT:%d", d.repeat))
+	s.WriteString(fmt.Sprintf("DESCRIPTION:%s\n", d.Description))
+	s.WriteString(fmt.Sprintf("TRIGGER:%s", d.Trigger))
+	if d.Duration != nil {
+		s.WriteString(fmt.Sprintf("DURATION:%s", d.Duration))
+		s.WriteString(fmt.Sprintf("REPEAT:%d", d.Repeat))
 	}
-	if d.xProp != "" {
-		s.WriteString(fmt.Sprintf("XPROP:%s\n", d.xProp))
+	if d.XProp != "" {
+		s.WriteString(fmt.Sprintf("XPROP:%s\n", d.XProp))
 	}
-	if d.ianaProp != "" {
-		s.WriteString(fmt.Sprintf("IANAPROP:%s\n", d.ianaProp))
+	if d.IanaProp != "" {
+		s.WriteString(fmt.Sprintf("IANAPROP:%s\n", d.IanaProp))
 
 	}
 }
 
-func (d *Disprop) Validate() (bool, error) {
-	if d.action == "" || d.trigger == "" || d.description == "" {
+func (d *DisProp) Validate() (bool, error) {
+	if d.Trigger == nil || d.Description == "" {
 		return false, fmt.Errorf("disprop's action and trigger and description properity must not be null")
 	}
-	if d.duration != "" && d.repeat == 0 {
+	if d.Duration != nil && d.Repeat == 0 {
 		return false, fmt.Errorf("disprop's duration and repeat must appear both")
 	}
-	if d.duration == "" && d.repeat != 0 {
+	if d.Duration == nil && d.Repeat != 0 {
 		return false, fmt.Errorf("disprop's duration and repeat must appear both")
 	}
 	return true, nil
@@ -561,11 +559,10 @@ func (d *Disprop) Validate() (bool, error) {
 //                  attach / x-prop / iana-prop
 //                  ;
 //                  )
-type Emailprop struct {
-	action      string
-	description string
-	trigger     string
-	summary     string
+type EmailProp struct {
+	Description Text
+	Trigger     Trigger
+	Summary     Text
 	attendee    []string
 	duration    string
 	repeat      int
@@ -574,11 +571,11 @@ type Emailprop struct {
 	ianaProp    []string
 }
 
-func (e *Emailprop) Build(s *strings.Builder) {
+func (e *EmailProp) Build(s *strings.Builder) {
 	s.WriteString(fmt.Sprintln("ACTION:EMAIL"))
-	s.WriteString(fmt.Sprintf("DESCRIPTION:%s\n", e.description))
-	s.WriteString(fmt.Sprintf("TRIGGER:%s\n", e.trigger))
-	s.WriteString(fmt.Sprintf("SUMMARY:%s\n", e.summary))
+	s.WriteString(fmt.Sprintf("DESCRIPTION:%s\n", e.Description))
+	s.WriteString(fmt.Sprintf("TRIGGER:%s\n", e.Trigger))
+	s.WriteString(fmt.Sprintf("SUMMARY:%s\n", e.Summary))
 	for _, a := range e.attendee {
 		s.WriteString(fmt.Sprintf("ATTENDEE:%s\n", a))
 	}
@@ -594,8 +591,8 @@ func (e *Emailprop) Build(s *strings.Builder) {
 
 	}
 }
-func (e *Emailprop) Validate() (bool, error) {
-	if e.action == "" || e.trigger == "" || e.description == "" || e.summary == "" {
+func (e *EmailProp) Validate() (bool, error) {
+	if e.Trigger == nil || e.Description == "" || e.Summary == "" {
 		return false, fmt.Errorf("emailprop's action and trigger and description and sunnary properity must not be null")
 	}
 	if e.attendee == nil {

@@ -13,6 +13,14 @@ const (
 	UTCTimeFormat     = "150405Z"
 )
 
+type Trigger interface {
+	Trigger() string
+}
+
+type Attach interface {
+	Attach() string
+}
+
 //    Purpose:  This value type is used to identify properties that contain
 //      a character encoding of inline binary data.  For example, an
 //      inline attachment of a document might be included in an iCalendar
@@ -131,6 +139,10 @@ func (d *DateTime) String() string {
 	return d.Date.Format(UTCDateTimeFormat)
 }
 
+func (d *DateTime) Trigger() string {
+	return d.String()
+}
+
 //    Purpose:  This value type is used to identify properties that contain
 //      a duration of time.
 //    Format Definition:  This value type is defined by the following
@@ -153,6 +165,10 @@ type Duration struct {
 	DurHour   int
 	DurMinute int
 	DurSecond int
+}
+
+func (d *Duration) Trigger() string {
+	return d.String()
 }
 
 func (d *Duration) String() string {
@@ -280,7 +296,17 @@ func (t *Time) String() string {
 //    Purpose:  This value type is used to identify values that contain a
 //      uniform resource identifier (URI) type of reference to the
 //      property value.
-type URI string
+type URI struct {
+	Uri string
+}
+
+func (u *URI) String() string {
+	return u.Uri
+}
+
+func (u *URI) Attach() string {
+	return u.String()
+}
 
 //    Purpose:  This value type is used to identify properties that contain
 //      an offset from UTC to local time.
