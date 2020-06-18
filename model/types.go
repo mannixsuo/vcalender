@@ -13,8 +13,19 @@ const (
 	UTCTimeFormat     = "150405Z"
 )
 
-type Attach interface {
-	Attach() string
+type Attach struct {
+	FmtType string
+	URI     *URI
+	Binary  *Binary
+}
+
+func (a *Attach) Attach() string {
+	if a.URI != nil {
+		if a.FmtType != "" {
+			return fmt.Sprintf(";FMTTYPE=%s:%s", a.FmtType, a.URI.String())
+		}
+	}
+	return a.Binary.String()
 }
 
 type Trigger struct {
@@ -43,23 +54,18 @@ func (t *Trigger) Trigger() string {
 //      using the "BASE64" encoding method defined in [RFC2045].  No
 //      additional content value encoding (i.e., BACKSLASH character
 //      encoding, see Section 3.3.11) is defined for this value type.
-type Binary struct {
-	Data []byte
-}
+type Binary []byte
 
 func (b *Binary) String() string {
 	buf := new(bytes.Buffer)
 	w := base64.NewEncoder(base64.StdEncoding, buf)
-	_, err := w.Write(b.Data)
+	_, err := w.Write(*b)
 	if err != nil {
 		return ""
 	}
 	_ = w.Close()
 	bs := fmt.Sprintf(";ENCODING=BASE64;VALUE=BINARY:%s", buf.String())
 	return bs
-}
-func (b *Binary) Attach() string {
-	return b.String()
 }
 
 //    Purpose:  This value type is used to identify properties that contain
@@ -73,12 +79,10 @@ func (b *Binary) Attach() string {
 //   Description:  These values are case-insensitive text.  No additional
 //      content value encoding (i.e., BACKSLASH character encoding, see
 //      Section 3.3.11) is defined for this value type.
-type Boolean struct {
-	Data bool
-}
+type Boolean bool
 
-func (b *Boolean) String() string {
-	if b.Data {
+func (b *Boolean) Boolean() string {
+	if *b {
 		return "TRUE"
 	}
 	return "FALSE"
@@ -99,11 +103,11 @@ func (b *Boolean) String() string {
 //      encoding (i.e., BACKSLASH character encoding, see Section 3.3.11)
 //      is defined for this value type.
 type CalAddress struct {
-	Data string
+	Uri URI
 }
 
 func (c *CalAddress) String() string {
-	return fmt.Sprintf("mailto:%s", c.Data)
+	return fmt.Sprintf("mailto:%s", c.Uri.String())
 }
 
 //    Purpose:  This value type is used to identify values that contain a
@@ -186,8 +190,8 @@ type Duration struct {
 	DurSecond int
 }
 
-func (d *Duration) Trigger() string {
-	return fmt.Sprintf("%s%s", d.Related(), d.String())
+func (d *Duration) Duration() string {
+	return d.String()
 }
 
 func (d *Duration) Related() string {

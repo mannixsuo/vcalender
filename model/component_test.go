@@ -1,6 +1,8 @@
 package model
 
 import (
+	"fmt"
+	"strings"
 	"testing"
 )
 
@@ -10,24 +12,36 @@ const (
 		"ACTION:EMAIL\n" +
 		"ATTENDEE:mailto:john_doe@example.com\n" +
 		"SUMMARY:*** REMINDER: SEND AGENDA FOR WEEKLY STAFF MEETING ***\n" +
-		"DESCRIPTION:A draft agenda needs to be sent out to the attendees\n" +
-		"  to the weekly managers meeting (MGR-LIST). Attached is a\n" +
-		"  pointer the document template for the agenda file.\n" +
+		"DESCRIPTION:A draft agenda needs to be sent out to the attendees to the weekly man\n" +
+		" agers meeting (MGR-LIST). Attached is a pointer the document template \n" +
+		" or the agenda file.\n" +
 		"ATTACH;FMTTYPE=application/msword:http://example.com/\n" +
 		"templates/agenda.doc\n" +
 		"END:VALARM"
 )
 
 func TestEmailProp_AlarmProp(t *testing.T) {
-	_ = EmailProp{
-		Description: "A draft agenda needs to be sent out to the attendees to the weekly managers meeting (MGR-LIST). Attached is a pointer the document template for the agenda file.",
-		Trigger:     nil,
-		Summary:     "",
-		Attendee:    nil,
-		Duration:    nil,
-		Repeat:      0,
-		Attach:      nil,
-		XProp:       nil,
-		IanaProp:    nil,
+	e := EmailProp{
+		Description: "fA draft agenda needs to be sent out to the attendees to the weekly managers meeting (MGR-LIST). Attached is a pointer the document template or the agenda file.",
+		Trigger: &Trigger{
+			Related2Start: false,
+			Duration: &Duration{
+				Negative: true,
+				DurDay:   2,
+			},
+		},
+		Summary:  "*** REMINDER: SEND AGENDA FOR WEEKLY STAFF MEETING ***",
+		Attendee: []CalAddress{{Uri: URI{Uri: "john_doe@example.com"}}},
+		Duration: nil,
+		Repeat:   0,
+		Attach: []Attach{{
+			FmtType: "application/msword",
+			URI:     &URI{Uri: "http://example.com/templates/agenda.doc"},
+		}},
+		XProp:    nil,
+		IanaProp: nil,
 	}
+	sb := strings.Builder{}
+	e.AlarmProp(&sb)
+	fmt.Print(sb.String())
 }
