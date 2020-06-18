@@ -7,7 +7,7 @@ import (
 )
 
 type CalendarComponent interface {
-	Build()
+	CalendarComponent()
 }
 
 //    Component Name:  VEVENT
@@ -100,7 +100,7 @@ type Eventc struct {
 	Alarms      []Alarmc
 }
 
-func (e *Eventc) Build() {
+func (e *Eventc) CalendarComponent() {
 
 }
 
@@ -191,7 +191,7 @@ type Todoc struct {
 	Alarms     []Alarmc
 }
 
-func (t *Todoc) Build() {
+func (t *Todoc) CalendarComponent() {
 
 }
 
@@ -259,7 +259,7 @@ type Journalc struct {
 	ianaProp    []string
 }
 
-func (j *Journalc) Build() {
+func (j *Journalc) CalendarComponent() {
 
 }
 
@@ -311,7 +311,7 @@ type Freebusyc struct {
 	IanaProp  string
 }
 
-func (f *Freebusyc) Build() {
+func (f *Freebusyc) CalendarComponent() {
 
 }
 
@@ -325,14 +325,14 @@ func (t *Timezonec) build() {
 type IanaComp struct {
 }
 
-func (i *IanaComp) Build() {
+func (i *IanaComp) CalendarComponent() {
 
 }
 
 type Xcomp struct {
 }
 
-func (x *Xcomp) Build() {
+func (x *Xcomp) CalendarComponent() {
 
 }
 
@@ -395,11 +395,11 @@ type Alarmc struct {
 	Prop AlarmProp
 }
 
-func (a *Alarmc) Build(s *strings.Builder) error {
+func (a *Alarmc) Alarmc(s *strings.Builder) error {
 	ok, err := a.Prop.Validate()
 	if ok {
 		s.WriteString("BEGIN:VALARM")
-		a.Prop.Build(s)
+		a.Prop.AlarmProp(s)
 		s.WriteString("END:VALARM")
 		return nil
 
@@ -408,7 +408,7 @@ func (a *Alarmc) Build(s *strings.Builder) error {
 }
 
 type AlarmProp interface {
-	Build(s *strings.Builder)
+	AlarmProp(s *strings.Builder)
 	Validate() (bool, error)
 }
 
@@ -437,7 +437,7 @@ type AlarmProp interface {
 //                  ;
 //                  )
 type AudioProp struct {
-	Trigger  Trigger
+	Trigger  *Trigger
 	Duration *Duration
 	Repeat   *Integer
 	Attach   Attach
@@ -445,7 +445,7 @@ type AudioProp struct {
 	ianaProp string
 }
 
-func (a *AudioProp) Build(s *strings.Builder) {
+func (a *AudioProp) AlarmProp(s *strings.Builder) {
 	s.WriteString(fmt.Sprintln("ACTION:AUDIO"))
 	s.WriteString(fmt.Sprintf("TRIGGER:%s\n", a.Trigger.Trigger()))
 	if a.Duration != nil {
@@ -498,17 +498,17 @@ func (a *AudioProp) Validate() (bool, error) {
 //                  )
 type DisProp struct {
 	Description Text
-	Trigger     Trigger
+	Trigger     *Trigger
 	Duration    *Duration
 	Repeat      Integer
 	XProp       string
 	IanaProp    string
 }
 
-func (d *DisProp) Build(s *strings.Builder) {
+func (d *DisProp) AlarmProp(s *strings.Builder) {
 	s.WriteString(fmt.Sprintln("ACTION:DISPLY"))
 	s.WriteString(fmt.Sprintf("DESCRIPTION:%s\n", d.Description))
-	s.WriteString(fmt.Sprintf("TRIGGER:%s", d.Trigger))
+	s.WriteString(fmt.Sprintf("TRIGGER:%s", d.Trigger.Trigger()))
 	if d.Duration != nil {
 		s.WriteString(fmt.Sprintf("DURATION:%s", d.Duration))
 		s.WriteString(fmt.Sprintf("REPEAT:%d", d.Repeat))
@@ -561,47 +561,55 @@ func (d *DisProp) Validate() (bool, error) {
 //                  )
 type EmailProp struct {
 	Description Text
-	Trigger     Trigger
+	Trigger     *Trigger
 	Summary     Text
-	attendee    []string
-	duration    string
-	repeat      int
-	attach      []string
-	xProp       []string
-	ianaProp    []string
+	Attendee    []CalAddress
+	Duration    *Duration
+	Repeat      Integer
+	Attach      []Attach
+	XProp       []string
+	IanaProp    []string
 }
 
-func (e *EmailProp) Build(s *strings.Builder) {
+func (e *EmailProp) AlarmProp(s *strings.Builder) {
 	s.WriteString(fmt.Sprintln("ACTION:EMAIL"))
 	s.WriteString(fmt.Sprintf("DESCRIPTION:%s\n", e.Description))
-	s.WriteString(fmt.Sprintf("TRIGGER:%s\n", e.Trigger))
+	s.WriteString(fmt.Sprintf("TRIGGER:%s\n", e.Trigger.Trigger()))
 	s.WriteString(fmt.Sprintf("SUMMARY:%s\n", e.Summary))
-	for _, a := range e.attendee {
+	for _, a := range e.Attendee {
 		s.WriteString(fmt.Sprintf("ATTENDEE:%s\n", a))
 	}
-	if e.duration != "" {
-		s.WriteString(fmt.Sprintf("DURATION:%s\n", e.duration))
-		s.WriteString(fmt.Sprintf("REPEAT:%d\n", e.repeat))
+	if e.Duration != nil {
+		s.WriteString(fmt.Sprintf("DURATION:%s\n", e.Duration))
+		s.WriteString(fmt.Sprintf("REPEAT:%d\n", e.Repeat))
 	}
-	if e.xProp != nil {
-		s.WriteString(fmt.Sprintf("XPROP:%s\n", e.xProp))
+	if e.Attach != nil {
+		for _, a := range e.Attach {
+			s.WriteString(fmt.Sprintf("ATTACH:%s\n", a))
+		}
 	}
-	if e.ianaProp != nil {
-		s.WriteString(fmt.Sprintf("IANAPROP:%s\n", e.ianaProp))
-
+	if e.XProp != nil {
+		for _, x := range e.XProp {
+			s.WriteString(fmt.Sprintf("XPROP:%s\n", x))
+		}
+	}
+	if e.IanaProp != nil {
+		for _, i := range e.IanaProp {
+			s.WriteString(fmt.Sprintf("IANAPROP:%s\n", i))
+		}
 	}
 }
 func (e *EmailProp) Validate() (bool, error) {
 	if e.Trigger == nil || e.Description == "" || e.Summary == "" {
 		return false, fmt.Errorf("emailprop's action and trigger and description and sunnary properity must not be null")
 	}
-	if e.attendee == nil {
-		return false, fmt.Errorf("emailprop's attendee properties must not be specified")
+	if e.Attendee == nil {
+		return false, fmt.Errorf("emailprop's attendee properties must be specified")
 	}
-	if e.duration != "" && e.repeat == 0 {
+	if e.Duration != nil && e.Repeat == 0 {
 		return false, fmt.Errorf("emailprop's duration and repeat must appear both")
 	}
-	if e.duration == "" && e.repeat != 0 {
+	if e.Duration == nil && e.Repeat != 0 {
 		return false, fmt.Errorf("emailprop's duration and repeat must appear both")
 	}
 	return true, nil

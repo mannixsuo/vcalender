@@ -1,4 +1,4 @@
-RFC 5445 client simple implication in go
+RFC 5445 simple client implication in go
 
 see https://tools.ietf.org/html/rfc5545
 

@@ -13,12 +13,24 @@ const (
 	UTCTimeFormat     = "150405Z"
 )
 
-type Trigger interface {
-	Trigger() string
-}
-
 type Attach interface {
 	Attach() string
+}
+
+type Trigger struct {
+	Related2Start bool
+	Duration      *Duration
+	DateTime      *DateTime
+}
+
+func (t *Trigger) Trigger() string {
+	if t.Duration != nil {
+		if t.Related2Start {
+			return fmt.Sprintf(";VALUE=DURATION;RELATED=START:%s", t.Duration.String())
+		}
+		return fmt.Sprintf(";VALUE=DURATION;RELATED=END:%s", t.Duration.String())
+	}
+	return fmt.Sprintf(";VALUE=DATETIME:%s", t.DateTime.String())
 }
 
 //    Purpose:  This value type is used to identify properties that contain
@@ -45,6 +57,9 @@ func (b *Binary) String() string {
 	_ = w.Close()
 	bs := fmt.Sprintf(";ENCODING=BASE64;VALUE=BINARY:%s", buf.String())
 	return bs
+}
+func (b *Binary) Attach() string {
+	return b.String()
 }
 
 //    Purpose:  This value type is used to identify properties that contain
@@ -140,7 +155,11 @@ func (d *DateTime) String() string {
 }
 
 func (d *DateTime) Trigger() string {
-	return d.String()
+	return fmt.Sprintf(";VALUE=DATETIME:%s", d.String())
+}
+
+func (d *DateTime) Related() string {
+	return ""
 }
 
 //    Purpose:  This value type is used to identify properties that contain
@@ -168,7 +187,11 @@ type Duration struct {
 }
 
 func (d *Duration) Trigger() string {
-	return d.String()
+	return fmt.Sprintf("%s%s", d.Related(), d.String())
+}
+
+func (d *Duration) Related() string {
+	return fmt.Sprintf(";VALUE=DURATION;RELATED=START:")
 }
 
 func (d *Duration) String() string {
@@ -305,7 +328,7 @@ func (u *URI) String() string {
 }
 
 func (u *URI) Attach() string {
-	return u.String()
+	return fmt.Sprintf(":%s", u.String())
 }
 
 //    Purpose:  This value type is used to identify properties that contain
@@ -318,3 +341,18 @@ func (u *URI) Attach() string {
 //
 //       time-numzone = ("+" / "-") time-hour time-minute [time-second]
 type UTCOffset string
+
+func SplitString(s string) string {
+	if len(s) <= 75 {
+		return s
+	}
+	sb := strings.Builder{}
+	var i = 1
+	for ; i*70 < len(s); i++ {
+		sb.WriteString(s[(i-1)*70 : i*70])
+		sb.WriteString("\n ")
+	}
+	i--
+	sb.WriteString(s[i*70:])
+	return sb.String()
+}

@@ -13,3 +13,23 @@ func TestBINARY_String(t *testing.T) {
 		t.Errorf("error")
 	}
 }
+
+func TestSplitString(t *testing.T) {
+	s := "DESCRIPTION:This is a long description that exists on a long line.This is a long description that exists on a long line\n"
+	right := "DESCRIPTION:This is a long description that exists on a long line.This\n" +
+		"  is a long description that exists on a long line\n"
+	if right != SplitString(s) {
+		t.Error()
+	}
+	s = "DESCRIPTION:This is a short description."
+	right = s
+	if right != SplitString(s) {
+		t.Error()
+	}
+	s = "DESCRIPTION:This is a long description that exists on a long line.This is a long description that exists on a long lineists on a long linee\n"
+	right="DESCRIPTION:This is a long description that exists on a long line.This\n"+
+		"  is a long description that exists on a long lineists on a long linee\n"
+	if right != SplitString(s) {
+		t.Error()
+	}
+}
