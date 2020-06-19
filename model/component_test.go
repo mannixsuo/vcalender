@@ -21,6 +21,7 @@ const (
 )
 
 func TestEmailProp_AlarmProp(t *testing.T) {
+
 	e := EmailProp{
 		Description: "fA draft agenda needs to be sent out to the attendees to the weekly managers meeting (MGR-LIST). Attached is a pointer the document template or the agenda file.",
 		Trigger: &Trigger{
@@ -31,7 +32,7 @@ func TestEmailProp_AlarmProp(t *testing.T) {
 			},
 		},
 		Summary:  "*** REMINDER: SEND AGENDA FOR WEEKLY STAFF MEETING ***",
-		Attendee: []CalAddress{{Uri: URI{Uri: "john_doe@example.com"}}},
+		Attendee: []CalAddress{{URI{Uri: "john_doe@example.com"}}},
 		Duration: nil,
 		Repeat:   0,
 		Attach: []Attach{{
@@ -42,6 +43,7 @@ func TestEmailProp_AlarmProp(t *testing.T) {
 		IanaProp: nil,
 	}
 	sb := strings.Builder{}
-	e.AlarmProp(&sb)
+	a := Alarmc{Prop: &e}
+	_ = a.Alarmc(&sb)
 	fmt.Print(sb.String())
 }

@@ -103,11 +103,11 @@ func (b *Boolean) Boolean() string {
 //      encoding (i.e., BACKSLASH character encoding, see Section 3.3.11)
 //      is defined for this value type.
 type CalAddress struct {
-	Uri URI
+	URI
 }
 
 func (c *CalAddress) String() string {
-	return fmt.Sprintf("mailto:%s", c.Uri.String())
+	return fmt.Sprintf("mailto:%s", c.URI.String())
 }
 
 //    Purpose:  This value type is used to identify values that contain a

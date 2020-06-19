@@ -398,9 +398,9 @@ type Alarmc struct {
 func (a *Alarmc) Alarmc(s *strings.Builder) error {
 	ok, err := a.Prop.Validate()
 	if ok {
-		s.WriteString("BEGIN:VALARM")
+		s.WriteString("BEGIN:VALARM\n")
 		a.Prop.AlarmProp(s)
-		s.WriteString("END:VALARM")
+		s.WriteString("END:VALARM\n")
 		return nil
 
 	}
