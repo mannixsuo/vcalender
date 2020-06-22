@@ -37,11 +37,14 @@ type Trigger struct {
 func (t *Trigger) Trigger() string {
 	if t.Duration != nil {
 		if t.Related2Start {
-			return fmt.Sprintf(";VALUE=DURATION;RELATED=START:%s", t.Duration.String())
+			return fmt.Sprintf(":%s", t.Duration.String())
 		}
-		return fmt.Sprintf(";VALUE=DURATION;RELATED=END:%s", t.Duration.String())
+		return fmt.Sprintf(";RELATED=END:%s", t.Duration.String())
 	}
-	return fmt.Sprintf(";VALUE=DATETIME:%s", t.DateTime.String())
+	if t.DateTime != nil {
+		return fmt.Sprintf(";VALUE=DATETIME:%s", t.DateTime.String())
+	}
+	return ""
 }
 
 //    Purpose:  This value type is used to identify properties that contain
@@ -267,7 +270,7 @@ type Integer int
 // 
 type Period interface {
 	Check() bool
-	Build() string
+	Period() string
 }
 type ExplicitPeriod struct {
 	Start time.Time
@@ -278,7 +281,7 @@ func (e *ExplicitPeriod) Check() bool {
 	return e.Start.Before(e.End)
 }
 
-func (e *ExplicitPeriod) Build() string {
+func (e *ExplicitPeriod) Period() string {
 	return e.Start.Format(UTCDateTimeFormat) + "/" + e.End.Format(UTCDateTimeFormat)
 }
 
@@ -291,7 +294,7 @@ func (s *StartPeriod) Check() bool {
 	return true
 }
 
-func (s *StartPeriod) Build() string {
+func (s *StartPeriod) Period() string {
 	return s.Start.Format(UTCDateTimeFormat) + "/" + s.Duration.String()
 }
 

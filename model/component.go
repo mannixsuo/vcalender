@@ -402,7 +402,6 @@ func (a *Alarmc) Alarmc(s *strings.Builder) error {
 		a.Prop.AlarmProp(s)
 		s.WriteString("END:VALARM\n")
 		return nil
-
 	}
 	return err
 }
@@ -439,7 +438,7 @@ type AlarmProp interface {
 type AudioProp struct {
 	Trigger  *Trigger
 	Duration *Duration
-	Repeat   *Integer
+	Repeat   Integer
 	Attach   *Attach
 	xProp    string
 	ianaProp string
@@ -447,7 +446,7 @@ type AudioProp struct {
 
 func (a *AudioProp) AlarmProp(s *strings.Builder) {
 	s.WriteString(fmt.Sprintln("ACTION:AUDIO"))
-	s.WriteString(fmt.Sprintf("TRIGGER:%s\n", a.Trigger.Trigger()))
+	s.WriteString(fmt.Sprintf("TRIGGER%s\n", a.Trigger.Trigger()))
 	if a.Duration != nil {
 		s.WriteString(fmt.Sprintf("DURATION:%s\n", a.Duration))
 		s.WriteString(fmt.Sprintf("REPEAT:%d\n", a.Repeat))
@@ -468,10 +467,10 @@ func (a *AudioProp) Validate() (bool, error) {
 	if a.Trigger == nil {
 		return false, fmt.Errorf("audioprop's action or trigger properity must not be null")
 	}
-	if a.Duration != nil && a.Repeat == nil {
+	if a.Duration != nil && a.Repeat == 0 {
 		return false, fmt.Errorf("audioprop's duration and repeat must appear both")
 	}
-	if a.Duration == nil && a.Repeat != nil {
+	if a.Duration == nil && a.Repeat != 0 {
 		return false, fmt.Errorf("audioprop's duration and repeat must appear both")
 	}
 	return true, nil
@@ -508,10 +507,10 @@ type DisProp struct {
 func (d *DisProp) AlarmProp(s *strings.Builder) {
 	s.WriteString(fmt.Sprintln("ACTION:DISPLY"))
 	s.WriteString(fmt.Sprintf("DESCRIPTION:%s\n", d.Description))
-	s.WriteString(fmt.Sprintf("TRIGGER:%s", d.Trigger.Trigger()))
+	s.WriteString(fmt.Sprintf("TRIGGER:%s\n", d.Trigger.Trigger()))
 	if d.Duration != nil {
-		s.WriteString(fmt.Sprintf("DURATION:%s", d.Duration))
-		s.WriteString(fmt.Sprintf("REPEAT:%d", d.Repeat))
+		s.WriteString(fmt.Sprintf("DURATION:%s\n", d.Duration))
+		s.WriteString(fmt.Sprintf("REPEAT:%d\n", d.Repeat))
 	}
 	if d.XProp != "" {
 		s.WriteString(fmt.Sprintf("XPROP:%s\n", d.XProp))
