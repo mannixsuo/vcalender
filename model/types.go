@@ -13,6 +13,16 @@ const (
 	UTCTimeFormat     = "150405Z"
 )
 
+// https://tools.ietf.org/html/rfc5545#section-3.8.1.1
+//   Purpose:  This property provides the capability to associate a
+//      document object with a calendar component.
+//
+//    Example:  The following are examples of this property:
+//
+//       ATTACH:CID:jsmith.part3.960817T083000.xyzMail@example.com
+//
+//       ATTACH;FMTTYPE=application/postscript:ftp://example.com/pub/
+//        reports/r-960812.ps
 type Attach struct {
 	FmtType string
 	URI     *URI
@@ -22,12 +32,13 @@ type Attach struct {
 func (a *Attach) Attach() string {
 	if a.URI != nil {
 		if a.FmtType != "" {
-			return fmt.Sprintf(";FMTTYPE=%s:%s", a.FmtType, a.URI.String())
+			return fmt.Sprintf("ATTACH;FMTTYPE=%s:%s", a.FmtType, a.URI.String())
 		}
+		return fmt.Sprintf("ATTACH:%s", a.URI.String())
 	}
-	return a.Binary.String()
+	return fmt.Sprintf("ATTACH:%s", a.Binary.String())
 }
-
+// https://tools.ietf.org/html/rfc5545#section-3.8.6.3
 type Trigger struct {
 	Related2Start bool
 	Duration      *Duration
@@ -37,12 +48,12 @@ type Trigger struct {
 func (t *Trigger) Trigger() string {
 	if t.Duration != nil {
 		if t.Related2Start {
-			return fmt.Sprintf(":%s", t.Duration.String())
+			return fmt.Sprintf("TRIGGER:%s", t.Duration.String())
 		}
-		return fmt.Sprintf(";RELATED=END:%s", t.Duration.String())
+		return fmt.Sprintf("TRIGGER;RELATED=END:%s", t.Duration.String())
 	}
 	if t.DateTime != nil {
-		return fmt.Sprintf(";VALUE=DATETIME:%s", t.DateTime.String())
+		return fmt.Sprintf("TRIGGER;VALUE=DATE-TIME:%s", t.DateTime.String())
 	}
 	return ""
 }

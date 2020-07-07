@@ -446,13 +446,13 @@ type AudioProp struct {
 
 func (a *AudioProp) AlarmProp(s *strings.Builder) {
 	s.WriteString(fmt.Sprintln("ACTION:AUDIO"))
-	s.WriteString(fmt.Sprintf("TRIGGER%s\n", a.Trigger.Trigger()))
+	s.WriteString(fmt.Sprintf("%s\n", a.Trigger.Trigger()))
 	if a.Duration != nil {
 		s.WriteString(fmt.Sprintf("DURATION:%s\n", a.Duration))
 		s.WriteString(fmt.Sprintf("REPEAT:%d\n", a.Repeat))
 	}
 	if a.Attach != nil {
-		s.WriteString(fmt.Sprintf("ATTACH:%s\n", a.Attach.Attach()))
+		s.WriteString(fmt.Sprintf("%s\n", a.Attach.Attach()))
 	}
 	if a.xProp != "" {
 		s.WriteString(fmt.Sprintf("XPROP:%s\n", a.xProp))
@@ -507,7 +507,7 @@ type DisProp struct {
 func (d *DisProp) AlarmProp(s *strings.Builder) {
 	s.WriteString(fmt.Sprintln("ACTION:DISPLY"))
 	s.WriteString(fmt.Sprintf("DESCRIPTION:%s\n", d.Description))
-	s.WriteString(fmt.Sprintf("TRIGGER:%s\n", d.Trigger.Trigger()))
+	s.WriteString(fmt.Sprintf("%s\n", d.Trigger.Trigger()))
 	if d.Duration != nil {
 		s.WriteString(fmt.Sprintf("DURATION:%s\n", d.Duration))
 		s.WriteString(fmt.Sprintf("REPEAT:%d\n", d.Repeat))
@@ -573,7 +573,7 @@ type EmailProp struct {
 func (e *EmailProp) AlarmProp(s *strings.Builder) {
 	s.WriteString(fmt.Sprintln("ACTION:EMAIL"))
 	s.WriteString(fmt.Sprintf("DESCRIPTION:%s\n", e.Description))
-	s.WriteString(fmt.Sprintf("TRIGGER%s\n", e.Trigger.Trigger()))
+	s.WriteString(fmt.Sprintf("%s\n", e.Trigger.Trigger()))
 	s.WriteString(fmt.Sprintf("SUMMARY:%s\n", e.Summary))
 	for _, a := range e.Attendee {
 		s.WriteString(fmt.Sprintf("ATTENDEE:%s\n", a.String()))
@@ -584,7 +584,7 @@ func (e *EmailProp) AlarmProp(s *strings.Builder) {
 	}
 	if e.Attach != nil {
 		for _, a := range e.Attach {
-			s.WriteString(fmt.Sprintf("ATTACH%s\n", a.Attach()))
+			s.WriteString(fmt.Sprintf("%s\n", a.Attach()))
 		}
 	}
 	if e.XProp != nil {
