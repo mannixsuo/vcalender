@@ -3,13 +3,9 @@ package types
 import "testing"
 
 func Test(t *testing.T) {
-	var b Boolean
-	b = true
-	if b.Boolean() != "TRUE" {
-		t.Error()
-	}
-	b = false
-	if b.Boolean() != "FALSE" {
+	b1 := Boolean{true}
+	b2 := Boolean{false}
+	if b1.Value() != "TRUE" || b2.Value() != "FALSE" {
 		t.Error()
 	}
 }

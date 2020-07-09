@@ -1,5 +1,7 @@
 package types
 
+import "time"
+
 //   Value Name:  DATE-TIME
 //
 //   Purpose:  This value type is used to identify values that specify a
@@ -114,3 +116,28 @@ package types
 //       DTSTART;TZID=America/New_York:19970714T133000
 //                                                 ; Local time and time
 //                                                 ; zone reference
+const (
+	UTCDateTimeFormat   = "20060102T150405Z"
+	LocalDateTimeFormat = "20060102T150405"
+
+	UTCTimeFormat = "150405Z"
+)
+
+type DateTime struct {
+	V      time.Time
+	Format string
+}
+
+func (d *DateTime) Value() string {
+	return d.V.Format(d.Format)
+}
+
+// 19970714T173000Z
+func (d *DateTime) DateWithUTCTime() string {
+	return d.V.Format(UTCDateTimeFormat)
+}
+
+//19970714T173000
+func (d *DateTime) DateWithLocalTime() string {
+	return d.V.Format(LocalDateTimeFormat)
+}

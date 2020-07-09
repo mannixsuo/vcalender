@@ -25,8 +25,10 @@ import (
 //
 //    mailto:jane_doe@example.com
 
-type CalAddress URI
+type CalAddress struct {
+	V *URI
+}
 
-func (c *CalAddress) CalAddress() string {
-	return fmt.Sprintf("mailto:%s", *c)
+func (c *CalAddress) Value() string {
+	return fmt.Sprintf("mailto:%s", c.V.Value())
 }

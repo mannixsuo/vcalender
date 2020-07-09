@@ -35,23 +35,9 @@ type UTCOffset struct {
 	Second   int
 }
 
-func (u *UTCOffset) UTCOffset() (string, error) {
-	err := u.check()
-	if err != nil {
-		return "", err
-	}
+func (u *UTCOffset) Value() string {
 	if u.Positive {
-		return fmt.Sprintf("%2d%2d%2d", u.Hour, u.Minute, u.Second), nil
+		return fmt.Sprintf("%2d%2d%2d", u.Hour, u.Minute, u.Second)
 	}
-	return fmt.Sprintf("-%2d%2d%2d", u.Hour, u.Minute, u.Second), nil
-}
-
-func (u *UTCOffset) check() error {
-	if u.Second >= 60 || u.Minute >= 60 || u.Hour >= 60 {
-		return fmt.Errorf("utc offset time must less than 60")
-	}
-	if u.Second == 0 && u.Minute == 0 && u.Hour == 0 && u.Positive == false {
-		return fmt.Errorf("-000000 utc offset are not allowed")
-	}
-	return nil
+	return fmt.Sprintf("-%2d%2d%2d", u.Hour, u.Minute, u.Second)
 }

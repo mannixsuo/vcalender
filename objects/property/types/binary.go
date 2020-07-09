@@ -16,16 +16,23 @@ import (
 //      using the "BASE64" encoding method defined in [RFC2045].  No
 //      additional content value encoding (i.e., BACKSLASH character
 //      encoding, see Section 3.3.11) is defined for this value type.
-type Binary []byte
+type Binary struct {
+	V []byte
+}
 
-func (b *Binary) Binary() string {
+func (b *Binary) binary() string {
+
 	buf := new(bytes.Buffer)
 	w := base64.NewEncoder(base64.StdEncoding, buf)
-	_, err := w.Write(*b)
+	defer w.Close()
+	_, err := w.Write(b.V)
 	if err != nil {
 		return ""
 	}
-	_ = w.Close()
 	bs := fmt.Sprintf("%s", buf.String())
 	return bs
+}
+
+func (b *Binary) Value() string {
+	return b.binary()
 }

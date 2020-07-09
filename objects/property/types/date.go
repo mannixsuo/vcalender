@@ -32,13 +32,16 @@ import "time"
 //
 //       19970714
 
-type Date time.Time
+type Date struct {
+	V time.Time
+}
 
-func (d *Date) Date() string {
-	return time.Time(*d).Format("20060102")
+func (d *Date) Value() string {
+	return d.V.Format("20060102")
 }
 
 func NewDate(year, month, day int) *Date {
-	d := Date(time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.Local))
-	return &d
+	return &Date{
+		time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.Local),
+	}
 }

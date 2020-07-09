@@ -28,4 +28,11 @@ package types
 //
 //       http://example.com/my-report.txt
 
-type URI string
+type URI struct {
+	V string
+}
+
+func (u *URI) Value() string {
+	return u.V
+}
+

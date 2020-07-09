@@ -1,4 +1,5 @@
 package types
+
 //   Value Name:  BOOLEAN
 //
 //   Purpose:  This value type is used to identify properties that contain
@@ -18,10 +19,17 @@ package types
 //
 //       TRUE
 
-type Boolean bool
+type Boolean struct {
+	V bool
+}
 
-func (b *Boolean) Boolean() string {
-	if *b {
+var (
+	True  = Boolean{true}
+	False = Boolean{false}
+)
+
+func (b Boolean) Value() string {
+	if b.V {
 		return "TRUE"
 	}
 	return "FALSE"
