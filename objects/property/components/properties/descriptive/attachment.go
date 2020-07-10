@@ -1,9 +1,9 @@
 package descriptive
 
 import (
+	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
-	"strings"
 )
 
 //   Property Name:  ATTACH
@@ -72,22 +72,14 @@ import (
 //        reports/r-960812.ps
 
 type Attach struct {
-	Parameters parameters.Parameters
+	Parameters []parameters.Parameter
 	Value      types.Value
 }
 
-func NewAttach(p parameters.Parameters, v types.Value) *Attach {
-	return &Attach{
-		Parameters: p,
-		Value:      v,
+func (a *Attach) Property() (string, error) {
+	err := properties.DefaultCheckPropertyFunc(a.Parameters, a.Value)
+	if err != nil {
+		return "", err
 	}
-}
-
-func (a *Attach) Properties() string {
-	sb := strings.Builder{}
-	sb.WriteString("ATTACH")
-	sb.WriteString(a.Parameters.Parameters())
-	sb.WriteString(":")
-	sb.WriteString(a.Value.Value())
-	return sb.String()
+	return properties.DefaultCreatePropertyFunc("ATTACH", a.Parameters, a.Value), nil
 }

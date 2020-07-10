@@ -62,5 +62,4 @@ type AltRep struct {
 
 func (a *AltRep) Parameter() string {
 	return fmt.Sprintf("ALTREP=\"%s\"", a.V.Value())
-
 }

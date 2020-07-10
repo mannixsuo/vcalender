@@ -31,5 +31,5 @@ type FmtType struct {
 }
 
 func (f *FmtType) Parameter() string {
-	return fmt.Sprintf("FMTTYPE=%s", *f)
+	return fmt.Sprintf("FMTTYPE=%s", f.V)
 }

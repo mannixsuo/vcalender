@@ -1,6 +1,5 @@
 package types
 
-
 //   Value Name:  RECUR
 //
 //   Purpose:  This value type is used to identify properties that contain
@@ -342,4 +341,10 @@ package types
 //      There are other examples specified in Section 3.8.5.3.
 
 //todo
-type Recur string
+type RecurRule struct {
+	V string
+}
+
+func (r *RecurRule) Value() string {
+	return r.V
+}
