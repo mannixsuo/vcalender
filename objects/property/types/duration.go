@@ -85,8 +85,10 @@ func (d *Duration) duration() string {
 	}
 	if d.DurHour != 0 || d.DurMinute != 0 || d.DurSecond != 0 {
 		s.WriteString("T")
-		s.WriteString(fmt.Sprint(d.DurHour))
-		s.WriteString("H")
+		if d.DurHour != 0 {
+			s.WriteString(fmt.Sprint(d.DurHour))
+			s.WriteString("H")
+		}
 		s.WriteString(fmt.Sprint(d.DurMinute))
 		s.WriteString("M")
 		if d.DurSecond != 0 {

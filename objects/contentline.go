@@ -1,4 +1,10 @@
 package objects
+
+import (
+	"calendar/objects/property/components/properties"
+	"strings"
+)
+
 //     contentline   = name *(";" param ) ":" value CRLF
 //     name          = iana-token / x-name
 //     iana-token    = 1*(ALPHA / DIGIT / "-")
@@ -33,8 +39,22 @@ package objects
 //
 //     CONTROL       = %x00-08 / %x0A-1F / %x7F
 //     ; All the controls except HTAB
-type ContentLine struct {
-	Name  string
-	Param []string
-	Value string
+
+func ToContentLine(p properties.Property) string {
+	property, err := p.Property()
+	if err != nil {
+		return property
+	}
+	if len(property) > 75 {
+		sb := strings.Builder{}
+		var i = 1
+		for ; i*73 < len(property); i++ {
+			sb.WriteString(property[(i-1)*73 : i*73])
+			sb.WriteString("\n ")
+		}
+		i--
+		sb.WriteString(property[i*73:])
+		return sb.String()
+	}
+	return property
 }

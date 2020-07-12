@@ -62,5 +62,5 @@ type Description struct {
 }
 
 func (d *Description) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("DESCRIPTION", c.Parameters, c.Value), nil
+	return properties.DefaultCreatePropertyFunc("DESCRIPTION", d.Parameters, d.Value), nil
 }

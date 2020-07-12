@@ -23,13 +23,16 @@ func DefaultCreatePropertyFunc(name string, p []parameters.Parameter, v types.Va
 	sb.WriteString(parameters.Parameters(p))
 	sb.WriteString(":")
 	sb.WriteString(v.Value())
+	sb.WriteString("\n")
 	return sb.String()
 }
 
 func DefaultCreateMultiplePropertyFunc(name string, p []parameters.Parameter, v []types.Value) string {
 	sb := strings.Builder{}
 	sb.WriteString(name)
-	sb.WriteString(parameters.Parameters(p))
+	if len(p) > 0 {
+		sb.WriteString(parameters.Parameters(p))
+	}
 	sb.WriteString(":")
 	for index, value := range v {
 		sb.WriteString(value.Value())
@@ -37,5 +40,6 @@ func DefaultCreateMultiplePropertyFunc(name string, p []parameters.Parameter, v 
 			sb.WriteString(",")
 		}
 	}
+	sb.WriteString("\n")
 	return sb.String()
 }
