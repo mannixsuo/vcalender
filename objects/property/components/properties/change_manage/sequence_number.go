@@ -67,3 +67,9 @@ type Sequence struct {
 func (s *Sequence) Property() (string, error) {
 	return properties.DefaultCreatePropertyFunc("SEQUENCE", s.Parameters, s.Value), nil
 }
+
+func NewSequence(sequence int) *Sequence {
+	return &Sequence{
+		Value: types.NewInteger(sequence),
+	}
+}

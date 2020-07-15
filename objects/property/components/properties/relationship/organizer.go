@@ -89,3 +89,9 @@ type Organizer struct {
 func (c *Organizer) Property() (string, error) {
 	return properties.DefaultCreatePropertyFunc("ORGANIZER", c.Parameters, c.Value), nil
 }
+
+func NewOrganizer(organizer string) *Organizer {
+	return &Organizer{
+		Value: types.NewCalAddress(organizer),
+	}
+}

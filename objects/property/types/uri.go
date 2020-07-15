@@ -36,3 +36,6 @@ func (u *URI) Value() string {
 	return u.V
 }
 
+func NewUri(uri string) *URI {
+	return &URI{V: uri}
+}

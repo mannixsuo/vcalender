@@ -75,9 +75,15 @@ import (
 
 type Priority struct {
 	Parameters []parameters.Parameter
-	Value     *types.Integer
+	Value      *types.Integer
 }
 
 func (p *Priority) Property() (string, error) {
 	return properties.DefaultCreatePropertyFunc("PRIORITY", p.Parameters, p.Value), nil
+}
+
+func NewPriority(priority int) *Priority {
+	return &Priority{
+		Value: types.NewInteger(priority),
+	}
 }

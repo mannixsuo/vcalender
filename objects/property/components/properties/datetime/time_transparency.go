@@ -51,6 +51,11 @@ import (
 //
 //       TRANSP:OPAQUE
 
+const (
+	OpaqueType      = "OPAQUE"
+	TransparentType = "TRANSPARENT"
+)
+
 type Transparent struct {
 	Parameters []parameters.Parameter
 	Values     *types.Text
@@ -58,4 +63,11 @@ type Transparent struct {
 
 func (t *Transparent) Property() (string, error) {
 	return properties.DefaultCreatePropertyFunc("TRANSP", t.Parameters, t.Values), nil
+}
+
+var TransparentOpaque = Transparent{
+	Values: types.NewText(OpaqueType),
+}
+var TransparentTransparent = Transparent{
+	Values: types.NewText(TransparentType),
 }

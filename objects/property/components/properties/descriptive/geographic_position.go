@@ -99,3 +99,9 @@ func (g *Geographic) Property() (string, error) {
 	sb.WriteString(g.Values[1].Value())
 	return sb.String(), nil
 }
+
+func NewGeographic(latitude, longitude string) *Geographic {
+	return &Geographic{
+		Values: []*types.Float{{V: latitude}, {V: longitude}},
+	}
+}

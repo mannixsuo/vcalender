@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"time"
 )
 
 //   Property Name:  DTSTAMP
@@ -59,4 +60,13 @@ type DtStamp struct {
 
 func (d *DtStamp) Property() (string, error) {
 	return properties.DefaultCreatePropertyFunc("DTSTAMP", d.Parameters, d.Value), nil
+}
+
+func NewDtStamp(year, month, day, hour, minute, seconds int) *DtStamp {
+	return &DtStamp{
+		Value: &types.DateTime{
+			V:      time.Date(year, time.Month(month), day, hour, minute, seconds, 0, time.Local),
+			Format: types.UTCDateTimeFormat,
+		},
+	}
 }

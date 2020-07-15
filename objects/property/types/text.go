@@ -61,3 +61,6 @@ func (t *Text) Value() string {
 	return t.V
 }
 
+func NewText(text string) *Text {
+	return &Text{V: text}
+}

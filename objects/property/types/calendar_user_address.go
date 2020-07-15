@@ -32,3 +32,7 @@ type CalAddress struct {
 func (c *CalAddress) Value() string {
 	return fmt.Sprintf("mailto:%s", c.V.Value())
 }
+
+func NewCalAddress(address string) *CalAddress {
+	return &CalAddress{V: &URI{V: address}}
+}

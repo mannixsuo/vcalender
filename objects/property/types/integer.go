@@ -34,3 +34,6 @@ type Integer struct {
 func (i *Integer) Value() string {
 	return strconv.Itoa(i.V)
 }
+func NewInteger(i int) *Integer {
+	return &Integer{V: i}
+}

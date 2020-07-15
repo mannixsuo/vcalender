@@ -1,10 +1,14 @@
 package components
 
 import (
+	"calendar/objects/property/components/properties"
 	"calendar/objects/property/components/properties/change_manage"
 	"calendar/objects/property/components/properties/datetime"
+	"calendar/objects/property/components/properties/descriptive"
+	"calendar/objects/property/components/properties/miscellaneous"
+	"calendar/objects/property/components/properties/recurrence"
 	"calendar/objects/property/components/properties/relationship"
-	"time"
+	"strings"
 )
 
 //   Component Name:  VEVENT
@@ -161,34 +165,78 @@ type Event struct {
 	DtStamp     *change_manage.DtStamp
 	Uid         *relationship.Uid
 	DtStart     *datetime.DateStart
-	class       string
-	created     time.Time
-	description string
-	geo         string
-	lastmod     string
-	location    string
-	organizer   string
-	priority    string
-	seq         string
-	status      string
-	summary     string
-	transp      string
-	url         string
-	recurid     string
-	rrule       string
-	dtend       time.Time
-	duration    string
-	attach      []string
-	attendee    []string
-	categories  []string
-	comment     []string
-	contact     []string
-	exdate      []string
-	rstatus     []string
-	related     []string
-	resources   []string
-	rdate       []string
-	Xprop       []string
-	ianaProp    []string
+	Class       *descriptive.Classification
+	Created     *change_manage.Created
+	Description *descriptive.Description
+	Geo         *descriptive.Geographic
+	Lastmod     *change_manage.LastModified
+	Location    *descriptive.Location
+	Organizer   *relationship.Organizer
+	Priority    *descriptive.Priority
+	Seq         *change_manage.Sequence
+	Status      *descriptive.Status
+	Summary     *descriptive.Summary
+	Transparent *datetime.Transparent
+	Url         *relationship.Url
+	RecurId     *relationship.RecurrenceId
+	RRule       *recurrence.RRule
+	DtEnd       *datetime.DateEnd
+	Duration    *datetime.Duration
+	Attach      []*descriptive.Attach
+	Attendee    []*relationship.Attendee
+	Categories  []*descriptive.Categories
+	Comment     []*descriptive.Comment
+	Contact     []*relationship.Contact
+	ExDate      []*recurrence.ExDate
+	RStatus     []*miscellaneous.RequestStatus
+	Related     []*relationship.RelatedTo
+	Resources   []*descriptive.Resources
+	RDate       []*recurrence.RDate
+	Xprop       []*miscellaneous.NoStandard
+	IanaProp    []*miscellaneous.Iana
 	Alarm       *Alarm
+}
+
+func (e *Event) Event() string {
+	b := strings.Builder{}
+	b.WriteString("BEGIN:VEVENT\n")
+	WriteProperty(&b, e.DtStamp)
+	WriteProperty(&b, e.Uid)
+	WriteProperty(&b, e.DtStart)
+	WriteProperty(&b, e.Class)
+	WriteProperty(&b, e.Created)
+	WriteProperty(&b, e.Description)
+	WriteProperty(&b, e.Geo)
+	WriteProperty(&b, e.Lastmod)
+	WriteProperty(&b, e.Location)
+	WriteProperty(&b, e.Organizer)
+	WriteProperty(&b, e.Priority)
+	WriteProperty(&b, e.Seq)
+	WriteProperty(&b, e.Status)
+	WriteProperty(&b, e.Summary)
+	WriteProperty(&b, e.Transparent)
+	WriteProperty(&b, e.Url)
+	WriteProperty(&b, e.RecurId)
+	WriteProperty(&b, e.RRule)
+	WriteProperty(&b, e.DtEnd)
+	WriteProperty(&b, e.Duration)
+
+	b.WriteString("END:VEVENT\n")
+	return b.String()
+}
+
+func WriteProperty(b *strings.Builder, p properties.Property) {
+	if p != nil {
+		property, _ := p.Property()
+		b.WriteString(property)
+	}
+}
+
+func WriteProperties(b *strings.Builder, p []properties.Property) {
+	if p != nil {
+		for _, v := range p {
+			property, _ := v.Property()
+			b.WriteString(property)
+		}
+	}
 }

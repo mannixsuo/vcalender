@@ -45,3 +45,9 @@ type Url struct {
 func (r *Url) Property() (string, error) {
 	return properties.DefaultCreatePropertyFunc("URL", r.Parameters, r.Value), nil
 }
+
+func NewUrl(url string) *Url {
+	return &Url{
+		Value: types.NewUri(url),
+	}
+}

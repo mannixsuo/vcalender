@@ -45,3 +45,9 @@ type LastModified struct {
 func (l *LastModified) Property() (string, error) {
 	return properties.DefaultCreatePropertyFunc("LAST-MODIFIED", l.Parameters, l.Value), nil
 }
+
+func NewLastModified(year, month, day, hour, minute, seconds int) *LastModified {
+	return &LastModified{
+		Value: types.NewDateTime(year, month, day, hour, minute, seconds),
+	}
+}

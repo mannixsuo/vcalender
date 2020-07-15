@@ -65,6 +65,6 @@ func (s *Summary) AddParameters(p parameters.Parameter) *Summary {
 
 func NewSummary(summary string) *Summary {
 	return &Summary{
-		Value: &types.Text{V: summary},
+		Value: types.NewText(summary),
 	}
 }

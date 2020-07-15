@@ -63,3 +63,9 @@ type Location struct {
 func (l *Location) Property() (string, error) {
 	return properties.DefaultCreatePropertyFunc("LOCATION", l.Parameters, l.Values), nil
 }
+
+func NewLocation(location string) *Location {
+	return &Location{
+		Values: &types.Text{V: location},
+	}
+}

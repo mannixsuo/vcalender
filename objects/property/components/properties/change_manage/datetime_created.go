@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"time"
 )
 
 //   Property Name:  CREATED
@@ -46,4 +47,13 @@ type Created struct {
 
 func (c *Created) Property() (string, error) {
 	return properties.DefaultCreatePropertyFunc("CREATED", c.Parameters, c.Value), nil
+}
+
+func NewCreated(year, month, day, hour, minute, seconds int) *Created {
+	return &Created{
+		Value: &types.DateTime{
+			V:      time.Date(year, time.Month(month), day, hour, minute, seconds, 0, time.Local),
+			Format: types.UTCDateTimeFormat,
+		},
+	}
 }

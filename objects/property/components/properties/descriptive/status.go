@@ -80,3 +80,9 @@ type Status struct {
 func (s *Status) Property() (string, error) {
 	return properties.DefaultCreatePropertyFunc("STATUS", s.Parameters, s.Value), nil
 }
+
+func NewStatus(status string) *Status {
+	return &Status{
+		Value: types.NewText(status),
+	}
+}
