@@ -242,8 +242,8 @@ import (
 type Alarm struct {
 	Action      *alarm.Action
 	Trigger     *alarm.Trigger
-	Description *types.Text
-	Summary     *types.Text
+	Description *descriptive.Description
+	Summary     *descriptive.Summary
 	Attendee    []*relationship.Attendee
 	Duration    *types.Duration
 	Repeat      *types.Integer
@@ -265,11 +265,13 @@ func (a *Alarm) Alarm() string {
 	}
 
 	if a.Description != nil {
-		s.WriteString(fmt.Sprintf("DESCRIPTION:%s\n", a.Description.Value()))
+		property, _ := a.Description.Property()
+		s.WriteString(property)
 	}
 
 	if a.Summary != nil {
-		s.WriteString(fmt.Sprintf("SUMMARY:%s\n", a.Summary.Value()))
+		property, _ := a.Summary.Property()
+		s.WriteString(property)
 	}
 
 	if a.Attendee != nil {

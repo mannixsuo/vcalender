@@ -57,7 +57,7 @@ func TestAlarm_Display(t *testing.T) {
 				DurMinute: 15,
 			},
 		},
-		Description: &types.Text{V: "Breakfast meeting with executive team at 8:30 AM EST."},
+		Description: &descriptive.Description{Value: &types.Text{V: "Breakfast meeting with executive team at 8:30 AM EST."}},
 		Repeat:      &types.Integer{V: 2},
 	}
 	fmt.Println(dis.Alarm())
@@ -85,12 +85,15 @@ func TestAlarm_Email(t *testing.T) {
 				DurDay:   2,
 			},
 		},
-		Description: &types.Text{V: "A draft agenda needs to be sent out to the attendees to the weekly managers meeting (MGR-LIST). Attached is a pointer the document template for the agenda file."},
+		Description: &descriptive.Description{Value: &types.Text{V: "A draft agenda needs to be sent out to the attendees to the weekly managers meeting (MGR-LIST). Attached is a pointer the document template for the agenda file."}},
 		Attendee:    []*relationship.Attendee{{Value: &types.CalAddress{V: &types.URI{V: "john_doe@example.com"}}}},
 		Attach: []*descriptive.Attach{{
 			Parameters: []parameters.Parameter{&parameters.FmtType{V: "application/msword"}},
 			Value:      &types.URI{V: "http://example.com/templates/agenda.doc"},
 		}},
+		Summary: &descriptive.Summary{
+			Value: &types.Text{V: "*** REMINDER: SEND AGENDA FOR WEEKLY STAFF MEETING ***"},
+		},
 	}
 	fmt.Println(dis.Alarm())
 }

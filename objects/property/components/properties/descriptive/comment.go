@@ -50,9 +50,15 @@ import (
 //         their site. - - John
 type Comment struct {
 	Parameters []parameters.Parameter
-	Value      types.Value
+	Value      *types.Text
 }
 
 func (c *Comment) Property() (string, error) {
 	return properties.DefaultCreatePropertyFunc("COMMENT", c.Parameters, c.Value), nil
+}
+
+func NewComment(comment string) *Comment {
+	return &Comment{
+		Value: &types.Text{V: comment},
+	}
 }

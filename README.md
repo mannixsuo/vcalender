@@ -19,7 +19,7 @@ todo list:
   - [x] Time
   - [x] URI
   - [x] UTC Offset
-- [ ] Alarm
+- [x] Alarm
      - [x] Action
      - [x] REPEAT
      - [x] Trigger

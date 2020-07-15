@@ -57,3 +57,14 @@ type Summary struct {
 func (s *Summary) Property() (string, error) {
 	return properties.DefaultCreatePropertyFunc("SUMMARY", s.Parameters, s.Value), nil
 }
+
+func (s *Summary) AddParameters(p parameters.Parameter) *Summary {
+	s.Parameters = append(s.Parameters, p)
+	return s
+}
+
+func NewSummary(summary string) *Summary {
+	return &Summary{
+		Value: &types.Text{V: summary},
+	}
+}

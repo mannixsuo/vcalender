@@ -58,9 +58,15 @@ import (
 //         MUST attend this meeting.\nRSVP to team leader.
 type Description struct {
 	Parameters []parameters.Parameter
-	Value      types.Value
+	Value      *types.Text
 }
 
 func (d *Description) Property() (string, error) {
 	return properties.DefaultCreatePropertyFunc("DESCRIPTION", d.Parameters, d.Value), nil
+}
+
+func NewDescription(desc string) *Description {
+	return &Description{
+		Value: &types.Text{V: desc},
+	}
 }
