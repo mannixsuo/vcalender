@@ -1,4 +1,4 @@
-package change_manage
+package changemanage
 
 import (
 	"calendar/objects/property/components/properties"

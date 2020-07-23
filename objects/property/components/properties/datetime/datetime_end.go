@@ -71,3 +71,9 @@ type DateEnd struct {
 func (d *DateEnd) Property() (string, error) {
 	return properties.DefaultCreatePropertyFunc("DTEND", d.Parameters, d.Value), nil
 }
+
+func NewDateTimeDateEnd(year, month, day, hour, minute, seconds int) *DateEnd {
+	return &DateEnd{
+		Value: types.NewDateTime(year, month, day, hour, minute, seconds),
+	}
+}

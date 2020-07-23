@@ -59,3 +59,13 @@ type Categories struct {
 func (c *Categories) Property() (string, error) {
 	return properties.DefaultCreateMultiplePropertyFunc("CATEGORIES", c.Parameters, c.Values), nil
 }
+
+func NewCategories(c ...string) *Categories {
+	v := make([]types.Value, 0, len(c))
+	for _, cv := range c {
+		v = append(v, types.NewText(cv))
+	}
+	return &Categories{
+		Values: v,
+	}
+}

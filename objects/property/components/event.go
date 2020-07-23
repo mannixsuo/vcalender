@@ -2,12 +2,13 @@ package components
 
 import (
 	"calendar/objects/property/components/properties"
-	"calendar/objects/property/components/properties/change_manage"
+	"calendar/objects/property/components/properties/changemanage"
 	"calendar/objects/property/components/properties/datetime"
 	"calendar/objects/property/components/properties/descriptive"
 	"calendar/objects/property/components/properties/miscellaneous"
 	"calendar/objects/property/components/properties/recurrence"
 	"calendar/objects/property/components/properties/relationship"
+	"reflect"
 	"strings"
 )
 
@@ -162,39 +163,39 @@ import (
 //       END:VEVENT
 
 type Event struct {
-	DtStamp     *change_manage.DtStamp
-	Uid         *relationship.Uid
-	DtStart     *datetime.DateStart
-	Class       *descriptive.Classification
-	Created     *change_manage.Created
-	Description *descriptive.Description
-	Geo         *descriptive.Geographic
-	Lastmod     *change_manage.LastModified
-	Location    *descriptive.Location
-	Organizer   *relationship.Organizer
-	Priority    *descriptive.Priority
-	Seq         *change_manage.Sequence
-	Status      *descriptive.Status
-	Summary     *descriptive.Summary
-	Transparent *datetime.Transparent
-	Url         *relationship.Url
-	RecurId     *relationship.RecurrenceId
-	RRule       *recurrence.RRule
-	DtEnd       *datetime.DateEnd
-	Duration    *datetime.Duration
-	Attach      []*descriptive.Attach
-	Attendee    []*relationship.Attendee
-	Categories  []*descriptive.Categories
-	Comment     []*descriptive.Comment
-	Contact     []*relationship.Contact
-	ExDate      []*recurrence.ExDate
-	RStatus     []*miscellaneous.RequestStatus
-	Related     []*relationship.RelatedTo
-	Resources   []*descriptive.Resources
-	RDate       []*recurrence.RDate
-	Xprop       []*miscellaneous.NoStandard
-	IanaProp    []*miscellaneous.Iana
-	Alarm       *Alarm
+	DtStamp      *changemanage.DtStamp
+	Uid          *relationship.Uid
+	DtStart      *datetime.DateStart
+	Class        *descriptive.Classification
+	Created      *changemanage.Created
+	Description  *descriptive.Description
+	Geo          *descriptive.Geographic
+	LastModified *changemanage.LastModified
+	Location     *descriptive.Location
+	Organizer    *relationship.Organizer
+	Priority     *descriptive.Priority
+	Seq          *changemanage.Sequence
+	Status       *descriptive.Status
+	Summary      *descriptive.Summary
+	Transparent  *datetime.Transparent
+	Url          *relationship.Url
+	RecurId      *relationship.RecurrenceId
+	RRule        *recurrence.RRule
+	DtEnd        *datetime.DateEnd
+	Duration     *datetime.Duration
+	Attach       []*descriptive.Attach
+	Attendee     []*relationship.Attendee
+	Categories   []*descriptive.Categories
+	Comment      []*descriptive.Comment
+	Contact      []*relationship.Contact
+	ExDate       []*recurrence.ExDate
+	RStatus      []*miscellaneous.RequestStatus
+	Related      []*relationship.RelatedTo
+	Resources    []*descriptive.Resources
+	RDate        []*recurrence.RDate
+	Xprop        []*miscellaneous.NoStandard
+	IanaProp     []*miscellaneous.Iana
+	Alarm        *Alarm
 }
 
 func (e *Event) Event() string {
@@ -207,7 +208,7 @@ func (e *Event) Event() string {
 	WriteProperty(&b, e.Created)
 	WriteProperty(&b, e.Description)
 	WriteProperty(&b, e.Geo)
-	WriteProperty(&b, e.Lastmod)
+	WriteProperty(&b, e.LastModified)
 	WriteProperty(&b, e.Location)
 	WriteProperty(&b, e.Organizer)
 	WriteProperty(&b, e.Priority)
@@ -221,22 +222,42 @@ func (e *Event) Event() string {
 	WriteProperty(&b, e.DtEnd)
 	WriteProperty(&b, e.Duration)
 
+	WriteProperties(&b, e.Attach)
+	WriteProperties(&b, e.Attendee)
+	WriteProperties(&b, e.Categories)
+	WriteProperties(&b, e.Comment)
+	WriteProperties(&b, e.Contact)
+	WriteProperties(&b, e.ExDate)
+	WriteProperties(&b, e.RStatus)
+	WriteProperties(&b, e.Related)
+	WriteProperties(&b, e.Resources)
+	WriteProperties(&b, e.RDate)
+	WriteProperties(&b, e.Xprop)
+	WriteProperties(&b, e.IanaProp)
+	if e.Alarm != nil {
+		b.WriteString(e.Alarm.Alarm())
+	}
 	b.WriteString("END:VEVENT\n")
 	return b.String()
 }
 
 func WriteProperty(b *strings.Builder, p properties.Property) {
-	if p != nil {
-		property, _ := p.Property()
-		b.WriteString(property)
+	if reflect.ValueOf(p).IsZero() {
+		return
 	}
+	property, _ := p.Property()
+	b.WriteString(property)
 }
 
-func WriteProperties(b *strings.Builder, p []properties.Property) {
-	if p != nil {
-		for _, v := range p {
-			property, _ := v.Property()
-			b.WriteString(property)
-		}
+func WriteProperties(b *strings.Builder, p interface{}) {
+	valueOf := reflect.ValueOf(p)
+	kind := valueOf.Kind()
+	if kind != reflect.Array && kind != reflect.Slice {
+		return
+	}
+	for i := 0; i < valueOf.Len(); i++ {
+		p := valueOf.Index(i).Interface().(properties.Property)
+		property, _ := p.Property()
+		b.WriteString(property)
 	}
 }

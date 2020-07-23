@@ -129,6 +129,9 @@ type DateTime struct {
 }
 
 func (d *DateTime) Value() string {
+	if d.Format == "" {
+		return d.V.Format(UTCDateTimeFormat)
+	}
 	return d.V.Format(d.Format)
 }
 
