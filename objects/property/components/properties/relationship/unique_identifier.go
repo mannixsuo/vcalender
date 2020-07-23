@@ -77,7 +77,7 @@ type Uid struct {
 }
 
 func (u *Uid) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("URL", u.Parameters, u.Value), nil
+	return properties.DefaultCreatePropertyFunc("UID", u.Parameters, u.Value), nil
 }
 
 func NewUid(u string) *Uid {

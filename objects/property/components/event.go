@@ -32,7 +32,7 @@ import (
 //                  dtstamp / uid /
 //                  ;
 //                  ; The following is REQUIRED if the component
-//                  ; appears in an iCalendar object that doesn't
+//                  ; appears in an iCalendar object that doesn'T
 //                  ; specify the "METHOD" property; otherwise, it
 //                  ; is OPTIONAL; in any case, it MUST NOT occur
 //                  ; more than once.
