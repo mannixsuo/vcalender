@@ -17,7 +17,7 @@ import (
 //      associated with the calendar component was last revised in the
 //      calendar store.
 //
-//   Value Type:  DATE-TIME
+//   V Type:  DATE-TIME
 //
 //   Property Parameters:  IANA and non-standard property parameters can
 //      be specified on this property.

@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property defines the overall status or confirmation
 //      for the calendar component.
 //
-//   Value Type:  TEXT
+//   V Type:  TEXT
 //
 //   Property Parameters:  IANA and non-standard property parameters can
 //      be specified on this property.

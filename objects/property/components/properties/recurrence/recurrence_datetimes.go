@@ -12,7 +12,7 @@ import (
 //      recurring events, to-dos, journal entries, or time zone
 //      definitions.
 //
-//   Value Type:  The default value type for this property is DATE-TIME.
+//   V Type:  The default value type for this property is DATE-TIME.
 //      The value type can be set to DATE or PERIOD.
 //
 //   Property Parameters:  IANA, non-standard, value data type, and time
@@ -71,7 +71,7 @@ import (
 //                  )
 //
 //       rdtval     = date-time / date / period
-//       ;Value MUST match value type
+//       ;V MUST match value type
 //
 //   Example:  The following are examples of this property:
 //

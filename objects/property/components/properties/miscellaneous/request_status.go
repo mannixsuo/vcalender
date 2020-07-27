@@ -10,7 +10,7 @@ import (
 //   Purpose:  This property defines the status code returned for a
 //      scheduling request.
 //
-//   Value Type:  TEXT
+//   V Type:  TEXT
 //
 //   Property Parameters:  IANA, non-standard, and language property
 //      parameters can be specified on this property.

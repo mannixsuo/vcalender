@@ -10,7 +10,7 @@ import (
 //
 //   Purpose:  This property specifies a positive duration of time.
 //
-//   Value Type:  DURATION
+//   V Type:  DURATION
 //
 //   Property Parameters:  IANA and non-standard property parameters can
 //      be specified on this property.

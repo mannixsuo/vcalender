@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property defines the date and time that a to-do is
 //      expected to be completed.
 //
-//   Value Type:  The default value type is DATE-TIME.  The value type can
+//   V Type:  The default value type is DATE-TIME.  The value type can
 //      be set to a DATE value type.
 //
 //   Property Parameters:  IANA, non-standard, value data type, and time
@@ -52,17 +52,30 @@ import (
 //                  )
 //
 //       dueval     = date-time / date
-//       ;Value MUST match value type
+//       ;V MUST match value type
 //
 //   Example:  The following is an example of this property:
 //
 //       DUE:19980430T000000Z
 
-type DateDue struct {
+type Due struct {
 	Parameters []parameters.Parameter
 	Value      types.Value
 }
 
-func (d *DateDue) Property() (string, error) {
+func (d *Due) Property() (string, error) {
 	return properties.DefaultCreatePropertyFunc("DUE", d.Parameters, d.Value), nil
+}
+
+func NewDueWithDate(year, month, day int) *Due {
+	return &Due{
+		Parameters: []parameters.Parameter{&parameters.Date},
+		Value:      types.NewDate(year, month, day),
+	}
+}
+func NewDueWithDateTime(year, month, day, hour, minute, seconds int) *Due {
+	return &Due{
+		Parameters: []parameters.Parameter{&parameters.DateTime},
+		Value:      types.NewDateTime(year, month, day, hour, minute, seconds),
+	}
 }

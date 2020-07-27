@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property defines the revision sequence number of the
 //      calendar component within a sequence of revisions.
 //
-//   Value Type:  INTEGER
+//   V Type:  INTEGER
 //
 //   Property Parameters:  IANA and non-standard property parameters can
 //      be specified on this property.

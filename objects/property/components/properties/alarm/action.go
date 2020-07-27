@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property defines the action to be invoked when an
 //      alarm is triggered.
 //
-//   Value Type:  TEXT
+//   V Type:  TEXT
 //
 //   Property Parameters:  IANA and non-standard property parameters can
 //      be specified on this property.

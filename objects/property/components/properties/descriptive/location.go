@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property defines the intended venue for the activity
 //      defined by a calendar component.
 //
-//   Value Type:  TEXT
+//   V Type:  TEXT
 //
 //   Property Parameters:  IANA, non-standard, alternate text
 //      representation, and language property parameters can be specified

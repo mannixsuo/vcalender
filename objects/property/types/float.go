@@ -1,6 +1,6 @@
 package types
 
-//   Value Name:  FLOAT
+//   V Name:  FLOAT
 //
 //   Purpose:  This value type is used to identify properties that contain
 //      a real-number value.

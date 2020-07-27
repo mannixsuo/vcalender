@@ -1,6 +1,6 @@
 package types
 
-//   Value Name:  BOOLEAN
+//   V Name:  BOOLEAN
 //
 //   Purpose:  This value type is used to identify properties that contain
 //      either a "TRUE" or "FALSE" Boolean value.

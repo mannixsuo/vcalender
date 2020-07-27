@@ -1,6 +1,6 @@
 package types
 
-//   Value Name:  PERIOD
+//   V Name:  PERIOD
 //
 //   Purpose:  This value type is used to identify values that contain a
 //      precise period of time.

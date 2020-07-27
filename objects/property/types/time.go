@@ -2,7 +2,7 @@ package types
 
 import "time"
 
-//   Value Name:  TIME
+//   V Name:  TIME
 //
 //   Purpose:  This value type is used to identify values that contain a
 //      time of day.

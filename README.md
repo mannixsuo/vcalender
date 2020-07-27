@@ -19,15 +19,82 @@ todo list:
   - [x] Time
   - [x] URI
   - [x] UTC Offset
-- [x] Alarm
-     - [x] Action
-     - [x] REPEAT
-     - [x] Trigger
-     - [x] AUDIO
-     - [x] DISPLY
-     - [x] EMAIL
-- [ ] EVENT
+- [x] Property Parameters
+     - [x] Alternate Text Representation
+     - [x] Common Name
+     - [x] Calendar User Type
+     - [x] Delegators  
+     - [x] Delegatees  
+     - [x] Directory Entry Reference
+     - [x] Inline Encoding
+     - [x] Format Type
+     - [x] Free/Busy Time Type
+     - [x] Language  
+     - [x] Group or List Membership  
+     - [x] Participation Status  
+     - [x] Recurrence Identifier Range  
+     - [x] Alarm Trigger Relationship  
+     - [x] Relationship Type  
+     - [x] Participation Role  
+     - [x] RSVP Expectation  
+     - [x] Sent By  
+     - [x] Time Zone Identifier  
+     - [x] Value Data Types
+- [x] Component Properties
+    - [x] Descriptive Component Properties
+        - [x] Attachment
+        - [x] Categories
+        - [x] Classification
+        - [x] Comment 
+        - [x] Description 
+        - [x] Geographic Position 
+        - [x] Location  
+        - [x] Percent Complete 
+        - [x] Priority  
+        - [x] Resources 
+        - [x] Status  
+    - [x] Date and Time Component Properties
+        - [x] Date-Time Completed  
+        - [x] Date-Time End  
+        - [x] Date-Time Due  
+        - [x] Date-Time Start  
+        - [x] Duration  
+        - [x] Free/Busy Time   
+        - [x] Time Transparency
+    - [x] Time Zone Component Properties
+        - [x]  Time Zone Identifier
+        - [x]  Time Zone Name
+        - [x]  Time Zone Offset From
+        - [x]  Time Zone Offset To
+        - [x]  Time Zone URL
+    - [x]  Relationship Component Properties
+        - [x] Attendee  
+        - [x]  Contact   
+        - [x]  Organizer    
+        - [x]  Recurrence ID   
+        - [x]  Related To 
+        - [x]  Uniform Resource Locator
+        - [x]  Unique Identifier
+    - [x]  Recurrence Component Properties
+        - [x]  Exception Date-Times
+        - [x]  Recurrence Date-Times
+        - [x]  Recurrence Rule
+    - [x]  Alarm Component Properties
+        - [x]  Action  
+        - [x]  Repeat Count
+        - [x]  Trigger 
+    - [x]   Change Management Component Properties
+        - [x]  Date-Time Created
+        - [x]  Date-Time Stamp
+        - [x]  Last Modified
+        - [x]  Sequence Number
+    - [x]  Miscellaneous Component Properties
+        - [x]  IANA Properties
+        - [x]  Non-Standard Properties
+        - [x]  Request Status
+- [x] EVENT
 - [ ] TO-DO
 - [ ] JOURNAL
 - [ ] FREE/BUSY
 - [ ] Calender
+- [ ] Error-check

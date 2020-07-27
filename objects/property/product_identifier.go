@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property specifies the identifier for the product that
 //      created the iCalendar object.
 //
-//   Value Type:  TEXT
+//   V Type:  TEXT
 //
 //   Property Parameters:  IANA and non-standard property parameters can
 //      be specified on this property.

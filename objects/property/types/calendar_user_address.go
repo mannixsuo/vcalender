@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-//   Value Name:  CAL-ADDRESS
+//   V Name:  CAL-ADDRESS
 //
 //   Purpose:  This value type is used to identify properties that contain
 //      a calendar user address.

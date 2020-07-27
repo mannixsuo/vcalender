@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property defines one or more free or busy time
 //      intervals.
 //
-//   Value Type:  PERIOD
+//   V Type:  PERIOD
 //
 //   Property Parameters:  IANA, non-standard, and free/busy time type
 //      property parameters can be specified on this property.

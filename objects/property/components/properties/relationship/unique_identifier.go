@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property defines the persistent, globally unique
 //      identifier for the calendar component.
 //
-//   Value Type:  TEXT
+//   V Type:  TEXT
 //
 //   Property Parameters:  IANA and non-standard property parameters can
 //      be specified on this property.

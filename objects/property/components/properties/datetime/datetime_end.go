@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property specifies the date and time that a calendar
 //      component ends.
 //
-//   Value Type:  The default value type is DATE-TIME.  The value type can
+//   V Type:  The default value type is DATE-TIME.  The value type can
 //      be set to a DATE value type.
 //
 //   Property Parameters:  IANA, non-standard, value data type, and time
@@ -55,7 +55,7 @@ import (
 //                  )
 //
 //       dtendval   = date-time / date
-//       ;Value MUST match value type
+//       ;V MUST match value type
 //
 //   Example:  The following is an example of this property:
 //

@@ -11,7 +11,7 @@ import (
 //
 //   Purpose:  This property specifies when the calendar component begins.
 //
-//   Value Type:  The default value type is DATE-TIME.  The time value
+//   V Type:  The default value type is DATE-TIME.  The time value
 //      MUST be one of the forms defined for the DATE-TIME value type.
 //      The value type can be set to a DATE value type.
 //
@@ -63,7 +63,7 @@ import (
 //                  )
 //
 //       dtstval    = date-time / date
-//       ;Value MUST match value type
+//       ;V MUST match value type
 //
 //   Example:  The following is an example of this property:
 //
@@ -88,8 +88,7 @@ func NewDateStartWithDatetime(year, month, day, hour, minute, seconds int) *Date
 }
 func NewDateStartWithDate(year, month, day int) *DateStart {
 	return &DateStart{
-		Value: &types.Date{
-			V: time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.Local),
-		},
+		Parameters: []parameters.Parameter{&parameters.Date},
+		Value:      types.NewDate(year, month, day),
 	}
 }

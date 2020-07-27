@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property defines the iCalendar object method
 //      associated with the calendar object.
 //
-//   Value Type:  TEXT
+//   V Type:  TEXT
 //
 //   Property Parameters:  IANA and non-standard property parameters can
 //      be specified on this property.

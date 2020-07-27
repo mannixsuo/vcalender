@@ -12,7 +12,7 @@ import (
 //      to-do to convey the percent completion of a to-do to the
 //      "Organizer".
 //
-//   Value Type:  INTEGER
+//   V Type:  INTEGER
 //
 //   Property Parameters:  IANA and non-standard property parameters can
 //      be specified on this property.

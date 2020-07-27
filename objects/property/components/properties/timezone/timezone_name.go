@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property specifies the customary designation for a
 //      time zone description.
 //
-//   Value Type:  TEXT
+//   V Type:  TEXT
 //
 //   Property Parameters:  IANA, non-standard, and language property
 //      parameters can be specified on this property.

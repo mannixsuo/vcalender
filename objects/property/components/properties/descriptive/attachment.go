@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property provides the capability to associate a
 //      document object with a calendar component.
 //
-//   Value Type:  The default value type for this property is URI.  The
+//   V Type:  The default value type for this property is URI.  The
 //      value type can also be set to BINARY to indicate inline binary
 //      encoded content information.
 //

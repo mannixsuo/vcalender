@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property defines a Uniform Resource Locator (URL)
 //      associated with the iCalendar object.
 //
-//   Value Type:  URI
+//   V Type:  URI
 //
 //   Property Parameters:  IANA and non-standard property parameters can
 //      be specified on this property.

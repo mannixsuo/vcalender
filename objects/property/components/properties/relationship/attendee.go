@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property defines an "Attendee" within a calendar
 //      component.
 //
-//   Value Type:  CAL-ADDRESS
+//   V Type:  CAL-ADDRESS
 //
 //   Property Parameters:  IANA, non-standard, language, calendar user
 //      type, group or list membership, participation role, participation

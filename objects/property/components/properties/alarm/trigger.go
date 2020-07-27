@@ -10,7 +10,7 @@ import (
 //
 //   Purpose:  This property specifies when an alarm will trigger.
 //
-//   Value Type:  The default value type is DURATION.  The value type can
+//   V Type:  The default value type is DURATION.  The value type can
 //      be set to a DATE-TIME value type, in which case the value MUST
 //      specify a UTC-formatted DATE-TIME value.
 //

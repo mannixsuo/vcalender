@@ -8,7 +8,7 @@ import (
 
 //   Property Name:  An IANA-registered property name
 //
-//   Value Type:  The default value type is TEXT.  The value type can be
+//   V Type:  The default value type is TEXT.  The value type can be
 //      set to any value type.
 //
 //   Property Parameters:  Any parameter can be specified on this

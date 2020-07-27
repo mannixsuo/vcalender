@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-//   Value Name:  DURATION
+//   V Name:  DURATION
 //
 //   Purpose:  This value type is used to identify properties that contain
 //      a duration of time.

@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property defines whether or not an event is
 //      transparent to busy time searches.
 //
-//   Value Type:  TEXT
+//   V Type:  TEXT
 //
 //   Property Parameters:  IANA and non-standard property parameters can
 //      be specified on this property.

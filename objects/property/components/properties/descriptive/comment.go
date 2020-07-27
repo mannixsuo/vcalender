@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property specifies non-processing information intended
 //      to provide a comment to the calendar user.
 //
-//   Value Type:  TEXT
+//   V Type:  TEXT
 //
 //   Property Parameters:  IANA, non-standard, alternate text
 //      representation, and language property parameters can be specified

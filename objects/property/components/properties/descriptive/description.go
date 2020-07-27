@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property provides a more complete description of the
 //      calendar component than that provided by the "SUMMARY" property.
 //
-//   Value Type:  TEXT
+//   V Type:  TEXT
 //
 //   Property Parameters:  IANA, non-standard, alternate text
 //      representation, and language property parameters can be specified

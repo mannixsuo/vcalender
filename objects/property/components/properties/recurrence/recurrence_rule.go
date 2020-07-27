@@ -12,7 +12,7 @@ import (
 //      recurring events, to-dos, journal entries, or time zone
 //      definitions.
 //
-//   Value Type:  RECUR
+//   V Type:  RECUR
 //
 //   Property Parameters:  IANA and non-standard property parameters can
 //      be specified on this property.
@@ -464,9 +464,9 @@ import (
 
 type RRule struct {
 	Parameters []parameters.Parameter
-	Value      *types.RecurRule
+	V          *types.RecurRule
 }
 
 func (r *RRule) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("RRULE", r.Parameters, r.Value), nil
+	return properties.DefaultCreatePropertyFunc("RRULE", r.Parameters, r.V), nil
 }

@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property defines the organizer for a calendar
 //      component.
 //
-//   Value Type:  CAL-ADDRESS
+//   V Type:  CAL-ADDRESS
 //
 //   Property Parameters:  IANA, non-standard, language, common name,
 //      directory entry reference, and sent-by property parameters can be

@@ -13,7 +13,7 @@ import (
 //      iCalendar specification that is required in order to interpret the
 //      iCalendar object.
 //
-//   Value Type:  TEXT
+//   V Type:  TEXT
 //
 //   Property Parameters:  IANA and non-standard property parameters can
 //      be specified on this property.

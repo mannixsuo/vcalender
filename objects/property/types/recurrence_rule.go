@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-//   Value Name:  RECUR
+//   V Name:  RECUR
 //
 //   Purpose:  This value type is used to identify properties that contain
 //      a recurrence rule specification.
@@ -347,7 +347,8 @@ import (
 //      There are other examples specified in Section 3.8.5.3.
 
 type RecurRule struct {
-	Rules []Rule
+	Frequency Frequency
+	Rules     []Rule
 }
 
 type Rule interface {
@@ -616,6 +617,8 @@ func (w *Wkst) Rule() string {
 
 func (r *RecurRule) Value() string {
 	s := strings.Builder{}
+	s.WriteString(r.Frequency.Rule())
+	s.WriteString(";")
 	for index, r := range r.Rules {
 		if index != 0 {
 			s.WriteString(";")

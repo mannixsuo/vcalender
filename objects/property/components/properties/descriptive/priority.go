@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property defines the relative priority for a calendar
 //      component.
 //
-//   Value Type:  INTEGER
+//   V Type:  INTEGER
 //
 //   Property Parameters:  IANA and non-standard property parameters can
 //      be specified on this property.

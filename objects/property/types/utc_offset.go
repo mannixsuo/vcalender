@@ -2,7 +2,7 @@ package types
 
 import "fmt"
 
-//   Value Name:  UTC-OFFSET
+//   V Name:  UTC-OFFSET
 //
 //   Purpose:  This value type is used to identify properties that contain
 //      an offset from UTC to local time.

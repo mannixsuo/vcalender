@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property defines the access classification for a
 //      calendar component.
 //
-//   Value Type:  TEXT
+//   V Type:  TEXT
 //
 //   Property Parameters:  IANA and non-standard property parameters can
 //      be specified on this property.

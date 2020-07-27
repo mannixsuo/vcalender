@@ -1,6 +1,6 @@
 package types
 
-//   Value Name:  URI
+//   V Name:  URI
 //
 //   Purpose:  This value type is used to identify values that contain a
 //      uniform resource identifier (URI) type of reference to the

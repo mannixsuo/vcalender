@@ -2,7 +2,7 @@ package types
 
 import "strconv"
 
-//   Value Name:  INTEGER
+//   V Name:  INTEGER
 //
 //   Purpose:  This value type is used to identify properties that contain
 //      a signed integer value.

@@ -11,7 +11,7 @@ import (
 //   Purpose:  This class of property provides a framework for defining
 //      non-standard properties.
 //
-//   Value Type:  The default value type is TEXT.  The value type can be
+//   V Type:  The default value type is TEXT.  The value type can be
 //      set to any value type.
 //
 //   Property Parameters:  IANA, non-standard, and language property

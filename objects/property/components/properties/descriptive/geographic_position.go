@@ -11,7 +11,7 @@ import (
 //
 //   Purpose:  This property specifies information related to the global
 //      position for the activity specified by a calendar component.
-//   Value Type:  FLOAT.  The value MUST be two SEMICOLON-separated FLOAT
+//   V Type:  FLOAT.  The value MUST be two SEMICOLON-separated FLOAT
 //      values.
 //
 //   Property Parameters:  IANA and non-standard property parameters can

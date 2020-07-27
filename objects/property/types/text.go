@@ -1,6 +1,6 @@
 package types
 
-//   Value Name:  TEXT
+//   V Name:  TEXT
 //
 //   Purpose:  This value type is used to identify values that contain
 //      human-readable text.

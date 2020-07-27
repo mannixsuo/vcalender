@@ -12,7 +12,7 @@ import (
 //      to point to a network location that can be used to retrieve an up-
 //      to-date version of itself.
 //
-//   Value Type:  URI
+//   V Type:  URI
 //
 //   Property Parameters:  IANA and non-standard property parameters can
 //      be specified on this property.

@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property is used to represent a relationship or
 //      reference between one calendar component and another.
 //
-//   Value Type:  TEXT
+//   V Type:  TEXT
 //
 //   Property Parameters:  IANA, non-standard, and relationship type
 //      property parameters can be specified on this property.

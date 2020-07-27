@@ -15,7 +15,7 @@ import (
 //         Note: This is analogous to the modification date and time for a
 //         file in the file system.
 //
-//   Value Type:  DATE-TIME
+//   V Type:  DATE-TIME
 //
 //   Property Parameters:  IANA and non-standard property parameters can
 //      be specified on this property.

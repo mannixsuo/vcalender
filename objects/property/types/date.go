@@ -2,7 +2,7 @@ package types
 
 import "time"
 
-//   Value Name:  DATE
+//   V Name:  DATE
 //
 //   Purpose:  This value type is used to identify values that contain a
 //      calendar date.

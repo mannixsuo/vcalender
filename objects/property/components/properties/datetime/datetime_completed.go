@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property defines the date and time that a to-do was
 //      actually completed.
 //
-//   Value Type:  DATE-TIME
+//   V Type:  DATE-TIME
 //
 //   Property Parameters:  IANA and non-standard property parameters can
 //      be specified on this property.

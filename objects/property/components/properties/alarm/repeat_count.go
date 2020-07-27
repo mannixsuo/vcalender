@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property defines the number of times the alarm should
 //      be repeated, after the initial trigger.
 //
-//   Value Type:  INTEGER
+//   V Type:  INTEGER
 //
 //   Property Parameters:  IANA and non-standard property parameters can
 //      be specified on this property.

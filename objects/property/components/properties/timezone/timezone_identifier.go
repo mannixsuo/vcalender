@@ -12,7 +12,7 @@ import (
 //      identifies the "VTIMEZONE" calendar component in the scope of an
 //      iCalendar object.
 //
-//   Value Type:  TEXT
+//   V Type:  TEXT
 //
 //   Property Parameters:  IANA and non-standard property parameters can
 //      be specified on this property.

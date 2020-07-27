@@ -11,7 +11,7 @@ import (
 //   Purpose:  This property specifies the offset that is in use in this
 //      time zone observance.
 //
-//   Value Type:  UTC-OFFSET
+//   V Type:  UTC-OFFSET
 //
 //   Property Parameters:  IANA and non-standard property parameters can
 //      be specified on this property.

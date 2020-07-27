@@ -14,7 +14,7 @@ import (
 //      The property value is the original value of the "DTSTART" property
 //      of the recurrence instance.
 
-//   Value Type:  The default value type is DATE-TIME.  The value type can
+//   V Type:  The default value type is DATE-TIME.  The value type can
 //      be set to a DATE value type.  This property MUST have the same
 //      value type as the "DTSTART" property contained within the
 //      recurring component.  Furthermore, this property MUST be specified
@@ -98,7 +98,7 @@ import (
 //                  )
 //
 //       ridval     = date-time / date
-//       ;Value MUST match value type
+//       ;V MUST match value type
 //
 //   Example:  The following are examples of this property:
 //

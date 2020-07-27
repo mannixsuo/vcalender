@@ -12,7 +12,7 @@ import (
 //      alternately a reference to contact information associated with the
 //      calendar component.
 //
-//   Value Type:  TEXT
+//   V Type:  TEXT
 //
 //   Property Parameters:  IANA, non-standard, alternate text
 //      representation, and language property parameters can be specified
