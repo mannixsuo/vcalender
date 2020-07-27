@@ -74,6 +74,6 @@ func (d *DateEnd) Property() (string, error) {
 
 func NewDateTimeDateEnd(year, month, day, hour, minute, seconds int) *DateEnd {
 	return &DateEnd{
-		Value: types.NewDateTime(year, month, day, hour, minute, seconds),
+		Value: types.NewUTCDateTime(year, month, day, hour, minute, seconds),
 	}
 }

@@ -48,6 +48,6 @@ func (l *LastModified) Property() (string, error) {
 
 func NewLastModified(year, month, day, hour, minute, seconds int) *LastModified {
 	return &LastModified{
-		Value: types.NewDateTime(year, month, day, hour, minute, seconds),
+		Value: types.NewUTCDateTime(year, month, day, hour, minute, seconds),
 	}
 }

@@ -145,8 +145,16 @@ func (d *DateTime) DateWithLocalTime() string {
 	return d.V.Format(LocalDateTimeFormat)
 }
 
-func NewDateTime(year, month, day, hour, minute, seconds int) *DateTime {
+func NewUTCDateTime(year, month, day, hour, minute, seconds int) *DateTime {
 	return &DateTime{
-		V: time.Date(year, time.Month(month), day, hour, minute, seconds, 0, time.Local),
+		Format: UTCDateTimeFormat,
+		V:      time.Date(year, time.Month(month), day, hour, minute, seconds, 0, time.Local),
+	}
+}
+
+func NewLocalDateTime(year, month, day, hour, minute, seconds int) *DateTime {
+	return &DateTime{
+		Format: LocalDateTimeFormat,
+		V:      time.Date(year, time.Month(month), day, hour, minute, seconds, 0, time.Local),
 	}
 }

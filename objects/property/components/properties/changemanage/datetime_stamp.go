@@ -70,3 +70,12 @@ func NewDtStamp(year, month, day, hour, minute, seconds int) *DtStamp {
 		},
 	}
 }
+
+func NewDtStampNow() *DtStamp {
+	return &DtStamp{
+		Value: &types.DateTime{
+			V:      time.Now(),
+			Format: types.UTCDateTimeFormat,
+		},
+	}
+}

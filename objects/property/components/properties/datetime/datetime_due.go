@@ -76,6 +76,6 @@ func NewDueWithDate(year, month, day int) *Due {
 func NewDueWithDateTime(year, month, day, hour, minute, seconds int) *Due {
 	return &Due{
 		Parameters: []parameters.Parameter{&parameters.DateTime},
-		Value:      types.NewDateTime(year, month, day, hour, minute, seconds),
+		Value:      types.NewUTCDateTime(year, month, day, hour, minute, seconds),
 	}
 }
