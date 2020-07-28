@@ -51,3 +51,9 @@ type ProductIdentifier struct {
 func (a *ProductIdentifier) Property() (string, error) {
 	return properties.DefaultCreatePropertyFunc("PRODID", a.Parameters, a.Value), nil
 }
+
+func NewProductIdentifier(id string) *ProductIdentifier {
+	return &ProductIdentifier{
+		Value: types.NewText(id),
+	}
+}

@@ -64,3 +64,9 @@ type TzId struct {
 func (t *TzId) Property() (string, error) {
 	return properties.DefaultCreatePropertyFunc("TZID", t.Parameters, t.Value), nil
 }
+
+func NewTzId(tzId string) *TzId {
+	return &TzId{
+		Value: types.NewText(tzId),
+	}
+}

@@ -55,3 +55,9 @@ type TzName struct {
 func (t *TzName) Property() (string, error) {
 	return properties.DefaultCreatePropertyFunc("TZNAME", t.Parameters, t.Value), nil
 }
+
+func NewTzName(name string) *TzName {
+	return &TzName{
+		Value: types.NewText(name),
+	}
+}

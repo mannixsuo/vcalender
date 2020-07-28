@@ -71,7 +71,7 @@ func NewDtStamp(year, month, day, hour, minute, seconds int) *DtStamp {
 	}
 }
 
-func NewDtStampNow() *DtStamp {
+func NewDtStampWithCurrentTime() *DtStamp {
 	return &DtStamp{
 		Value: &types.DateTime{
 			V:      time.Now(),

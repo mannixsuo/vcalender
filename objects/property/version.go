@@ -52,3 +52,5 @@ type Version struct {
 func (a *Version) Property() (string, error) {
 	return properties.DefaultCreatePropertyFunc("VERSION", a.Parameters, a.Value), nil
 }
+
+var Version2 = Version{Value: types.NewText("2.0")}

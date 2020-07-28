@@ -151,3 +151,7 @@ func (j *Journal) Journal() string {
 	b.WriteString("END:VJOURNAL\n")
 	return b.String()
 }
+
+func (j *Journal) Component() (string, error) {
+	return j.Journal(), nil
+}

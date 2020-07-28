@@ -143,7 +143,6 @@ type Todo struct {
 	Alarm      *Alarm
 }
 
-
 func (t *Todo) Todo() string {
 	b := strings.Builder{}
 	b.WriteString("BEGIN:VTODO\n")
@@ -186,4 +185,8 @@ func (t *Todo) Todo() string {
 	}
 	b.WriteString("END:VTODO\n")
 	return b.String()
+}
+
+func (t *Todo) Component() (string, error) {
+	return t.Todo(), nil
 }

@@ -86,6 +86,16 @@ func NewDateStartWithDatetime(year, month, day, hour, minute, seconds int) *Date
 		},
 	}
 }
+
+func NewDateStartWithDatetimeAndFormat(year, month, day, hour, minute, seconds int, format string) *DateStart {
+	return &DateStart{
+		Value: &types.DateTime{
+			V:      time.Date(year, time.Month(month), day, hour, minute, seconds, 0, time.Local),
+			Format: format,
+		},
+	}
+}
+
 func NewDateStartWithDate(year, month, day int) *DateStart {
 	return &DateStart{
 		Parameters: []parameters.Parameter{&parameters.Date},

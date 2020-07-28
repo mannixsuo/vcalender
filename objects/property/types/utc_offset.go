@@ -1,6 +1,9 @@
 package types
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 //   V Name:  UTC-OFFSET
 //
@@ -36,8 +39,23 @@ type UTCOffset struct {
 }
 
 func (u *UTCOffset) Value() string {
-	if u.Positive {
-		return fmt.Sprintf("%2d%2d%2d", u.Hour, u.Minute, u.Second)
+	s := strings.Builder{}
+	if !u.Positive {
+		s.WriteString("-")
 	}
-	return fmt.Sprintf("-%2d%2d%2d", u.Hour, u.Minute, u.Second)
+	s.WriteString(fmt.Sprintf("%02d", u.Hour))
+	s.WriteString(fmt.Sprintf("%02d", u.Minute))
+	if u.Second != 0 {
+		s.WriteString(fmt.Sprintf("%02d", u.Second))
+	}
+	return s.String()
+}
+
+func NewUTCOffset(positive bool, hour, minute, second int) *UTCOffset {
+	return &UTCOffset{
+		Positive: positive,
+		Hour:     hour,
+		Minute:   minute,
+		Second:   second,
+	}
 }

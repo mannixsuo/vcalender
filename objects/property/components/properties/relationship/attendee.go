@@ -134,3 +134,9 @@ type Attendee struct {
 func (a *Attendee) Property() (string, error) {
 	return properties.DefaultCreatePropertyFunc("ATTENDEE", a.Parameters, a.Value), nil
 }
+
+func NewAttendee(addr string) *Attendee {
+	return &Attendee{
+		Value: types.NewCalAddress(addr),
+	}
+}

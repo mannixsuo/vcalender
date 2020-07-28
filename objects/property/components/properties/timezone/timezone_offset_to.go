@@ -48,3 +48,9 @@ type TzOffsetTo struct {
 func (t *TzOffsetTo) Property() (string, error) {
 	return properties.DefaultCreatePropertyFunc("TZOFFSETTO", t.Parameters, t.Value), nil
 }
+
+func NewTzOffsetTo(positive bool, hour, minute, second int) *TzOffsetTo {
+	return &TzOffsetTo{
+		Value: types.NewUTCOffset(positive, hour, minute, second),
+	}
+}

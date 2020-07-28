@@ -261,3 +261,7 @@ func WriteProperties(b *strings.Builder, p interface{}) {
 		b.WriteString(property)
 	}
 }
+
+func (e *Event) Component() (string, error) {
+	return e.Event(), nil
+}
