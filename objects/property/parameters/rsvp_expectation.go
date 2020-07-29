@@ -1,6 +1,8 @@
 package parameters
 
-//   Parameter Name:  RSVP
+import "strings"
+
+//   WriteParameterToStrBuilder Name:  RSVP
 //
 //   Purpose:  To specify whether there is an expectation of a favor of a
 //      reply from the calendar user specified by the property value.
@@ -25,9 +27,11 @@ type Rsvp struct {
 	V bool
 }
 
-func (r *Rsvp) Parameter() string {
+func (r *Rsvp) WriteParameterToStrBuilder(s *strings.Builder) error {
 	if r.V {
-		return "RSVP=TRUE"
+		s.WriteString("RSVP=TRUE")
+		return nil
 	}
-	return "RSVP=FALSE"
+	s.WriteString("RSVP=FALSE")
+	return nil
 }

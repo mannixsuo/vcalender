@@ -7,6 +7,7 @@ import (
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
 	"fmt"
+	"strings"
 	"testing"
 	"time"
 )
@@ -20,6 +21,7 @@ import (
 //        sounds/bell-01.aud
 //       END:VALARM
 func TestAlarm_Audio(t *testing.T) {
+	s := &strings.Builder{}
 	audio := Alarm{
 		Trigger: &alarm.Trigger{
 			Parameters: []parameters.Parameter{&parameters.DateTime},
@@ -38,7 +40,8 @@ func TestAlarm_Audio(t *testing.T) {
 			Value:      &types.URI{V: "ftp://example.com/pub/sounds/bell-01.aud"},
 		}},
 	}
-	fmt.Println(audio.Alarm())
+	audio.Alarm(s)
+	fmt.Println(s.String())
 }
 
 //       BEGIN:VALARM
@@ -50,6 +53,7 @@ func TestAlarm_Audio(t *testing.T) {
 //        team at 8:30 AM EST.
 //       END:VALARM
 func TestAlarm_Display(t *testing.T) {
+	s := &strings.Builder{}
 	dis := Alarm{
 		Action: &alarm.Display,
 		Trigger: &alarm.Trigger{
@@ -60,7 +64,8 @@ func TestAlarm_Display(t *testing.T) {
 		Description: &descriptive.Description{Value: &types.Text{V: "Breakfast meeting with executive team at 8:30 AM EST."}},
 		Repeat:      &types.Integer{V: 2},
 	}
-	fmt.Println(dis.Alarm())
+	dis.Alarm(s)
+	fmt.Println(s.String())
 }
 
 //       BEGIN:VALARM
@@ -76,6 +81,8 @@ func TestAlarm_Display(t *testing.T) {
 //       END:VALARM
 
 func TestAlarm_Email(t *testing.T) {
+	s := &strings.Builder{}
+
 	dis := Alarm{
 		Action: &alarm.Email,
 		Trigger: &alarm.Trigger{
@@ -95,5 +102,6 @@ func TestAlarm_Email(t *testing.T) {
 			Value: &types.Text{V: "*** REMINDER: SEND AGENDA FOR WEEKLY STAFF MEETING ***"},
 		},
 	}
-	fmt.Println(dis.Alarm())
+	dis.Alarm(s)
+	fmt.Println(s.String())
 }

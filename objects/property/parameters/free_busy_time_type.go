@@ -1,8 +1,11 @@
 package parameters
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
-//   Parameter Name:  FBTYPE
+//   WriteParameterToStrBuilder Name:  FBTYPE
 //
 //   Purpose:  To specify the free or busy time type.
 //
@@ -43,6 +46,7 @@ var Busy = FreeBusyType{"BUSY"}
 var BusyUnavailable = FreeBusyType{"BUSY-UNAVAILABLE"}
 var BusyTentative = FreeBusyType{"BUSY-TENTATIVE"}
 
-func (f *FreeBusyType) Parameter() string {
-	return fmt.Sprintf("FBTYPE=%s", f.V)
+func (f *FreeBusyType) WriteParameterToStrBuilder(s *strings.Builder) error {
+	s.WriteString(fmt.Sprintf("FBTYPE=%s", f.V))
+	return nil
 }

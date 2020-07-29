@@ -5,6 +5,7 @@ import (
 	"calendar/objects/property/components/properties/datetime"
 	"calendar/objects/property/components/properties/descriptive"
 	"calendar/objects/property/components/properties/relationship"
+	"strings"
 	"testing"
 )
 
@@ -18,7 +19,7 @@ func TestTodo_Todo(t *testing.T) {
 	//       CATEGORIES:FAMILY,FINANCE
 	//       STATUS:NEEDS-ACTION
 	//       END:VTODO
-
+	s:=&strings.Builder{}
 	todo := Todo{
 		DtStamp:    changemanage.NewDtStamp(2007, 3, 13, 12, 34, 32),
 		Uid:        relationship.NewUid("20070313T123432Z-456553@example.com"),
@@ -28,8 +29,9 @@ func TestTodo_Todo(t *testing.T) {
 		Due:        datetime.NewDueWithDate(2007, 5, 1),
 		Categories: []*descriptive.Categories{descriptive.NewCategories("FAMILY","FINANCE")},
 	}
+	todo.Todo(s)
 	v:=VTest{
-		S: todo.Todo(),
+		S: s.String(),
 		T: t,
 	}
 	v.ContainsOrError("BEGIN:VTODO")

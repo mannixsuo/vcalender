@@ -3,14 +3,13 @@ package parameters
 import "strings"
 
 type Parameter interface {
-	Parameter() string
+	WriteParameterToStrBuilder(s *strings.Builder) error
 }
 
-func Parameters(p []Parameter) string {
-	sb := strings.Builder{}
+func WriteParametersToStrBuilder(p []Parameter, sb *strings.Builder) error {
 	for _, v := range p {
 		sb.WriteString(";")
-		sb.WriteString(v.Parameter())
+		v.WriteParameterToStrBuilder(sb)
 	}
-	return sb.String()
+	return nil
 }

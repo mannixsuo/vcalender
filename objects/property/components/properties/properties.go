@@ -7,7 +7,7 @@ import (
 )
 
 type Property interface {
-	Property() (string, error)
+	WritePropertyToStrBuilder(s *strings.Builder) error
 }
 
 type CheckPropertyFunc func([]*parameters.Parameter, types.Value) error
@@ -17,29 +17,28 @@ func DefaultCheckPropertyFunc(p []parameters.Parameter, v types.Value) error {
 	return nil
 }
 
-func DefaultCreatePropertyFunc(name string, p []parameters.Parameter, v types.Value) string {
-	sb := strings.Builder{}
+func DefaultCreatePropertyFunc(name string, p []parameters.Parameter, v types.Value, sb *strings.Builder) error {
 	sb.WriteString(name)
-	sb.WriteString(parameters.Parameters(p))
+	parameters.WriteParametersToStrBuilder(p, sb)
 	sb.WriteString(":")
-	sb.WriteString(v.Value())
+	v.WriteValueToStrBuilder(sb)
 	sb.WriteString("\n")
-	return sb.String()
+	return nil
 }
 
-func DefaultCreateMultiplePropertyFunc(name string, p []parameters.Parameter, v []types.Value) string {
-	sb := strings.Builder{}
+func DefaultCreateMultiplePropertyFunc(name string, p []parameters.Parameter, v []types.Value, sb *strings.Builder) error {
 	sb.WriteString(name)
 	if len(p) > 0 {
-		sb.WriteString(parameters.Parameters(p))
+		parameters.WriteParametersToStrBuilder(p, sb)
 	}
 	sb.WriteString(":")
+	last := len(v) - 1
 	for index, value := range v {
-		sb.WriteString(value.Value())
-		if index != len(v)-1 {
+		value.WriteValueToStrBuilder(sb)
+		if index != last {
 			sb.WriteString(",")
 		}
 	}
 	sb.WriteString("\n")
-	return sb.String()
+	return nil
 }

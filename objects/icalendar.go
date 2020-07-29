@@ -18,21 +18,20 @@ type Calendar struct {
 }
 
 func (c *Calendar) Calendar() (string, error) {
-	s := strings.Builder{}
+	s := &strings.Builder{}
 	s.WriteString("BEGIN:VCALENDAR\n")
-	components.WriteProperty(&s, c.ProdId)
-	components.WriteProperty(&s, c.Version)
-	components.WriteProperty(&s, c.CalScale)
-	components.WriteProperty(&s, c.Method)
+	components.WriteProperty(s, c.ProdId)
+	components.WriteProperty(s, c.Version)
+	components.WriteProperty(s, c.CalScale)
+	components.WriteProperty(s, c.Method)
 	for _, comp := range c.Components {
-		component, err := comp.Component()
+		err := comp.WriteComponentToStrBuilder(s)
 		if err != nil {
 			return "", err
 		}
-		s.WriteString(component)
 	}
-	components.WriteProperties(&s, c.Xprop)
-	components.WriteProperties(&s, c.IanaProp)
+	components.WriteProperties(s, c.Xprop)
+	components.WriteProperties(s, c.IanaProp)
 	s.WriteString("END:VCALENDAR\n")
 	return s.String(), nil
 }

@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  RELATED-TO
@@ -77,6 +78,6 @@ type RelatedTo struct {
 	Value      *types.Text
 }
 
-func (r *RelatedTo) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("RELATED-TO", r.Parameters, r.Value), nil
+func (r *RelatedTo) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreatePropertyFunc("RELATED-TO", r.Parameters, r.Value, s)
 }

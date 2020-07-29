@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  CATEGORIES
@@ -56,8 +57,8 @@ type Categories struct {
 	Values     []types.Value
 }
 
-func (c *Categories) Property() (string, error) {
-	return properties.DefaultCreateMultiplePropertyFunc("CATEGORIES", c.Parameters, c.Values), nil
+func (c *Categories) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreateMultiplePropertyFunc("CATEGORIES", c.Parameters, c.Values,s)
 }
 
 func NewCategories(c ...string) *Categories {

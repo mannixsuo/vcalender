@@ -1,8 +1,10 @@
 package parameters
 
-import "fmt"
+import (
+	"strings"
+)
 
-//   Parameter Name:  CUTYPE
+//   WriteParameterToStrBuilder Name:  CUTYPE
 //
 //   Purpose:  To identify the type of calendar user specified by the
 //      property.
@@ -42,6 +44,8 @@ var ResourceCuType = CuType{"RESOURCE"}
 var RoomCuType = CuType{"ROOM"}
 var UnknownCuType = CuType{"UNKNOWN"}
 
-func (c *CuType) Parameter() string {
-	return fmt.Sprintf("CUTYPE=%s", c.V)
+func (c *CuType) WriteParameterToStrBuilder(s *strings.Builder) error {
+	s.WriteString("CUTYPE=")
+	s.WriteString(c.V)
+	return nil
 }

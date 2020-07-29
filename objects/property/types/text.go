@@ -1,5 +1,7 @@
 package types
 
+import "strings"
+
 //   V Name:  TEXT
 //
 //   Purpose:  This value type is used to identify values that contain
@@ -57,8 +59,9 @@ type Text struct {
 	V string
 }
 
-func (t *Text) Value() string {
-	return t.V
+func (t *Text) WriteValueToStrBuilder(s *strings.Builder) error {
+	s.WriteString(t.V)
+	return nil
 }
 
 func NewText(text string) *Text {

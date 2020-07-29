@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  REPEAT
@@ -44,6 +45,6 @@ type Repeat struct {
 	Value      *types.Integer
 }
 
-func (r *Repeat) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("REPEAT", r.Parameters, r.Value), nil
+func (r *Repeat) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreatePropertyFunc("REPEAT", r.Parameters, r.Value, s)
 }

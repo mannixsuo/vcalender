@@ -6,6 +6,7 @@ import (
 	"calendar/objects/property/components/properties/recurrence"
 	"calendar/objects/property/components/properties/timezone"
 	"calendar/objects/property/types"
+	"strings"
 	"testing"
 )
 
@@ -63,6 +64,7 @@ func TestTimeZone_TimeZone(t *testing.T) {
 	//       TZNAME:EST
 	//       END:STANDARD
 	//       END:VTIMEZONE
+	s := &strings.Builder{}
 	z := TimeZone{
 		TzId:    timezone.NewTzId("America/New_York"),
 		LastMod: changemanage.NewLastModified(2005, 8, 9, 5, 0, 0),
@@ -211,8 +213,9 @@ func TestTimeZone_TimeZone(t *testing.T) {
 			}},
 		},
 	}
+	z.TimeZone(s)
 	v := VTest{
-		S: z.TimeZone(),
+		S: s.String(),
 		T: t,
 	}
 	v.ContainsOrError("BEGIN:VTIMEZONE")

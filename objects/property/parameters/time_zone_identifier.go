@@ -1,8 +1,11 @@
 package parameters
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
-//   Parameter Name:  TZID
+//   WriteParameterToStrBuilder Name:  TZID
 //
 //   Purpose:  To specify the identifier for the time zone definition for
 //      a time component in the property value.
@@ -66,6 +69,7 @@ type TimeZoneId struct {
 	V string
 }
 
-func (t *TimeZoneId) Parameter() string {
-	return fmt.Sprintf("TZID=%s", t.V)
+func (t *TimeZoneId) WriteParameterToStrBuilder(s *strings.Builder) error {
+	s.WriteString(fmt.Sprintf("TZID=%s", t.V))
+	return nil
 }

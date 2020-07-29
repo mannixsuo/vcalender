@@ -1,8 +1,11 @@
 package parameters
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
-//   Parameter Name:  LANGUAGE
+//   WriteParameterToStrBuilder Name:  LANGUAGE
 //
 //   Purpose:  To specify the language for text values in a property or
 //      property parameter.
@@ -37,6 +40,7 @@ type Language struct {
 	V string
 }
 
-func (l *Language) Parameter() string {
-	return fmt.Sprintf("LANGUAGE=%s", l.V)
+func (l *Language) WriteParameterToStrBuilder(s *strings.Builder) error {
+	s.WriteString(fmt.Sprintf("LANGUAGE=%s", l.V))
+	return nil
 }

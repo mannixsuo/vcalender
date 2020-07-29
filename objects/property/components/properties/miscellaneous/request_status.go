@@ -120,11 +120,10 @@ type RequestStatus struct {
 	ExtData    string
 }
 
-func (r *RequestStatus) Property() (string, error) {
-	sb := strings.Builder{}
+func (r *RequestStatus) WritePropertyToStrBuilder(sb *strings.Builder) error {
 	sb.WriteString("REQUEST-STATUS")
 	if len(r.Parameters) > 0 {
-		sb.WriteString(parameters.Parameters(r.Parameters))
+		parameters.WriteParametersToStrBuilder(r.Parameters,sb)
 	}
 	sb.WriteString(":")
 	sb.WriteString(r.StatCode)
@@ -134,5 +133,5 @@ func (r *RequestStatus) Property() (string, error) {
 		sb.WriteString(";" + r.ExtData)
 	}
 	sb.WriteString("\n")
-	return sb.String(), nil
+	return nil
 }

@@ -156,27 +156,26 @@ type FreeBusy struct {
 	IanaProp     []*miscellaneous.Iana
 }
 
-func (f *FreeBusy) FreeBusy() string {
-	b := strings.Builder{}
+func (f *FreeBusy) FreeBusy(b *strings.Builder) error {
 	b.WriteString("BEGIN:VFREEBUSY\n")
-	WriteProperty(&b, f.DtStamp)
-	WriteProperty(&b, f.Uid)
-	WriteProperty(&b, f.DtStart)
-	WriteProperty(&b, f.Organizer)
-	WriteProperty(&b, f.Url)
-	WriteProperty(&b, f.DtEnd)
+	WriteProperty(b, f.DtStamp)
+	WriteProperty(b, f.Uid)
+	WriteProperty(b, f.DtStart)
+	WriteProperty(b, f.Organizer)
+	WriteProperty(b, f.Url)
+	WriteProperty(b, f.DtEnd)
 
-	WriteProperties(&b, f.Attendee)
-	WriteProperties(&b, f.Comment)
-	WriteProperties(&b, f.FreeBusyTime)
-	WriteProperties(&b, f.Contact)
-	WriteProperties(&b, f.RStatus)
-	WriteProperties(&b, f.Xprop)
-	WriteProperties(&b, f.IanaProp)
+	WriteProperties(b, f.Attendee)
+	WriteProperties(b, f.Comment)
+	WriteProperties(b, f.FreeBusyTime)
+	WriteProperties(b, f.Contact)
+	WriteProperties(b, f.RStatus)
+	WriteProperties(b, f.Xprop)
+	WriteProperties(b, f.IanaProp)
 	b.WriteString("END:VFREEBUSY\n")
-	return b.String()
+	return nil
 }
 
-func (f *FreeBusy) Component() (string, error) {
-	return f.FreeBusy(), nil
+func (f *FreeBusy) WriteComponentToStrBuilder(s *strings.Builder) error {
+	return f.FreeBusy(s)
 }

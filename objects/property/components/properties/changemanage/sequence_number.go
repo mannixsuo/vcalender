@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  SEQUENCE
@@ -64,8 +65,8 @@ type Sequence struct {
 	Value      *types.Integer
 }
 
-func (s *Sequence) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("SEQUENCE", s.Parameters, s.Value), nil
+func (s *Sequence) WritePropertyToStrBuilder(sb *strings.Builder) error {
+	return properties.DefaultCreatePropertyFunc("SEQUENCE", s.Parameters, s.Value, sb)
 }
 
 func NewSequence(sequence int) *Sequence {

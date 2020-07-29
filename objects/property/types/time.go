@@ -1,6 +1,9 @@
 package types
 
-import "time"
+import (
+	"strings"
+	"time"
+)
 
 //   V Name:  TIME
 //
@@ -106,9 +109,14 @@ type Time struct {
 	Format string
 }
 
-func (t *Time) Value() string {
-	return t.V.Format(t.Format)
+func (t *Time) WriteValueToStrBuilder(s *strings.Builder) error {
+	s.WriteString(t.V.Format(t.Format))
+	return nil
 }
+
 func NewTime(hour, minute, seconds int, format string) *Time {
-	return &Time{}
+	return &Time{
+		V:      time.Date(0, 0, 0, hour, minute, seconds, 0, time.Local),
+		Format: format,
+	}
 }

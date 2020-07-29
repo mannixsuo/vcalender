@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  VERSION
@@ -49,8 +50,8 @@ type Version struct {
 	Value      *types.Text
 }
 
-func (a *Version) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("VERSION", a.Parameters, a.Value), nil
+func (a *Version) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreatePropertyFunc("VERSION", a.Parameters, a.Value, s)
 }
 
 var Version2 = Version{Value: types.NewText("2.0")}

@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  CLASS
@@ -67,6 +68,6 @@ var ConfidentialClassification = Classification{
 	Value: &types.Text{V: "CONFIDENTIAL"},
 }
 
-func (c *Classification) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("CLASS", c.Parameters, c.Value), nil
+func (c *Classification) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreatePropertyFunc("CLASS", c.Parameters, c.Value, s)
 }

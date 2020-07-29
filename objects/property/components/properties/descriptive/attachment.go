@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  ATTACH
@@ -76,10 +77,10 @@ type Attach struct {
 	Value      types.Value
 }
 
-func (a *Attach) Property() (string, error) {
+func (a *Attach) WritePropertyToStrBuilder(s *strings.Builder) error {
 	err := properties.DefaultCheckPropertyFunc(a.Parameters, a.Value)
 	if err != nil {
-		return "", err
+		return err
 	}
-	return properties.DefaultCreatePropertyFunc("ATTACH", a.Parameters, a.Value), nil
+	return properties.DefaultCreatePropertyFunc("ATTACH", a.Parameters, a.Value, s)
 }

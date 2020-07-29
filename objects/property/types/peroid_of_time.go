@@ -1,5 +1,7 @@
 package types
 
+import "strings"
+
 //   V Name:  PERIOD
 //
 //   Purpose:  This value type is used to identify values that contain a
@@ -47,7 +49,7 @@ package types
 //      encoding, see Section 3.3.11) is defined for this value type.
 
 type Period interface {
-	period() string
+	writePeriod(s *strings.Builder) error
 }
 
 // 19970101T180000Z/19970102T070000Z
@@ -56,11 +58,14 @@ type ExplicitPeriod struct {
 	End   *DateTime
 }
 
-func (e *ExplicitPeriod) period() string {
-	return e.Start.Value() + "/" + e.End.Value()
+func (e *ExplicitPeriod) writePeriod(s *strings.Builder) error {
+	_ = e.Start.WriteValueToStrBuilder(s)
+	s.WriteString("/")
+	_ = e.End.WriteValueToStrBuilder(s)
+	return nil
 }
-func (e *ExplicitPeriod) Value() string {
-	return e.period()
+func (e *ExplicitPeriod) WriteValueToStrBuilder(s *strings.Builder) error {
+	return e.writePeriod(s)
 }
 
 // 19970101T180000Z/PT5H30M
@@ -69,9 +74,12 @@ type StartPeriod struct {
 	Duration *Duration
 }
 
-func (s *StartPeriod) period() string {
-	return s.Start.Value() + "/" + s.Duration.Value()
+func (s *StartPeriod) writePeriod(b *strings.Builder) error {
+	_ = s.Start.WriteValueToStrBuilder(b)
+	b.WriteString("/")
+	_ = s.Duration.WriteValueToStrBuilder(b)
+	return nil
 }
-func (s *StartPeriod) Value() string {
-	return s.period()
+func (s *StartPeriod) WriteValueToStrBuilder(b *strings.Builder) error {
+	return s.writePeriod(b)
 }

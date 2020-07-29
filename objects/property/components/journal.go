@@ -118,40 +118,39 @@ type Journal struct {
 	IanaProp     []*miscellaneous.Iana
 }
 
-func (j *Journal) Journal() string {
-	b := strings.Builder{}
+func (j *Journal) Journal(b *strings.Builder) error {
 	b.WriteString("BEGIN:VJOURNAL\n")
-	WriteProperty(&b, j.DtStamp)
-	WriteProperty(&b, j.Uid)
-	WriteProperty(&b, j.DtStart)
-	WriteProperty(&b, j.Class)
-	WriteProperty(&b, j.Created)
-	WriteProperty(&b, j.LastModified)
-	WriteProperty(&b, j.Organizer)
-	WriteProperty(&b, j.Seq)
-	WriteProperty(&b, j.Status)
-	WriteProperty(&b, j.Summary)
-	WriteProperty(&b, j.Url)
-	WriteProperty(&b, j.RecurId)
-	WriteProperty(&b, j.RRule)
+	WriteProperty(b, j.DtStamp)
+	WriteProperty(b, j.Uid)
+	WriteProperty(b, j.DtStart)
+	WriteProperty(b, j.Class)
+	WriteProperty(b, j.Created)
+	WriteProperty(b, j.LastModified)
+	WriteProperty(b, j.Organizer)
+	WriteProperty(b, j.Seq)
+	WriteProperty(b, j.Status)
+	WriteProperty(b, j.Summary)
+	WriteProperty(b, j.Url)
+	WriteProperty(b, j.RecurId)
+	WriteProperty(b, j.RRule)
 
-	WriteProperties(&b, j.Description)
+	WriteProperties(b, j.Description)
 
-	WriteProperties(&b, j.Attach)
-	WriteProperties(&b, j.Attendee)
-	WriteProperties(&b, j.Categories)
-	WriteProperties(&b, j.Comment)
-	WriteProperties(&b, j.Contact)
-	WriteProperties(&b, j.ExDate)
-	WriteProperties(&b, j.RStatus)
-	WriteProperties(&b, j.Related)
-	WriteProperties(&b, j.RDate)
-	WriteProperties(&b, j.Xprop)
-	WriteProperties(&b, j.IanaProp)
+	WriteProperties(b, j.Attach)
+	WriteProperties(b, j.Attendee)
+	WriteProperties(b, j.Categories)
+	WriteProperties(b, j.Comment)
+	WriteProperties(b, j.Contact)
+	WriteProperties(b, j.ExDate)
+	WriteProperties(b, j.RStatus)
+	WriteProperties(b, j.Related)
+	WriteProperties(b, j.RDate)
+	WriteProperties(b, j.Xprop)
+	WriteProperties(b, j.IanaProp)
 	b.WriteString("END:VJOURNAL\n")
-	return b.String()
+	return nil
 }
 
-func (j *Journal) Component() (string, error) {
-	return j.Journal(), nil
+func (j *Journal) WriteComponentToStrBuilder(s *strings.Builder) error {
+	return j.Journal(s)
 }

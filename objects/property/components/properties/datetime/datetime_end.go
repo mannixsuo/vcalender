@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  DTEND
@@ -68,8 +69,8 @@ type DateEnd struct {
 	Value      types.Value
 }
 
-func (d *DateEnd) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("DTEND", d.Parameters, d.Value), nil
+func (d *DateEnd) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreatePropertyFunc("DTEND", d.Parameters, d.Value, s)
 }
 
 func NewDateTimeDateEnd(year, month, day, hour, minute, seconds int) *DateEnd {

@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  RECURRENCE-ID
@@ -111,6 +112,6 @@ type RecurrenceId struct {
 	Value      types.Value
 }
 
-func (c *RecurrenceId) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("RECURRENCE-ID", c.Parameters, c.Value), nil
+func (c *RecurrenceId) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreatePropertyFunc("RECURRENCE-ID", c.Parameters, c.Value,s)
 }

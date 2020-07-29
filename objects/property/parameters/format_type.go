@@ -1,8 +1,11 @@
 package parameters
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
-//   Parameter Name:  FMTTYPE
+//   WriteParameterToStrBuilder Name:  FMTTYPE
 //
 //   Purpose:  To specify the content type of a referenced object.
 //
@@ -30,6 +33,7 @@ type FmtType struct {
 	V string
 }
 
-func (f *FmtType) Parameter() string {
-	return fmt.Sprintf("FMTTYPE=%s", f.V)
+func (f *FmtType) WriteParameterToStrBuilder(s *strings.Builder) error {
+	s.WriteString(fmt.Sprintf("FMTTYPE=%s", f.V))
+	return nil
 }

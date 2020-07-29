@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  PERCENT-COMPLETE
@@ -50,6 +51,6 @@ type PercentComplete struct {
 	Values     *types.Integer
 }
 
-func (p *PercentComplete) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("PERCENT-COMPLETE", p.Parameters, p.Values), nil
+func (p *PercentComplete) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreatePropertyFunc("PERCENT-COMPLETE", p.Parameters, p.Values,s)
 }

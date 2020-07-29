@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 	"time"
 )
 
@@ -45,8 +46,8 @@ type Created struct {
 	Value      *types.DateTime
 }
 
-func (c *Created) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("CREATED", c.Parameters, c.Value), nil
+func (c *Created) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreatePropertyFunc("CREATED", c.Parameters, c.Value, s)
 }
 
 func NewCreated(year, month, day, hour, minute, seconds int) *Created {

@@ -1,5 +1,7 @@
 package types
 
+import "strings"
+
 //   V Name:  URI
 //
 //   Purpose:  This value type is used to identify values that contain a
@@ -32,8 +34,9 @@ type URI struct {
 	V string
 }
 
-func (u *URI) Value() string {
-	return u.V
+func (u *URI) WriteValueToStrBuilder(s *strings.Builder) error {
+	s.WriteString(u.V)
+	return nil
 }
 
 func NewUri(uri string) *URI {

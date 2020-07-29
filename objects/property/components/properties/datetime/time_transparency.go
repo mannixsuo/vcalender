@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  TRANSP
@@ -61,8 +62,8 @@ type Transparent struct {
 	Values     *types.Text
 }
 
-func (t *Transparent) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("TRANSP", t.Parameters, t.Values), nil
+func (t *Transparent) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreatePropertyFunc("TRANSP", t.Parameters, t.Values, s)
 }
 
 var TransparentOpaque = Transparent{

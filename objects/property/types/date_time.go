@@ -1,6 +1,9 @@
 package types
 
-import "time"
+import (
+	"strings"
+	"time"
+)
 
 //   V Name:  DATE-TIME
 //
@@ -128,11 +131,12 @@ type DateTime struct {
 	Format string
 }
 
-func (d *DateTime) Value() string {
+func (d *DateTime) WriteValueToStrBuilder(s *strings.Builder) error {
 	if d.Format == "" {
-		return d.V.Format(UTCDateTimeFormat)
+		s.WriteString(d.V.Format(UTCDateTimeFormat))
 	}
-	return d.V.Format(d.Format)
+	s.WriteString(d.V.Format(d.Format))
+	return nil
 }
 
 // 19970714T173000Z

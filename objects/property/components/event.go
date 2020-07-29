@@ -198,55 +198,53 @@ type Event struct {
 	Alarm        *Alarm
 }
 
-func (e *Event) Event() string {
-	b := strings.Builder{}
+func (e *Event) Event(b *strings.Builder) error {
 	b.WriteString("BEGIN:VEVENT\n")
-	WriteProperty(&b, e.DtStamp)
-	WriteProperty(&b, e.Uid)
-	WriteProperty(&b, e.DtStart)
-	WriteProperty(&b, e.Class)
-	WriteProperty(&b, e.Created)
-	WriteProperty(&b, e.Description)
-	WriteProperty(&b, e.Geo)
-	WriteProperty(&b, e.LastModified)
-	WriteProperty(&b, e.Location)
-	WriteProperty(&b, e.Organizer)
-	WriteProperty(&b, e.Priority)
-	WriteProperty(&b, e.Seq)
-	WriteProperty(&b, e.Status)
-	WriteProperty(&b, e.Summary)
-	WriteProperty(&b, e.Transparent)
-	WriteProperty(&b, e.Url)
-	WriteProperty(&b, e.RecurId)
-	WriteProperty(&b, e.RRule)
-	WriteProperty(&b, e.DtEnd)
-	WriteProperty(&b, e.Duration)
+	WriteProperty(b, e.DtStamp)
+	WriteProperty(b, e.Uid)
+	WriteProperty(b, e.DtStart)
+	WriteProperty(b, e.Class)
+	WriteProperty(b, e.Created)
+	WriteProperty(b, e.Description)
+	WriteProperty(b, e.Geo)
+	WriteProperty(b, e.LastModified)
+	WriteProperty(b, e.Location)
+	WriteProperty(b, e.Organizer)
+	WriteProperty(b, e.Priority)
+	WriteProperty(b, e.Seq)
+	WriteProperty(b, e.Status)
+	WriteProperty(b, e.Summary)
+	WriteProperty(b, e.Transparent)
+	WriteProperty(b, e.Url)
+	WriteProperty(b, e.RecurId)
+	WriteProperty(b, e.RRule)
+	WriteProperty(b, e.DtEnd)
+	WriteProperty(b, e.Duration)
 
-	WriteProperties(&b, e.Attach)
-	WriteProperties(&b, e.Attendee)
-	WriteProperties(&b, e.Categories)
-	WriteProperties(&b, e.Comment)
-	WriteProperties(&b, e.Contact)
-	WriteProperties(&b, e.ExDate)
-	WriteProperties(&b, e.RStatus)
-	WriteProperties(&b, e.Related)
-	WriteProperties(&b, e.Resources)
-	WriteProperties(&b, e.RDate)
-	WriteProperties(&b, e.Xprop)
-	WriteProperties(&b, e.IanaProp)
+	WriteProperties(b, e.Attach)
+	WriteProperties(b, e.Attendee)
+	WriteProperties(b, e.Categories)
+	WriteProperties(b, e.Comment)
+	WriteProperties(b, e.Contact)
+	WriteProperties(b, e.ExDate)
+	WriteProperties(b, e.RStatus)
+	WriteProperties(b, e.Related)
+	WriteProperties(b, e.Resources)
+	WriteProperties(b, e.RDate)
+	WriteProperties(b, e.Xprop)
+	WriteProperties(b, e.IanaProp)
 	if e.Alarm != nil {
-		b.WriteString(e.Alarm.Alarm())
+		e.Alarm.Alarm(b)
 	}
 	b.WriteString("END:VEVENT\n")
-	return b.String()
+	return nil
 }
 
 func WriteProperty(b *strings.Builder, p properties.Property) {
 	if reflect.ValueOf(p).IsZero() {
 		return
 	}
-	property, _ := p.Property()
-	b.WriteString(property)
+	_ = p.WritePropertyToStrBuilder(b)
 }
 
 func WriteProperties(b *strings.Builder, p interface{}) {
@@ -257,11 +255,10 @@ func WriteProperties(b *strings.Builder, p interface{}) {
 	}
 	for i := 0; i < valueOf.Len(); i++ {
 		p := valueOf.Index(i).Interface().(properties.Property)
-		property, _ := p.Property()
-		b.WriteString(property)
+		_ = p.WritePropertyToStrBuilder(b)
 	}
 }
 
-func (e *Event) Component() (string, error) {
-	return e.Event(), nil
+func (e *Event) WriteComponentToStrBuilder(s *strings.Builder) error {
+	return e.Event(s)
 }

@@ -1,8 +1,11 @@
 package parameters
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
-//   Parameter Name:  ENCODING
+//   WriteParameterToStrBuilder Name:  ENCODING
 //
 //   Purpose:  To specify an alternate inline encoding for the property
 //      value.
@@ -47,6 +50,7 @@ type Encoding struct {
 var Bit8 = Encoding{"8BIT"}
 var BASE64 = Encoding{"BASE64"}
 
-func (e *Encoding) Parameter() string {
-	return fmt.Sprintf("ENCODING=%s", e.V)
+func (e *Encoding) WriteParameterToStrBuilder(s *strings.Builder) error {
+	s.WriteString(fmt.Sprintf("ENCODING=%s", e.V))
+	return nil
 }

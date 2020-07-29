@@ -23,6 +23,7 @@ func TestEvent_Event(t *testing.T) {
 	//       CLASS:PRIVATE
 	//       CATEGORIES:BUSINESS,HUMAN RESOURCES
 	//       END:VEVENT
+	s := &strings.Builder{}
 	e := Event{
 		DtStamp:    changemanage.NewDtStamp(1997, 9, 1, 13, 0, 0),
 		Uid:        relationship.NewUid("19970901T130000Z-123401@example.com"),
@@ -32,8 +33,9 @@ func TestEvent_Event(t *testing.T) {
 		Class:      &descriptive.PrivateClassification,
 		Categories: []*descriptive.Categories{descriptive.NewCategories("BUSINESS", "HUMAN RESOURCES")},
 	}
+	e.Event(s)
 	v := &VTest{
-		S: e.Event(),
+		S: s.String(),
 		T: t,
 	}
 	v.ContainsOrError("BEGIN:VEVENT")
@@ -66,8 +68,10 @@ func TestEvent_Event(t *testing.T) {
 		DtEnd:       datetime.NewDateTimeDateEnd(1997, 4, 2, 1, 0, 0),
 		Categories:  []*descriptive.Categories{descriptive.NewCategories("BUSINESS", "HUMAN RESOURCES")},
 	}
+	s.Reset()
+	event2.Event(s)
 	v = &VTest{
-		S: event2.Event(),
+		S: s.String(),
 		T: t,
 	}
 	v.ContainsOrError("19970901T130000Z-123402@example.com")
@@ -88,23 +92,25 @@ func TestEvent_Event(t *testing.T) {
 	//       CATEGORIES:ANNIVERSARY,PERSONAL,SPECIAL OCCASION
 	//       RRULE:FREQ=YEARLY
 	//       END:VEVENT
-	event3:=Event{
-		DtStamp:     changemanage.NewDtStamp(1997, 9, 1, 13, 0, 0),
-		Uid:         relationship.NewUid("19970901T130000Z-123403@example.com"),
-		DtStart:     &datetime.DateStart{
-			Parameters: []parameters.Parameter{&parameters.ValueType{V:"DATE"}},
-			Value:      types.NewDate(1997,11,2),
+	event3 := Event{
+		DtStamp: changemanage.NewDtStamp(1997, 9, 1, 13, 0, 0),
+		Uid:     relationship.NewUid("19970901T130000Z-123403@example.com"),
+		DtStart: &datetime.DateStart{
+			Parameters: []parameters.Parameter{&parameters.ValueType{V: "DATE"}},
+			Value:      types.NewDate(1997, 11, 2),
 		},
-		Summary:descriptive.NewSummary("SUMMARY:Our Blissful Anniversary"),
+		Summary:     descriptive.NewSummary("SUMMARY:Our Blissful Anniversary"),
 		Class:       &descriptive.ConfidentialClassification,
 		Transparent: &datetime.TransparentTransparent,
-		RRule:       &recurrence.RRule{V:&types.RecurRule{
+		RRule: &recurrence.RRule{V: &types.RecurRule{
 			Frequency: types.FreqYearly,
 		}},
-		Categories:  []*descriptive.Categories{descriptive.NewCategories("ANNIVERSARY","PERSONAL","SPECIAL OCCASION")},
+		Categories: []*descriptive.Categories{descriptive.NewCategories("ANNIVERSARY", "PERSONAL", "SPECIAL OCCASION")},
 	}
+	s.Reset()
+	event3.Event(s)
 	v = &VTest{
-		S: event3.Event(),
+		S: s.String(),
 		T: t,
 	}
 	v.ContainsOrError("BEGIN:VEVENT")

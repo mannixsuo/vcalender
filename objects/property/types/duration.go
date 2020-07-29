@@ -64,12 +64,12 @@ type Duration struct {
 	DurSecond int
 }
 
-func (d *Duration) Value() string {
-	return d.duration()
+func (d *Duration) WriteValueToStrBuilder(s *strings.Builder) error {
+	d.duration(s)
+	return nil
 }
 
-func (d *Duration) duration() string {
-	s := strings.Builder{}
+func (d *Duration) duration(s *strings.Builder) {
 	if d.Negative {
 		s.WriteString("-")
 	}
@@ -77,7 +77,7 @@ func (d *Duration) duration() string {
 	if d.DurWeek != 0 {
 		s.WriteString(fmt.Sprint(d.DurWeek))
 		s.WriteString("W")
-		return s.String()
+		return
 	}
 	if d.DurDay != 0 {
 		s.WriteString(fmt.Sprint(d.DurDay))
@@ -96,5 +96,4 @@ func (d *Duration) duration() string {
 			s.WriteString("S")
 		}
 	}
-	return s.String()
 }

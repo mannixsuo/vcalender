@@ -1,5 +1,7 @@
 package types
 
+import "strings"
+
 //   V Name:  FLOAT
 //
 //   Purpose:  This value type is used to identify properties that contain
@@ -26,6 +28,7 @@ type Float struct {
 	V string
 }
 
-func (f *Float) Value() string {
-	return f.V
+func (f *Float) WriteValueToStrBuilder(s *strings.Builder) error {
+	s.WriteString(f.V)
+	return nil
 }

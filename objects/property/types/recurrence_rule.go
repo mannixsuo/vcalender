@@ -1,7 +1,6 @@
 package types
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 )
@@ -352,7 +351,7 @@ type RecurRule struct {
 }
 
 type Rule interface {
-	Rule() string
+	WriteRule(s *strings.Builder) error
 }
 
 type Frequency string
@@ -367,40 +366,46 @@ const (
 	FreqYearly   Frequency = "YEARLY"
 )
 
-func (f Frequency) Rule() string {
-	return fmt.Sprintf("FREQ=%s", string(f))
+func (f Frequency) WriteRule(s *strings.Builder) error {
+	s.WriteString("FREQ=")
+	s.WriteString(string(f))
+	return nil
 }
 
 type Until struct {
 	Time Value
 }
 
-func (u *Until) Rule() string {
-	return fmt.Sprintf("UNTIL=%s", u.Time.Value())
+func (u *Until) WriteRule(s *strings.Builder) error {
+	s.WriteString("UNTIL=")
+	return u.Time.WriteValueToStrBuilder(s)
 }
 
 type Count struct {
 	V int
 }
 
-func (c *Count) Rule() string {
-	return fmt.Sprintf("COUNT=%d", c.V)
+func (c *Count) WriteRule(s *strings.Builder) error {
+	s.WriteString("COUNT=")
+	s.WriteString(strconv.Itoa(c.V))
+	return nil
 }
 
 type Interval struct {
 	V int
 }
 
-func (i *Interval) Rule() string {
-	return fmt.Sprintf("INTERVAL=%d", i.V)
+func (i *Interval) WriteRule(s *strings.Builder) error {
+	s.WriteString("INTERVAL=")
+	s.WriteString(strconv.Itoa(i.V))
+	return nil
 }
 
 type BySecond struct {
 	V []int
 }
 
-func (b *BySecond) Rule() string {
-	s := strings.Builder{}
+func (b *BySecond) WriteRule(s *strings.Builder) error {
 	s.WriteString("BYSECOND=")
 	l := len(b.V) - 1
 	for index, v := range b.V {
@@ -409,15 +414,14 @@ func (b *BySecond) Rule() string {
 			s.WriteString(",")
 		}
 	}
-	return s.String()
+	return nil
 }
 
 type ByMinute struct {
 	V []int
 }
 
-func (b *ByMinute) Rule() string {
-	s := strings.Builder{}
+func (b *ByMinute) WriteRule(s *strings.Builder) error {
 	s.WriteString("BYMINUTE=")
 	l := len(b.V) - 1
 	for index, v := range b.V {
@@ -426,15 +430,14 @@ func (b *ByMinute) Rule() string {
 			s.WriteString(",")
 		}
 	}
-	return s.String()
+	return nil
 }
 
 type ByHour struct {
 	V []int
 }
 
-func (b *ByHour) Rule() string {
-	s := strings.Builder{}
+func (b *ByHour) WriteRule(s *strings.Builder) error {
 	s.WriteString("BYHOUR=")
 	l := len(b.V) - 1
 	for index, v := range b.V {
@@ -443,24 +446,23 @@ func (b *ByHour) Rule() string {
 			s.WriteString(",")
 		}
 	}
-	return s.String()
+	return nil
 }
 
 type ByDay struct {
 	V []*WeekDayNum
 }
 
-func (b *ByDay) Rule() string {
-	s := strings.Builder{}
+func (b *ByDay) WriteRule(s *strings.Builder) error {
 	s.WriteString("BYDAY=")
 	l := len(b.V) - 1
 	for index, v := range b.V {
-		s.WriteString(v.Rule())
+		v.WriteRule(s)
 		if index != l {
 			s.WriteString(",")
 		}
 	}
-	return s.String()
+	return nil
 }
 
 type WeekDayNum struct {
@@ -488,28 +490,29 @@ const (
 	Saturday          = "SA"
 )
 
-func (w *WeekDayNum) Rule() string {
-	if w.OrdWk == 0 {
-		return fmt.Sprintf("%s%s", string(w.Operator), string(w.WeekDay))
+func (w *WeekDayNum) WriteRule(s *strings.Builder) error {
+	s.WriteString(string(w.Operator))
+	if w.OrdWk != 0 {
+		s.WriteString(strconv.Itoa(w.OrdWk))
 	}
-	return fmt.Sprintf("%s%d%s", string(w.Operator), w.OrdWk, string(w.WeekDay))
+	s.WriteString(string(w.WeekDay))
+	return nil
 }
 
 type ByMonthDay struct {
 	V []*MonthDayNum
 }
 
-func (b *ByMonthDay) Rule() string {
-	s := strings.Builder{}
+func (b *ByMonthDay) WriteRule(s *strings.Builder) error {
 	s.WriteString("BYMONTHDAY=")
 	l := len(b.V) - 1
 	for index, v := range b.V {
-		s.WriteString(v.Rule())
+		v.WriteRule(s)
 		if index != l {
 			s.WriteString(",")
 		}
 	}
-	return s.String()
+	return nil
 }
 
 type MonthDayNum struct {
@@ -517,25 +520,26 @@ type MonthDayNum struct {
 	OrdMoDay int
 }
 
-func (m *MonthDayNum) Rule() string {
-	return fmt.Sprintf("%s%s", string(m.Operator), strconv.Itoa(m.OrdMoDay))
+func (m *MonthDayNum) WriteRule(s *strings.Builder) error {
+	s.WriteString(string(m.Operator))
+	s.WriteString(strconv.Itoa(m.OrdMoDay))
+	return nil
 }
 
 type ByYearDay struct {
 	V []*YearDayNum
 }
 
-func (b *ByYearDay) Rule() string {
-	s := strings.Builder{}
+func (b *ByYearDay) WriteRule(s *strings.Builder) error {
 	s.WriteString("BYYEARDAY=")
 	l := len(b.V) - 1
 	for index, v := range b.V {
-		s.WriteString(v.Rule())
+		v.WriteRule(s)
 		if index != l {
 			s.WriteString(",")
 		}
 	}
-	return s.String()
+	return nil
 }
 
 type YearDayNum struct {
@@ -543,25 +547,26 @@ type YearDayNum struct {
 	OrdYrDay int
 }
 
-func (y *YearDayNum) Rule() string {
-	return fmt.Sprintf("%s%s", string(y.Operator), strconv.Itoa(y.OrdYrDay))
+func (y *YearDayNum) WriteRule(s *strings.Builder) error {
+	s.WriteString(string(y.Operator))
+	s.WriteString(strconv.Itoa(y.OrdYrDay))
+	return nil
 }
 
 type ByWeekNo struct {
 	V []*WeekNum
 }
 
-func (b *ByWeekNo) Rule() string {
-	s := strings.Builder{}
+func (b *ByWeekNo) WriteRule(s *strings.Builder) error {
 	s.WriteString("BYWEEKNO=")
 	l := len(b.V) - 1
 	for index, v := range b.V {
-		s.WriteString(v.Rule())
+		v.WriteRule(s)
 		if index != l {
 			s.WriteString(",")
 		}
 	}
-	return s.String()
+	return nil
 }
 
 type WeekNum struct {
@@ -569,16 +574,17 @@ type WeekNum struct {
 	OrdWk    int
 }
 
-func (w *WeekNum) Rule() string {
-	return fmt.Sprintf("%s%s", string(w.Operator), strconv.Itoa(w.OrdWk))
+func (w *WeekNum) WriteRule(s *strings.Builder) error {
+	s.WriteString(string(w.Operator))
+	s.WriteString(strconv.Itoa(w.OrdWk))
+	return nil
 }
 
 type ByMonth struct {
 	V []int
 }
 
-func (b *ByMonth) Rule() string {
-	s := strings.Builder{}
+func (b *ByMonth) WriteRule(s *strings.Builder) error {
 	s.WriteString("BYMONTH=")
 	l := len(b.V) - 1
 	for index, v := range b.V {
@@ -587,43 +593,43 @@ func (b *ByMonth) Rule() string {
 			s.WriteString(",")
 		}
 	}
-	return s.String()
+	return nil
 }
 
 type BySetpos struct {
 	V []*YearDayNum
 }
 
-func (b *BySetpos) Rule() string {
-	s := strings.Builder{}
+func (b *BySetpos) WriteRule(s *strings.Builder) error {
 	s.WriteString("BYSETPOS=")
 	l := len(b.V) - 1
 	for index, v := range b.V {
-		s.WriteString(v.Rule())
+		v.WriteRule(s)
 		if index != l {
 			s.WriteString(",")
 		}
 	}
-	return s.String()
+	return nil
 }
 
 type Wkst struct {
 	V WeekDay
 }
 
-func (w *Wkst) Rule() string {
-	return fmt.Sprintf("WKST=%s", string(w.V))
+func (w *Wkst) WriteRule(s *strings.Builder) error {
+	s.WriteString("WKST=")
+	s.WriteString(string(w.V))
+	return nil
 }
 
-func (r *RecurRule) Value() string {
-	s := strings.Builder{}
-	s.WriteString(r.Frequency.Rule())
+func (r *RecurRule) WriteValueToStrBuilder(s *strings.Builder) error {
+	r.Frequency.WriteRule(s)
 	s.WriteString(";")
 	for index, r := range r.Rules {
 		if index != 0 {
 			s.WriteString(";")
 		}
-		s.WriteString(r.Rule())
+		r.WriteRule(s)
 	}
-	return s.String()
+	return nil
 }

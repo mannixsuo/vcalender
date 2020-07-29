@@ -5,6 +5,7 @@ import (
 	"calendar/objects/property/components/properties/datetime"
 	"calendar/objects/property/components/properties/descriptive"
 	"calendar/objects/property/components/properties/relationship"
+	"strings"
 	"testing"
 )
 
@@ -24,6 +25,8 @@ func TestJournal_Journal(t *testing.T) {
 	//         totaled by tree. Is looking into a loaner car. 555-2323
 	//         (tel).
 	//       END:VJOURNAL
+	s := &strings.Builder{}
+
 	j:=Journal{
 		DtStamp:     changemanage.NewDtStamp(1997, 9, 1, 13, 0, 0),
 		Uid:         relationship.NewUid("19970901T130000Z-123405@example.com"),
@@ -31,8 +34,9 @@ func TestJournal_Journal(t *testing.T) {
 		Summary:     descriptive.NewSummary("Staff meeting minutes"),
 		Description: []*descriptive.Description{descriptive.NewDescription("1. Staff meeting: Participants include Joe,Lisa, and Bob. Aurora project plans were reviewed.There is currently no budget reserves for this project.2. Telephone Conference: ABC Corp. sales representative called to discuss new printer. Promised to get us a demo by Friday.\n3. Henry Miller (Handsoff Insurance): Car was totaled by tree. Is looking into a loaner car. 555-2323(tel).")},
 	}
+	j.Journal(s)
 	v:=VTest{
-		S: j.Journal(),
+		S: s.String(),
 		T: t,
 	}
 	v.ContainsOrError("UID:19970901T130000Z-123405@example.com")

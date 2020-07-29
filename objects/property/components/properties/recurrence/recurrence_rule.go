@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  RRULE
@@ -467,6 +468,6 @@ type RRule struct {
 	V          *types.RecurRule
 }
 
-func (r *RRule) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("RRULE", r.Parameters, r.V), nil
+func (r *RRule) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreatePropertyFunc("RRULE", r.Parameters, r.V, s)
 }

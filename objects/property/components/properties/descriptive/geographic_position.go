@@ -86,18 +86,17 @@ type Geographic struct {
 	Values     []*types.Float
 }
 
-func (g *Geographic) Property() (string, error) {
-	sb := strings.Builder{}
-	sb.WriteString("GEO")
-	sb.WriteString(parameters.Parameters(g.Parameters))
-	sb.WriteString(":")
+func (g *Geographic) WritePropertyToStrBuilder(s *strings.Builder) error {
+	s.WriteString("GEO")
+	parameters.WriteParametersToStrBuilder(g.Parameters, s)
+	s.WriteString(":")
 	if len(g.Values) != 2 {
-		return "", fmt.Errorf("Latitude and Longitude components not set ")
+		return fmt.Errorf("Latitude and Longitude components not set ")
 	}
-	sb.WriteString(g.Values[0].Value())
-	sb.WriteString(";")
-	sb.WriteString(g.Values[1].Value())
-	return sb.String(), nil
+	g.Values[0].WriteValueToStrBuilder(s)
+	s.WriteString(";")
+	g.Values[1].WriteValueToStrBuilder(s)
+	return nil
 }
 
 func NewGeographic(latitude, longitude string) *Geographic {

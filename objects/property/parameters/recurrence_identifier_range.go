@@ -1,8 +1,11 @@
 package parameters
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
-//   Parameter Name:  RANGE
+//   WriteParameterToStrBuilder Name:  RANGE
 //
 //   Purpose:  To specify the effective range of recurrence instances from
 //      the instance specified by the recurrence identifier specified by
@@ -36,6 +39,7 @@ type RecurrenceIdRange struct {
 
 var ThisAndFuture = RecurrenceIdRange{"THISANDFUTURE"}
 
-func (r *RecurrenceIdRange) Parameter() string {
-	return fmt.Sprintf("RANGE=%s", r.V)
+func (r *RecurrenceIdRange) WriteParameterToStrBuilder(s *strings.Builder) error {
+	s.WriteString(fmt.Sprintf("RANGE=%s", r.V))
+	return nil
 }

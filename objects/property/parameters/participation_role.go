@@ -1,8 +1,11 @@
 package parameters
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
-//   Parameter Name:  ROLE
+//   WriteParameterToStrBuilder Name:  ROLE
 //
 //   Purpose:  To specify the participation role for the calendar user
 //      specified by the property.
@@ -44,6 +47,7 @@ var Required = ParticipationRole{"REQ-PARTICIPANT"}
 var Optional = ParticipationRole{"OPT-PARTICIPANT"}
 var None = ParticipationRole{"NON-PARTICIPANT"}
 
-func (p *ParticipationRole) Parameter() string {
-	return fmt.Sprintf("ROLE=%s", p.V)
+func (p *ParticipationRole) WriteParameterToStrBuilder(s *strings.Builder) error {
+	s.WriteString(fmt.Sprintf("ROLE=%s", p.V))
+	return nil
 }

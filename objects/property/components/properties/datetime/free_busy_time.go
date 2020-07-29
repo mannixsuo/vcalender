@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  FREEBUSY
@@ -68,6 +69,6 @@ type FreeBusy struct {
 	Values     []types.Value
 }
 
-func (f *FreeBusy) Property() (string, error) {
-	return properties.DefaultCreateMultiplePropertyFunc("FREEBUSY", f.Parameters, f.Values), nil
+func (f *FreeBusy) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreateMultiplePropertyFunc("FREEBUSY", f.Parameters, f.Values, s)
 }

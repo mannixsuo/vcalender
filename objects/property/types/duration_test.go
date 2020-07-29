@@ -1,11 +1,12 @@
 package types
 
 import (
-	"fmt"
+	"strings"
 	"testing"
 )
 
 func TestDuration_Value(t *testing.T) {
+	s := &strings.Builder{}
 	// P15DT5H0M20S
 	d := Duration{
 		Negative:  false,
@@ -15,8 +16,8 @@ func TestDuration_Value(t *testing.T) {
 		DurMinute: 0,
 		DurSecond: 20,
 	}
-	if d.Value() != "P15DT5H0M20S" {
-		fmt.Print(d.Value())
+	d.WriteValueToStrBuilder(s)
+	if s.String() != "P15DT5H0M20S" {
 		t.Error()
 	}
 	// P7W
@@ -28,7 +29,9 @@ func TestDuration_Value(t *testing.T) {
 		DurMinute: 0,
 		DurSecond: 0,
 	}
-	if w.Value() != "P7W" {
+	s.Reset()
+	w.WriteValueToStrBuilder(s)
+	if s.String() != "P7W" {
 		t.Error()
 	}
 }

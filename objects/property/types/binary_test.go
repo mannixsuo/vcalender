@@ -1,11 +1,15 @@
 package types
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
 func TestBINARY_Binary(t *testing.T) {
+	s := &strings.Builder{}
 	var b Binary = Binary{V: []byte("abcdefghijklmnopqrstuvwxyz")}
-	got := b.Value()
-	if got != "YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXo=" {
+	_ = b.WriteValueToStrBuilder(s)
+	if s.String() != "YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXo=" {
 		t.Errorf("error")
 	}
 }

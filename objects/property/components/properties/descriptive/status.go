@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  STATUS
@@ -77,8 +78,8 @@ type Status struct {
 	Value      *types.Text
 }
 
-func (s *Status) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("STATUS", s.Parameters, s.Value), nil
+func (s *Status) WritePropertyToStrBuilder(sb *strings.Builder) error {
+	return properties.DefaultCreatePropertyFunc("STATUS", s.Parameters, s.Value, sb)
 }
 
 func NewStatus(status string) *Status {

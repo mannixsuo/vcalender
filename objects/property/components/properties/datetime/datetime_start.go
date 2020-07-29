@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 	"time"
 )
 
@@ -74,8 +75,8 @@ type DateStart struct {
 	Value      types.Value
 }
 
-func (d *DateStart) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("DTSTART", d.Parameters, d.Value), nil
+func (d *DateStart) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreatePropertyFunc("DTSTART", d.Parameters, d.Value, s)
 }
 
 func NewDateStartWithDatetime(year, month, day, hour, minute, seconds int) *DateStart {

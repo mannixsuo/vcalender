@@ -2,10 +2,10 @@ package parameters
 
 import (
 	"calendar/objects/property/types"
-	"fmt"
+	"strings"
 )
 
-//   Parameter Name:  ALTREP
+//   WriteParameterToStrBuilder Name:  ALTREP
 //
 //   Purpose:  To specify an alternate text representation for the
 //      property value.
@@ -60,6 +60,10 @@ type AltRep struct {
 	V *types.URI
 }
 
-func (a *AltRep) Parameter() string {
-	return fmt.Sprintf("ALTREP=\"%s\"", a.V.Value())
+func (a *AltRep) WriteParameterToStrBuilder(s *strings.Builder) error {
+	s.WriteString("ALTREP=")
+	s.WriteString("\"")
+	a.V.WriteValueToStrBuilder(s)
+	s.WriteString("\"")
+	return nil
 }

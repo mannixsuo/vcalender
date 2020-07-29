@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  TZOFFSETTO
@@ -45,8 +46,8 @@ type TzOffsetTo struct {
 	Value      *types.UTCOffset
 }
 
-func (t *TzOffsetTo) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("TZOFFSETTO", t.Parameters, t.Value), nil
+func (t *TzOffsetTo) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreatePropertyFunc("TZOFFSETTO", t.Parameters, t.Value,s)
 }
 
 func NewTzOffsetTo(positive bool, hour, minute, second int) *TzOffsetTo {

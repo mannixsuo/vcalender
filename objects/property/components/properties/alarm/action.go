@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  ACTION
@@ -46,8 +47,8 @@ type Action struct {
 	Value      *types.Text
 }
 
-func (a *Action) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("ACTION", a.Parameters, a.Value), nil
+func (a *Action) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreatePropertyFunc("ACTION", a.Parameters, a.Value, s)
 }
 
 var Audio = Action{Value: &types.Text{V: "AUDIO"},}

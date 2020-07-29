@@ -2,15 +2,18 @@ package descriptive
 
 import (
 	"calendar/objects/property/types"
+	"strings"
 	"testing"
 )
 
 func TestClassification_Property(t *testing.T) {
+	s := &strings.Builder{}
+
 	c := Classification{
 		Value: &types.Text{V: "PUBLIC"},
 	}
-	property, _ := c.Property()
-	if property != "CLASS:PUBLIC" {
+	_ = c.WritePropertyToStrBuilder(s)
+	if s.String() != "CLASS:PUBLIC" {
 		t.Error()
 	}
 }

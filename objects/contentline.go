@@ -2,7 +2,6 @@ package objects
 
 import (
 	"calendar/objects/property/components/properties"
-	"strings"
 )
 
 //     contentline   = name *(";" param ) ":" value CRLF
@@ -41,20 +40,5 @@ import (
 //     ; All the controls except HTAB
 
 func ToContentLine(p properties.Property) string {
-	property, err := p.Property()
-	if err != nil {
-		return property
-	}
-	if len(property) > 75 {
-		sb := strings.Builder{}
-		var i = 1
-		for ; i*73 < len(property); i++ {
-			sb.WriteString(property[(i-1)*73 : i*73])
-			sb.WriteString("\n ")
-		}
-		i--
-		sb.WriteString(property[i*73:])
-		return sb.String()
-	}
-	return property
+	return ""
 }

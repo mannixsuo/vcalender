@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  Any property name with a "X-" prefix
@@ -57,6 +58,6 @@ type NoStandard struct {
 	Values     []types.Value
 }
 
-func (n *NoStandard) Property() (string, error) {
-	return properties.DefaultCreateMultiplePropertyFunc(n.Name, n.Parameters, n.Values), nil
+func (n *NoStandard) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreateMultiplePropertyFunc(n.Name, n.Parameters, n.Values,s)
 }

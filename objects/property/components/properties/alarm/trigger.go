@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  TRIGGER
@@ -119,6 +120,6 @@ type Trigger struct {
 	Value      types.Value
 }
 
-func (t *Trigger) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("TRIGGER", t.Parameters, t.Value), nil
+func (t *Trigger) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreatePropertyFunc("TRIGGER", t.Parameters, t.Value, s)
 }

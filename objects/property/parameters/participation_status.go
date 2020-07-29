@@ -1,8 +1,11 @@
 package parameters
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
-//   Parameter Name:  PARTSTAT
+//   WriteParameterToStrBuilder Name:  PARTSTAT
 //
 //   Purpose:  To specify the participation status for the calendar user
 //      specified by the property.
@@ -82,6 +85,7 @@ var Delegated = PartStat{"DELEGATED"}
 var Completed = PartStat{"COMPLETED"}
 var InProgress = PartStat{"IN-PROCESS"}
 
-func (p *PartStat) Parameter() string {
-	return fmt.Sprintf("PARTSTAT=%s", p.V)
+func (p *PartStat) WriteParameterToStrBuilder(s *strings.Builder) error {
+	s.WriteString(fmt.Sprintf("PARTSTAT=%s", p.V))
+	return nil
 }

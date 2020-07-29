@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 	"time"
 )
 
@@ -58,8 +59,8 @@ type DtStamp struct {
 	Value      *types.DateTime
 }
 
-func (d *DtStamp) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("DTSTAMP", d.Parameters, d.Value), nil
+func (d *DtStamp) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreatePropertyFunc("DTSTAMP", d.Parameters, d.Value, s)
 }
 
 func NewDtStamp(year, month, day, hour, minute, seconds int) *DtStamp {

@@ -2,11 +2,10 @@ package parameters
 
 import (
 	"calendar/objects/property/types"
-	"fmt"
 	"strings"
 )
 
-//   Parameter Name:  MEMBER
+//   WriteParameterToStrBuilder Name:  MEMBER
 //
 //   Purpose:  To specify the group or list membership of the calendar
 //      user specified by the property.
@@ -36,15 +35,16 @@ type Member struct {
 	V []*types.CalAddress
 }
 
-func (m *Member) Parameter() string {
-	sb := strings.Builder{}
-	sb.WriteString("MEMBER=")
+func (m *Member) WriteParameterToStrBuilder(s *strings.Builder) error {
+	s.WriteString("MEMBER=")
 
 	for index, addr := range m.V {
 		if index != 0 {
-			sb.WriteString(",")
+			s.WriteString(",")
 		}
-		sb.WriteString(fmt.Sprintf("\"%s\"", addr.Value()))
+		s.WriteString("\"")
+		addr.WriteValueToStrBuilder(s)
+		s.WriteString("\"")
 	}
-	return sb.String()
+	return nil
 }

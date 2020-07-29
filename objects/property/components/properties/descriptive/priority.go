@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  PRIORITY
@@ -78,8 +79,8 @@ type Priority struct {
 	Value      *types.Integer
 }
 
-func (p *Priority) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("PRIORITY", p.Parameters, p.Value), nil
+func (p *Priority) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreatePropertyFunc("PRIORITY", p.Parameters, p.Value, s)
 }
 
 func NewPriority(priority int) *Priority {

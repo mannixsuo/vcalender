@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  EXDATE
@@ -83,6 +84,6 @@ type ExDate struct {
 	Values     []types.Value
 }
 
-func (a *ExDate) Property() (string, error) {
-	return properties.DefaultCreateMultiplePropertyFunc("EXDATE", a.Parameters, a.Values), nil
+func (a *ExDate) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreateMultiplePropertyFunc("EXDATE", a.Parameters, a.Values, s)
 }

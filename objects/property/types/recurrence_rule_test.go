@@ -2,10 +2,13 @@ package types
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 )
 
 func TestRecurRule_Value(t *testing.T) {
+	b := &strings.Builder{}
+
 	//FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1
 	r := RecurRule{
 		Frequency: FreqMonthly,
@@ -14,8 +17,9 @@ func TestRecurRule_Value(t *testing.T) {
 				{WeekDay: Wednesday}, {WeekDay: Thursday}, {WeekDay: Friday}}},
 			&BySetpos{V: []*YearDayNum{{Operator: Minus, OrdYrDay: 1}}}},
 	}
-	if r.Value() != "FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1" {
-		fmt.Println(r.Value())
+	r.WriteValueToStrBuilder(b)
+	if b.String() != "FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-1" {
+		fmt.Println(b.String())
 		t.Error()
 	}
 
@@ -31,8 +35,10 @@ func TestRecurRule_Value(t *testing.T) {
 			&ByHour{V: []int{8, 9}},
 			&ByMinute{V: []int{30}},
 		}}
-	if r.Value() != "FREQ=YEARLY;INTERVAL=2;BYMONTH=1;BYDAY=SU;BYHOUR=8,9;BYMINUTE=30" {
-		fmt.Println(r.Value())
+	b.Reset()
+	r.WriteValueToStrBuilder(b)
+	if b.String() != "FREQ=YEARLY;INTERVAL=2;BYMONTH=1;BYDAY=SU;BYHOUR=8,9;BYMINUTE=30" {
+		fmt.Println(b.String())
 		t.Error()
 	}
 }

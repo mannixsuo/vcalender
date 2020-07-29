@@ -38,8 +38,7 @@ type UTCOffset struct {
 	Second   int
 }
 
-func (u *UTCOffset) Value() string {
-	s := strings.Builder{}
+func (u *UTCOffset) WriteValueToStrBuilder(s *strings.Builder) error {
 	if !u.Positive {
 		s.WriteString("-")
 	}
@@ -48,7 +47,7 @@ func (u *UTCOffset) Value() string {
 	if u.Second != 0 {
 		s.WriteString(fmt.Sprintf("%02d", u.Second))
 	}
-	return s.String()
+	return nil
 }
 
 func NewUTCOffset(positive bool, hour, minute, second int) *UTCOffset {

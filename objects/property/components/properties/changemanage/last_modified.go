@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  LAST-MODIFIED
@@ -42,8 +43,8 @@ type LastModified struct {
 	Value      *types.DateTime
 }
 
-func (l *LastModified) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("LAST-MODIFIED", l.Parameters, l.Value), nil
+func (l *LastModified) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreatePropertyFunc("LAST-MODIFIED", l.Parameters, l.Value, s)
 }
 
 func NewLastModified(year, month, day, hour, minute, seconds int) *LastModified {

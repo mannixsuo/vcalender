@@ -2,10 +2,10 @@ package parameters
 
 import (
 	"calendar/objects/property/types"
-	"fmt"
+	"strings"
 )
 
-//   Parameter Name:  SENT-BY
+//   WriteParameterToStrBuilder Name:  SENT-BY
 //
 //   Purpose:  To specify the calendar user that is acting on behalf of
 //      the calendar user specified by the property.
@@ -30,6 +30,9 @@ type SendBy struct {
 	V *types.CalAddress
 }
 
-func (s *SendBy) Parameter() string {
-	return fmt.Sprintf("SENT-BY=\"%s\"", s.V.Value())
+func (s *SendBy) WriteParameterToStrBuilder(sb *strings.Builder) error {
+	sb.WriteString("SENT-BY=\"")
+	s.V.WriteValueToStrBuilder(sb)
+	sb.WriteString("\"")
+	return nil
 }

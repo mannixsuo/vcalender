@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  COMMENT
@@ -53,8 +54,8 @@ type Comment struct {
 	Value      *types.Text
 }
 
-func (c *Comment) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("COMMENT", c.Parameters, c.Value), nil
+func (c *Comment) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreatePropertyFunc("COMMENT", c.Parameters, c.Value, s)
 }
 
 func NewComment(comment string) *Comment {

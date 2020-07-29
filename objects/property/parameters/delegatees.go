@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-//   Parameter Name:  DELEGATED-TO
+//   WriteParameterToStrBuilder Name:  DELEGATED-TO
 //
 //   Purpose:  To specify the calendar users to whom the calendar user
 //      specified by the property has delegated participation.
@@ -32,18 +32,20 @@ type DelegatedTo struct {
 	V []*types.CalAddress
 }
 
-func (d *DelegatedTo) Parameter() string {
-	return d.delegatedTo()
+func (d *DelegatedTo) WriteParameterToStrBuilder(s *strings.Builder) error {
+	d.delegatedTo(s)
+	return nil
 }
 
-func (d *DelegatedTo) delegatedTo() string {
-	sb := strings.Builder{}
-	sb.WriteString("DELEGATED-TO=")
+func (d *DelegatedTo) delegatedTo(s *strings.Builder) string {
+	s.WriteString("DELEGATED-TO=")
 	for index, addr := range d.V {
 		if index != 0 {
-			sb.WriteString(",")
+			s.WriteString(",")
 		}
-		sb.WriteString(fmt.Sprintf("\"%s\"", addr.Value()))
+		s.WriteString(fmt.Sprintf("\""))
+		addr.WriteValueToStrBuilder(s)
+		s.WriteString(fmt.Sprintf("\""))
 	}
-	return sb.String()
+	return s.String()
 }

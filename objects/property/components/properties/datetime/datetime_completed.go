@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  COMPLETED
@@ -37,6 +38,6 @@ type Completed struct {
 	Value      *types.DateTime
 }
 
-func (s *Completed) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("COMPLETED", s.Parameters, s.Value), nil
+func (s *Completed) WritePropertyToStrBuilder(sb *strings.Builder) error {
+	return properties.DefaultCreatePropertyFunc("COMPLETED", s.Parameters, s.Value, sb)
 }

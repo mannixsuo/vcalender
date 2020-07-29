@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  TZURL
@@ -44,6 +45,6 @@ type TzUrl struct {
 	Value      *types.URI
 }
 
-func (t *TzUrl) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("TZURL", t.Parameters, t.Value), nil
+func (t *TzUrl) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreatePropertyFunc("TZURL", t.Parameters, t.Value, s)
 }

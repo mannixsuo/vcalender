@@ -2,11 +2,10 @@ package parameters
 
 import (
 	"calendar/objects/property/types"
-	"fmt"
 	"strings"
 )
 
-//   Parameter Name:  DELEGATED-FROM
+//   WriteParameterToStrBuilder Name:  DELEGATED-FROM
 //
 //   Purpose:  To specify the calendar users that have delegated their
 //      participation to the calendar user specified by the property.
@@ -33,18 +32,19 @@ type DelegatedFrom struct {
 	V []*types.CalAddress
 }
 
-func (d *DelegatedFrom) Parameter() string {
-	return d.delegatedFrom()
+func (d *DelegatedFrom) WriteParameterToStrBuilder(s *strings.Builder) error {
+	d.delegatedFrom(s)
+	return nil
 }
 
-func (d *DelegatedFrom) delegatedFrom() string {
-	sb := strings.Builder{}
-	sb.WriteString("DELEGATED-FROM=")
+func (d *DelegatedFrom) delegatedFrom(s *strings.Builder) {
+	s.WriteString("DELEGATED-FROM=")
 	for index, addr := range d.V {
 		if index != 0 {
-			sb.WriteString(",")
+			s.WriteString(",")
 		}
-		sb.WriteString(fmt.Sprintf("\"%s\"", addr.Value()))
+		s.WriteString("\"")
+		addr.WriteValueToStrBuilder(s)
+		s.WriteString("\"")
 	}
-	return sb.String()
 }

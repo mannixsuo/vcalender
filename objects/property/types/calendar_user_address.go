@@ -1,7 +1,7 @@
 package types
 
 import (
-	"fmt"
+	"strings"
 )
 
 //   V Name:  CAL-ADDRESS
@@ -29,8 +29,10 @@ type CalAddress struct {
 	V *URI
 }
 
-func (c *CalAddress) Value() string {
-	return fmt.Sprintf("mailto:%s", c.V.Value())
+func (c *CalAddress) WriteValueToStrBuilder(s *strings.Builder) error {
+	s.WriteString("mailto:")
+	c.V.WriteValueToStrBuilder(s)
+	return nil
 }
 
 func NewCalAddress(address string) *CalAddress {

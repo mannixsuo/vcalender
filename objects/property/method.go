@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  METHOD
@@ -55,6 +56,6 @@ type Method struct {
 	Value      *types.Text
 }
 
-func (a *Method) Property() (string, error) {
-	return properties.DefaultCreatePropertyFunc("METHOD", a.Parameters, a.Value), nil
+func (a *Method) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreatePropertyFunc("METHOD", a.Parameters, a.Value, s)
 }

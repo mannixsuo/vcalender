@@ -1,8 +1,11 @@
 package parameters
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
-//   Parameter Name:  VALUE
+//   WriteParameterToStrBuilder Name:  VALUE
 //
 //   Purpose:  To explicitly specify the value type format for a property
 //      value.
@@ -66,6 +69,7 @@ var (
 	UtcOffset  = ValueType{"UTC-OFFSET"}
 )
 
-func (v *ValueType) Parameter() string {
-	return fmt.Sprintf("VALUE=%s", v.V)
+func (v *ValueType) WriteParameterToStrBuilder(s *strings.Builder) error {
+	s.WriteString(fmt.Sprintf("VALUE=%s", v.V))
+	return nil
 }

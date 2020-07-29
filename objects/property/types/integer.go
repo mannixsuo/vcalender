@@ -1,6 +1,9 @@
 package types
 
-import "strconv"
+import (
+	"strconv"
+	"strings"
+)
 
 //   V Name:  INTEGER
 //
@@ -31,8 +34,9 @@ type Integer struct {
 	V int
 }
 
-func (i *Integer) Value() string {
-	return strconv.Itoa(i.V)
+func (i *Integer) WriteValueToStrBuilder(s *strings.Builder) error {
+	s.WriteString(strconv.Itoa(i.V))
+	return nil
 }
 func NewInteger(i int) *Integer {
 	return &Integer{V: i}

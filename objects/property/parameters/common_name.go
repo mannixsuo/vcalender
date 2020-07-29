@@ -1,8 +1,11 @@
 package parameters
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
-//   Parameter Name:  CN
+//   WriteParameterToStrBuilder Name:  CN
 //
 //   Purpose:  To specify the common name to be associated with the
 //      calendar user specified by the property.
@@ -27,6 +30,7 @@ type CommonName struct {
 	V string
 }
 
-func (c *CommonName) Parameter() string {
-	return fmt.Sprintf("CN=\"%s\"", c.V)
+func (c *CommonName) WriteParameterToStrBuilder(s *strings.Builder) error {
+	s.WriteString(fmt.Sprintf("CN=\"%s\"", c.V))
+	return nil
 }

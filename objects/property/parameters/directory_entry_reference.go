@@ -2,10 +2,10 @@ package parameters
 
 import (
 	"calendar/objects/property/types"
-	"fmt"
+	"strings"
 )
 
-//   Parameter Name:  DIR
+//   WriteParameterToStrBuilder Name:  DIR
 //
 //   Purpose:  To specify reference to a directory entry associated with
 //      the calendar user specified by the property.
@@ -36,6 +36,9 @@ type Dir struct {
 	V *types.URI
 }
 
-func (d *Dir) Parameter() string {
-	return fmt.Sprintf("DIR=\"%s\"", d.V.Value())
+func (d *Dir) WriteParameterToStrBuilder(s *strings.Builder) error {
+	s.WriteString("\"")
+	d.V.WriteValueToStrBuilder(s)
+	s.WriteString("\"")
+	return nil
 }

@@ -1,5 +1,7 @@
 package types
 
+import "strings"
+
 //   V Name:  BOOLEAN
 //
 //   Purpose:  This value type is used to identify properties that contain
@@ -28,9 +30,10 @@ var (
 	False = Boolean{false}
 )
 
-func (b Boolean) Value() string {
+func (b Boolean) WriteValueToStrBuilder(s *strings.Builder) error {
 	if b.V {
-		return "TRUE"
+		s.WriteString("TRUE")
 	}
-	return "FALSE"
+	s.WriteString("FALSE")
+	return nil
 }

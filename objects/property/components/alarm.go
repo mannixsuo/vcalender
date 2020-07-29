@@ -6,7 +6,6 @@ import (
 	"calendar/objects/property/components/properties/miscellaneous"
 	"calendar/objects/property/components/properties/relationship"
 	"calendar/objects/property/types"
-	"fmt"
 	"strings"
 )
 
@@ -252,58 +251,53 @@ type Alarm struct {
 	IANAProp    []*miscellaneous.Iana
 }
 
-func (a *Alarm) Alarm() string {
-	s := strings.Builder{}
+func (a *Alarm) Alarm(s *strings.Builder) error {
 	s.WriteString("BEGIN:VALARM\n")
 
-	action, _ := a.Action.Property()
-	s.WriteString(action)
+	_ = a.Action.WritePropertyToStrBuilder(s)
 
 	if a.Trigger != nil {
-		trigger, _ := a.Trigger.Property()
-		s.WriteString(trigger)
+		_ = a.Trigger.WritePropertyToStrBuilder(s)
 	}
 
 	if a.Description != nil {
-		property, _ := a.Description.Property()
-		s.WriteString(property)
+		_ = a.Description.WritePropertyToStrBuilder(s)
 	}
 
 	if a.Summary != nil {
-		property, _ := a.Summary.Property()
-		s.WriteString(property)
+		_ = a.Summary.WritePropertyToStrBuilder(s)
 	}
 
 	if a.Attendee != nil {
 		for _, at := range a.Attendee {
-			attendee, _ := at.Property()
-			s.WriteString(attendee)
+			_ = at.WritePropertyToStrBuilder(s)
 		}
 	}
 
 	if a.Duration != nil {
-		s.WriteString(fmt.Sprintf("DURATION:%s\n", a.Duration.Value()))
-		s.WriteString(fmt.Sprintf("REPEAT:%s\n", a.Repeat.Value()))
+		s.WriteString("DURATION:")
+		a.Duration.WriteValueToStrBuilder(s)
+		s.WriteString("\n")
+		s.WriteString("REPEAT:")
+		a.Repeat.WriteValueToStrBuilder(s)
+		s.WriteString("\n")
 	}
 
 	if a.Attach != nil {
 		for _, at := range a.Attach {
-			attach, _ := at.Property()
-			s.WriteString(attach)
+			_ = at.WritePropertyToStrBuilder(s)
 		}
 	}
 	if a.XProp != nil {
 		for _, p := range a.XProp {
-			xProperity, _ := p.Property()
-			s.WriteString(xProperity)
+			_ = p.WritePropertyToStrBuilder(s)
 		}
 	}
 	if a.IANAProp != nil {
 		for _, p := range a.IANAProp {
-			iaProperity, _ := p.Property()
-			s.WriteString(iaProperity)
+			_ = p.WritePropertyToStrBuilder(s)
 		}
 	}
 	s.WriteString("END:VALARM\n")
-	return s.String()
+	return nil
 }

@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties"
 	"calendar/objects/property/parameters"
 	"calendar/objects/property/types"
+	"strings"
 )
 
 //   Property Name:  An IANA-registered property name
@@ -37,6 +38,6 @@ type Iana struct {
 	Values     []types.Value
 }
 
-func (i *Iana) Property() (string, error) {
-	return properties.DefaultCreateMultiplePropertyFunc(i.Name, i.Parameters, i.Values), nil
+func (i *Iana) WritePropertyToStrBuilder(s *strings.Builder) error {
+	return properties.DefaultCreateMultiplePropertyFunc(i.Name, i.Parameters, i.Values, s)
 }

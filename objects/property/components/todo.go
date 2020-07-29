@@ -143,50 +143,49 @@ type Todo struct {
 	Alarm      *Alarm
 }
 
-func (t *Todo) Todo() string {
-	b := strings.Builder{}
+func (t *Todo) Todo(b *strings.Builder) error {
 	b.WriteString("BEGIN:VTODO\n")
-	WriteProperty(&b, t.DtStamp)
-	WriteProperty(&b, t.Uid)
-	WriteProperty(&b, t.DtStart)
-	WriteProperty(&b, t.Class)
-	WriteProperty(&b, t.Completed)
-	WriteProperty(&b, t.Created)
-	WriteProperty(&b, t.Description)
-	WriteProperty(&b, t.Geo)
-	WriteProperty(&b, t.LastModified)
-	WriteProperty(&b, t.Location)
-	WriteProperty(&b, t.Organizer)
-	WriteProperty(&b, t.Percent)
-	WriteProperty(&b, t.Priority)
-	WriteProperty(&b, t.Seq)
-	WriteProperty(&b, t.Status)
-	WriteProperty(&b, t.Summary)
-	WriteProperty(&b, t.Url)
-	WriteProperty(&b, t.RecurId)
-	WriteProperty(&b, t.RRule)
-	WriteProperty(&b, t.Due)
-	WriteProperty(&b, t.Duration)
+	WriteProperty(b, t.DtStamp)
+	WriteProperty(b, t.Uid)
+	WriteProperty(b, t.DtStart)
+	WriteProperty(b, t.Class)
+	WriteProperty(b, t.Completed)
+	WriteProperty(b, t.Created)
+	WriteProperty(b, t.Description)
+	WriteProperty(b, t.Geo)
+	WriteProperty(b, t.LastModified)
+	WriteProperty(b, t.Location)
+	WriteProperty(b, t.Organizer)
+	WriteProperty(b, t.Percent)
+	WriteProperty(b, t.Priority)
+	WriteProperty(b, t.Seq)
+	WriteProperty(b, t.Status)
+	WriteProperty(b, t.Summary)
+	WriteProperty(b, t.Url)
+	WriteProperty(b, t.RecurId)
+	WriteProperty(b, t.RRule)
+	WriteProperty(b, t.Due)
+	WriteProperty(b, t.Duration)
 
-	WriteProperties(&b, t.Attach)
-	WriteProperties(&b, t.Attendee)
-	WriteProperties(&b, t.Categories)
-	WriteProperties(&b, t.Comment)
-	WriteProperties(&b, t.Contact)
-	WriteProperties(&b, t.ExDate)
-	WriteProperties(&b, t.RStatus)
-	WriteProperties(&b, t.Related)
-	WriteProperties(&b, t.Resources)
-	WriteProperties(&b, t.RDate)
-	WriteProperties(&b, t.Xprop)
-	WriteProperties(&b, t.IanaProp)
+	WriteProperties(b, t.Attach)
+	WriteProperties(b, t.Attendee)
+	WriteProperties(b, t.Categories)
+	WriteProperties(b, t.Comment)
+	WriteProperties(b, t.Contact)
+	WriteProperties(b, t.ExDate)
+	WriteProperties(b, t.RStatus)
+	WriteProperties(b, t.Related)
+	WriteProperties(b, t.Resources)
+	WriteProperties(b, t.RDate)
+	WriteProperties(b, t.Xprop)
+	WriteProperties(b, t.IanaProp)
 	if t.Alarm != nil {
-		b.WriteString(t.Alarm.Alarm())
+		t.Alarm.Alarm(b)
 	}
 	b.WriteString("END:VTODO\n")
-	return b.String()
+	return nil
 }
 
-func (t *Todo) Component() (string, error) {
-	return t.Todo(), nil
+func (t *Todo) WriteComponentToStrBuilder(s *strings.Builder) error {
+	return t.Todo(s)
 }

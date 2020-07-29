@@ -75,11 +75,11 @@ import (
 //      measurement rules determined by the governing body for a given
 //      geographic area.  These rules describe, at a minimum, the base
 //      offset from UTC for the time zone, often referred to as the
-//      Standard Time offset.  Many locations adjust their Standard Time
+//      WriteStandardToStrBuilder Time offset.  Many locations adjust their WriteStandardToStrBuilder Time
 //      forward or backward by one hour, in order to accommodate seasonal
-//      changes in number of daylight hours, often referred to as DayLight
+//      changes in number of daylight hours, often referred to as WriteDayLightToStrBuilder
 //      Saving Time.  Some locations adjust their time by a fraction of an
-//      hour.  Standard Time is also known as Winter Time.  DayLight
+//      hour.  WriteStandardToStrBuilder Time is also known as Winter Time.  WriteDayLightToStrBuilder
 //      Saving Time is also known as Advanced Time, Summer Time, or Legal
 //      Time in certain countries.  The following table shows the changes
 //      in time zone rules in effect for New York City starting from 1967.
@@ -128,7 +128,7 @@ import (
 //      of current time zone information is integral to this behavior.
 //
 //      If present, the "VTIMEZONE" calendar component defines the set of
-//      Standard Time and DayLight Saving Time observances (or rules) for
+//      WriteStandardToStrBuilder Time and WriteDayLightToStrBuilder Saving Time observances (or rules) for
 //      a particular time zone for a given interval of time.  The
 //      "VTIMEZONE" calendar component cannot be nested within other
 //      calendar components.  Multiple "VTIMEZONE" calendar components can
@@ -151,11 +151,11 @@ import (
 //
 //      Each "VTIMEZONE" calendar component consists of a collection of
 //      one or more sub-components that describe the rule for a particular
-//      observance (either a Standard Time or a DayLight Saving Time
+//      observance (either a WriteStandardToStrBuilder Time or a WriteDayLightToStrBuilder Saving Time
 //      observance).  The "STANDARD" sub-component consists of a
-//      collection of properties that describe Standard Time.  The
+//      collection of properties that describe WriteStandardToStrBuilder Time.  The
 //      "DAYLIGHT" sub-component consists of a collection of properties
-//      that describe DayLight Saving Time.  In general, this collection
+//      that describe WriteDayLightToStrBuilder Saving Time.  In general, this collection
 //      of properties consists of:
 //
 //      *  the first onset DATE-TIME for the observance;
@@ -208,14 +208,14 @@ import (
 //      "TZOFFSETFROM" is combined with "DTSTART" to define the effective
 //      onset for the time zone sub-component definition.  For example,
 //      the following represents the time at which the observance of
-//      Standard Time took effect in Fall 1967 for New York City:
+//      WriteStandardToStrBuilder Time took effect in Fall 1967 for New York City:
 //
 //       DTSTART:19671029T020000
 //
 //       TZOFFSETFROM:-0400
 //
 //      The mandatory "TZOFFSETTO" property gives the UTC offset for the
-//      time zone sub-component (Standard Time or DayLight Saving Time)
+//      time zone sub-component (WriteStandardToStrBuilder Time or WriteDayLightToStrBuilder Saving Time)
 //      when this observance is in use.
 //
 //
@@ -340,8 +340,8 @@ import (
 //
 //      This is a simple example showing the current time zone rules for
 //      New York City using a "RRULE" recurrence pattern.  Note that there
-//      is no effective end date to either of the Standard Time or
-//      DayLight Time rules.  This information would be valid for a
+//      is no effective end date to either of the WriteStandardToStrBuilder Time or
+//      WriteDayLightToStrBuilder Time rules.  This information would be valid for a
 //      recurring event starting today and continuing indefinitely.
 //
 //       BEGIN:VTIMEZONE
@@ -365,8 +365,8 @@ import (
 //       END:VTIMEZONE
 //
 //      This is an example showing a set of rules for a fictitious time
-//      zone where the DayLight Time rule has an effective end date (i.e.,
-//      after that date, DayLight Time is no longer observed).
+//      zone where the WriteDayLightToStrBuilder Time rule has an effective end date (i.e.,
+//      after that date, WriteDayLightToStrBuilder Time is no longer observed).
 //
 //       BEGIN:VTIMEZONE
 //       TZID:Fictitious
@@ -388,8 +388,8 @@ import (
 //       END:VTIMEZONE
 //
 //      This is an example showing a set of rules for a fictitious time
-//      zone where the first DayLight Time rule has an effective end date.
-//      There is a second DayLight Time rule that picks up where the other
+//      zone where the first WriteDayLightToStrBuilder Time rule has an effective end date.
+//      There is a second WriteDayLightToStrBuilder Time rule that picks up where the other
 //      left off.
 //
 //       BEGIN:VTIMEZONE
@@ -428,68 +428,65 @@ type TimeZone struct {
 	IanaProp []*miscellaneous.Iana
 }
 
-func (t *TimeZone) TimeZone() string {
-	b := strings.Builder{}
+func (t *TimeZone) TimeZone(b *strings.Builder) error {
 	b.WriteString("BEGIN:VTIMEZONE\n")
-	WriteProperty(&b, t.TzId)
-	WriteProperty(&b, t.LastMod)
-	WriteProperty(&b, t.TzUrl)
+	WriteProperty(b, t.TzId)
+	WriteProperty(b, t.LastMod)
+	WriteProperty(b, t.TzUrl)
 	if len(t.Standard) > 0 {
 		for _, v := range t.Standard {
-			b.WriteString(v.Standard())
+			v.WriteStandardToStrBuilder(b)
 		}
 	}
 	if len(t.DayLight) > 0 {
 		for _, v := range t.DayLight {
-			b.WriteString(v.DayLight())
+			v.WriteDayLightToStrBuilder(b)
 		}
 	}
-	WriteProperties(&b, t.Xprop)
-	WriteProperties(&b, t.IanaProp)
+	WriteProperties(b, t.Xprop)
+	WriteProperties(b, t.IanaProp)
 	b.WriteString("END:VTIMEZONE\n")
-	return b.String()
+	return nil
 }
 
 type Standard struct {
 	*TzProp
 }
 
-func (e *Standard) Standard() string {
-	b := strings.Builder{}
+func (e *Standard) WriteStandardToStrBuilder(b *strings.Builder) error {
 	b.WriteString("BEGIN:STANDARD\n")
-	WriteProperty(&b, e.DtStart)
-	WriteProperty(&b, e.TzOffsetTo)
-	WriteProperty(&b, e.TzOffsetFrom)
-	WriteProperty(&b, e.RRule)
+	WriteProperty(b, e.DtStart)
+	WriteProperty(b, e.TzOffsetTo)
+	WriteProperty(b, e.TzOffsetFrom)
+	WriteProperty(b, e.RRule)
 
-	WriteProperties(&b, e.Comment)
-	WriteProperties(&b, e.RDate)
-	WriteProperties(&b, e.TzName)
-	WriteProperties(&b, e.Xprop)
-	WriteProperties(&b, e.IanaProp)
+	WriteProperties(b, e.Comment)
+	WriteProperties(b, e.RDate)
+	WriteProperties(b, e.TzName)
+	WriteProperties(b, e.Xprop)
+	WriteProperties(b, e.IanaProp)
 	b.WriteString("END:STANDARD\n")
-	return b.String()
+	return nil
 }
 
 type DayLight struct {
 	*TzProp
 }
 
-func (e *DayLight) DayLight() string {
-	b := strings.Builder{}
+func (e *DayLight) WriteDayLightToStrBuilder(b *strings.Builder) error {
 	b.WriteString("BEGIN:DAYLIGHT\n")
-	WriteProperty(&b, e.DtStart)
-	WriteProperty(&b, e.TzOffsetTo)
-	WriteProperty(&b, e.TzOffsetFrom)
-	WriteProperty(&b, e.RRule)
+	WriteProperty(b, e.DtStart)
+	WriteProperty(b, e.TzOffsetTo)
+	WriteProperty(b, e.TzOffsetFrom)
+	WriteProperty(b, e.RRule)
 
-	WriteProperties(&b, e.Comment)
-	WriteProperties(&b, e.RDate)
-	WriteProperties(&b, e.TzName)
-	WriteProperties(&b, e.Xprop)
-	WriteProperties(&b, e.IanaProp)
+	WriteProperties(b, e.Comment)
+	WriteProperties(b, e.RDate)
+	WriteProperties(b, e.TzName)
+	WriteProperties(b, e.Xprop)
+	WriteProperties(b, e.IanaProp)
 	b.WriteString("END:DAYLIGHT\n")
-	return b.String()
+	return nil
 }
 
 type TzProp struct {
@@ -504,6 +501,6 @@ type TzProp struct {
 	IanaProp     []*miscellaneous.Iana
 }
 
-func (t *TimeZone) Component() (string, error) {
-	return t.TimeZone(), nil
+func (t *TimeZone) WriteComponentToStrBuilder(s *strings.Builder) error {
+	return t.TimeZone(s)
 }

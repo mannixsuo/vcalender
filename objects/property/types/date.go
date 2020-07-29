@@ -1,6 +1,9 @@
 package types
 
-import "time"
+import (
+	"strings"
+	"time"
+)
 
 //   V Name:  DATE
 //
@@ -36,8 +39,9 @@ type Date struct {
 	V time.Time
 }
 
-func (d *Date) Value() string {
-	return d.V.Format("20060102")
+func (d *Date) WriteValueToStrBuilder(s *strings.Builder) error {
+	s.WriteString(d.V.Format("20060102"))
+	return nil
 }
 
 func NewDate(year, month, day int) *Date {

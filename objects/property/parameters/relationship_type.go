@@ -1,8 +1,11 @@
 package parameters
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
-//   Parameter Name:  RELTYPE
+//   WriteParameterToStrBuilder Name:  RELTYPE
 //
 //   Purpose:  To specify the type of hierarchical relationship associated
 //      with the calendar component specified by the property.
@@ -45,6 +48,7 @@ var Parent = RelType{"PARENT"}
 var Child = RelType{"CHILD"}
 var Sibling = RelType{"SIBLING"}
 
-func (r *RelType) Parameter() string {
-	return fmt.Sprintf("RELTYPE=%s", r.V)
+func (r *RelType) WriteParameterToStrBuilder(s *strings.Builder) error {
+	s.WriteString(fmt.Sprintf("RELTYPE=%s", r.V))
+	return nil
 }

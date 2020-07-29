@@ -1,14 +1,16 @@
 package types
 
 import (
-	"fmt"
+	"strings"
 	"testing"
 )
 
 func TestFloat_Value(t *testing.T) {
+	s := &strings.Builder{}
+
 	f := Float{V: "1000000.0000001"}
-	if f.Value() != "1000000.0000001" {
-		fmt.Println(f.Value())
+	f.WriteValueToStrBuilder(s)
+	if s.String() != "1000000.0000001" {
 		t.Error()
 	}
 }

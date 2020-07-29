@@ -3,7 +3,7 @@ package types
 import (
 	"bytes"
 	"encoding/base64"
-	"fmt"
+	"strings"
 )
 
 //    Purpose:  This value type is used to identify properties that contain
@@ -20,19 +20,19 @@ type Binary struct {
 	V []byte
 }
 
-func (b *Binary) binary() string {
+func (b *Binary) binary(s *strings.Builder) error {
 
 	buf := new(bytes.Buffer)
 	w := base64.NewEncoder(base64.StdEncoding, buf)
 	defer w.Close()
 	_, err := w.Write(b.V)
 	if err != nil {
-		return ""
+		return err
 	}
-	bs := fmt.Sprintf("%s", buf.String())
-	return bs
+	s.WriteString(buf.String())
+	return nil
 }
 
-func (b *Binary) Value() string {
-	return b.binary()
+func (b *Binary) WriteValueToStrBuilder(s *strings.Builder) error {
+	return b.binary(s)
 }

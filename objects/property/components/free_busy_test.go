@@ -4,6 +4,7 @@ import (
 	"calendar/objects/property/components/properties/changemanage"
 	"calendar/objects/property/components/properties/datetime"
 	"calendar/objects/property/components/properties/relationship"
+	"strings"
 	"testing"
 )
 
@@ -16,6 +17,7 @@ func TestFreeBusy_FreeBusy(t *testing.T) {
 	//       DTEND:19971016T050000Z
 	//       DTSTAMP:19970901T083000Z
 	//       END:VFREEBUSY
+	s := &strings.Builder{}
 	b:=FreeBusy{
 		DtStamp:   changemanage.NewDtStamp(1997, 9, 1, 8, 30, 0),
 		Uid:       relationship.NewUid("19970901T082949Z-FA43EF@example.com"),
@@ -24,8 +26,9 @@ func TestFreeBusy_FreeBusy(t *testing.T) {
 		Organizer: relationship.NewOrganizer("jane_doe@example.com"),
 		Attendee:  []*relationship.Attendee{relationship.NewAttendee("john_public@example.com")},
 	}
+	b.FreeBusy(s)
 	v:=VTest{
-		S: b.FreeBusy(),
+		S: s.String(),
 		T: t,
 	}
 	v.ContainsOrError("BEGIN:VFREEBUSY")

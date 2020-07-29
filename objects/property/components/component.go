@@ -1,5 +1,7 @@
 package components
 
+import "strings"
+
 type Component interface {
-	Component() (string, error)
+	WriteComponentToStrBuilder(s *strings.Builder) error
 }

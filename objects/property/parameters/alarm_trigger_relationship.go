@@ -1,8 +1,10 @@
 package parameters
 
-import "fmt"
+import (
+	"strings"
+)
 
-//   Parameter Name:  RELATED
+//   WriteParameterToStrBuilder Name:  RELATED
 //
 //   Purpose:  To specify the relationship of the alarm trigger with
 //      respect to the start or end of the calendar component.
@@ -35,6 +37,8 @@ var StartRelated = Related{V: "START"}
 
 var EndRelated = Related{V: "END"}
 
-func (r *Related) Parameter() string {
-	return fmt.Sprintf("RELATED=%s", r.V)
+func (r *Related) WriteParameterToStrBuilder(s *strings.Builder) error {
+	s.WriteString("RELATED=")
+	s.WriteString(r.V)
+	return nil
 }
