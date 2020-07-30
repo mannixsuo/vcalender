@@ -1,7 +1,7 @@
 package miscellaneous
 
 import (
-	"calendar/objects/property/parameters"
+	"github.com/mmsuo/vcalender/objects/property/parameters"
 	"strings"
 )
 

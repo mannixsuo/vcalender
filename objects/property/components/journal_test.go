@@ -1,10 +1,10 @@
 package components
 
 import (
-	"calendar/objects/property/components/properties/changemanage"
-	"calendar/objects/property/components/properties/datetime"
-	"calendar/objects/property/components/properties/descriptive"
-	"calendar/objects/property/components/properties/relationship"
+	"github.com/mmsuo/vcalender/objects/property/components/properties/changemanage"
+	"github.com/mmsuo/vcalender/objects/property/components/properties/datetime"
+	"github.com/mmsuo/vcalender/objects/property/components/properties/descriptive"
+	"github.com/mmsuo/vcalender/objects/property/components/properties/relationship"
 	"strings"
 	"testing"
 )

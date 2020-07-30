@@ -1,7 +1,7 @@
 package objects
 
 import (
-	"calendar/objects/property/components/properties"
+	"github.com/mmsuo/vcalender/objects/property/components/properties"
 )
 
 //     contentline   = name *(";" param ) ":" value CRLF

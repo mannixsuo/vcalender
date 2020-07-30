@@ -1,9 +1,9 @@
 package objects
 
 import (
-	"calendar/objects/property"
-	"calendar/objects/property/components"
-	"calendar/objects/property/components/properties/miscellaneous"
+	"github.com/mmsuo/vcalender/objects/property"
+	"github.com/mmsuo/vcalender/objects/property/components"
+	"github.com/mmsuo/vcalender/objects/property/components/properties/miscellaneous"
 	"strings"
 )
 

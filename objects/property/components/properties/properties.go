@@ -1,8 +1,8 @@
 package properties
 
 import (
-	"calendar/objects/property/parameters"
-	"calendar/objects/property/types"
+	"github.com/mmsuo/vcalender/objects/property/parameters"
+	"github.com/mmsuo/vcalender/objects/property/types"
 	"strings"
 )
 

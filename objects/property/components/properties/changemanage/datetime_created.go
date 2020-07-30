@@ -1,9 +1,9 @@
 package changemanage
 
 import (
-	"calendar/objects/property/components/properties"
-	"calendar/objects/property/parameters"
-	"calendar/objects/property/types"
+	"github.com/mmsuo/vcalender/objects/property/components/properties"
+	"github.com/mmsuo/vcalender/objects/property/parameters"
+	"github.com/mmsuo/vcalender/objects/property/types"
 	"strings"
 	"time"
 )

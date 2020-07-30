@@ -1,11 +1,11 @@
 package components
 
 import (
-	"calendar/objects/property/components/properties/changemanage"
-	"calendar/objects/property/components/properties/datetime"
-	"calendar/objects/property/components/properties/descriptive"
-	"calendar/objects/property/components/properties/miscellaneous"
-	"calendar/objects/property/components/properties/relationship"
+	"github.com/mmsuo/vcalender/objects/property/components/properties/changemanage"
+	"github.com/mmsuo/vcalender/objects/property/components/properties/datetime"
+	"github.com/mmsuo/vcalender/objects/property/components/properties/descriptive"
+	"github.com/mmsuo/vcalender/objects/property/components/properties/miscellaneous"
+	"github.com/mmsuo/vcalender/objects/property/components/properties/relationship"
 	"strings"
 )
 
@@ -137,7 +137,7 @@ import (
 //       FREEBUSY:19980314T233000Z/19980315T003000Z
 //       FREEBUSY:19980316T153000Z/19980316T163000Z
 //       FREEBUSY:19980318T030000Z/19980318T040000Z
-//       URL:http://www.example.com/calendar/busytime/jsmith.ifb
+//       URL:http://www.example.com/github.com/mmsuo/vcalender/busytime/jsmith.ifb
 //       END:VFREEBUSY
 
 type FreeBusy struct {

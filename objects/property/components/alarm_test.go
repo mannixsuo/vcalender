@@ -1,12 +1,12 @@
 package components
 
 import (
-	"calendar/objects/property/components/properties/alarm"
-	"calendar/objects/property/components/properties/descriptive"
-	"calendar/objects/property/components/properties/relationship"
-	"calendar/objects/property/parameters"
-	"calendar/objects/property/types"
 	"fmt"
+	"github.com/mmsuo/vcalender/objects/property/components/properties/alarm"
+	"github.com/mmsuo/vcalender/objects/property/components/properties/descriptive"
+	"github.com/mmsuo/vcalender/objects/property/components/properties/relationship"
+	"github.com/mmsuo/vcalender/objects/property/parameters"
+	"github.com/mmsuo/vcalender/objects/property/types"
 	"strings"
 	"testing"
 	"time"

@@ -1,8 +1,8 @@
 package parameters
 
 import (
-	"calendar/objects/property/types"
 	"fmt"
+	"github.com/mmsuo/vcalender/objects/property/types"
 	"strings"
 )
 
