@@ -1,4 +1,4 @@
-RFC 5445 simple client implication in go
+RFC5445 simple client implication in go
 
 see https://tools.ietf.org/html/rfc5545
 
@@ -14,7 +14,7 @@ todo list:
   - [x] Float
   - [x] Integer
   - [x] Period of Time
-  - [ ] Recurrence Rule
+  - [x] Recurrence Rule
   - [x] Text
   - [x] Time
   - [x] URI
